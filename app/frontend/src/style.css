@@ -1,0 +1,221 @@
+/* ── Reset & base ────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #0a0c13;
+  --surface:     #111420;
+  --surface-2:   #1a1f2e;
+  --border:      rgba(255, 255, 255, 0.08);
+  --accent:      #6c63ff;
+  --accent-glow: rgba(108, 99, 255, 0.35);
+  --ok:          #22c55e;
+  --ok-glow:     rgba(34, 197, 94, 0.25);
+  --error:       #ef4444;
+  --error-glow:  rgba(239, 68, 68, 0.25);
+  --text:        #e2e8f0;
+  --text-muted:  #64748b;
+  --radius:      16px;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(108,99,255,0.15) 0%, transparent 60%);
+}
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeUp .5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.header { text-align: center; }
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  margin-bottom: .5rem;
+}
+
+.logo-icon { font-size: 2.25rem; }
+
+.logo h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #a78bfa, #6c63ff, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.tagline {
+  color: var(--text-muted);
+  font-size: .9rem;
+  font-weight: 400;
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108,99,255,0.04), transparent 60%);
+  pointer-events: none;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.card-subtitle {
+  font-size: .85rem;
+  color: var(--text-muted);
+}
+
+.card-subtitle code {
+  color: #a78bfa;
+  background: rgba(167,139,250,.12);
+  padding: .1em .4em;
+  border-radius: 4px;
+  font-size: .82rem;
+}
+
+/* ── Status badge ─────────────────────────────────────────────────────────── */
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .85rem 1.1rem;
+  border-radius: 10px;
+  font-size: .9rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: all .3s ease;
+}
+
+.status-badge.loading {
+  background: var(--surface-2);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.status-badge.ok {
+  background: rgba(34,197,94,.1);
+  border-color: rgba(34,197,94,.25);
+  color: var(--ok);
+  box-shadow: 0 0 20px var(--ok-glow);
+}
+
+.status-badge.error {
+  background: rgba(239,68,68,.1);
+  border-color: rgba(239,68,68,.25);
+  color: var(--error);
+  box-shadow: 0 0 20px var(--error-glow);
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.status-badge.ok .status-dot   { animation: pulse-ok 2s infinite; }
+.status-badge.error .status-dot { background: var(--error); }
+
+@keyframes pulse-ok {
+  0%, 100% { box-shadow: 0 0 6px var(--ok); }
+  50%       { box-shadow: 0 0 14px var(--ok); }
+}
+
+/* ── Spinner ──────────────────────────────────────────────────────────────── */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Response block ───────────────────────────────────────────────────────── */
+.response-block {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: .82rem;
+  color: #7dd3fc;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.6;
+}
+
+/* ── Hint ─────────────────────────────────────────────────────────────────── */
+.hint {
+  font-size: .82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.hint code {
+  display: block;
+  margin-top: .4rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: .6rem .9rem;
+  color: #f0abfc;
+  font-size: .8rem;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  font-size: .75rem;
+  color: var(--text-muted);
+  letter-spacing: .02em;
+}
