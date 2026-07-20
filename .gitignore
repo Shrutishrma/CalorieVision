@@ -62,6 +62,7 @@ shared/test-videos/*.mkv
 cv-pipeline/models/*.pt
 cv-pipeline/models/*.pth
 cv-pipeline/models/*.onnx
+cv-pipeline/models/*.task         # MediaPipe pre-built task bundles (large binary)
 
 # MediaPipe / EasyOCR caches
 .mediapipe/

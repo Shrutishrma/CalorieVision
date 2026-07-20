@@ -1,5 +1,6 @@
 # ─── Computer Vision Pipeline ─────────────────────────────────────────────────
 mediapipe
+opencv-python          # cv2: video decode + frame iteration
 torch
 easyocr
 scenedetect[opencv]
