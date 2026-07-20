@@ -142,7 +142,54 @@ The UI will be available at **http://localhost:5173**
 
 ```bash
 # From the repo root, with the virtual environment activated:
-pytest tests/ -v
+
+# Fast tests only (no network calls, no heavy ML):
+pytest tests/ fusion-pipeline/segmentation/ -m "not network" -v
+
+# All tests including real YouTube download:
+pytest -m network -v
+```
+
+---
+
+## Running the Pipeline
+
+> **Important:** The download step must run **before** `extract_keypoints.py`.
+> `extract_keypoints.py` only accepts a local file path — it does not fetch URLs.
+
+### From a YouTube URL (two-step flow)
+
+```bash
+# Step 1 — Download the video (saves to shared/test-videos/<video_id>.mp4)
+python fusion-pipeline/segmentation/download_video.py "https://youtu.be/jNQXAC9IVRw" --out shared/test-videos
+
+# Step 2 — Extract pose keypoints from the downloaded file
+python cv-pipeline/keypoints/extract_keypoints.py shared/test-videos/jNQXAC9IVRw.mp4 --out output.json
+```
+
+### From a local video file
+
+```bash
+# Skip the download step — go straight to extraction:
+python cv-pipeline/keypoints/extract_keypoints.py path/to/workout.mp4 --out output.json
+```
+
+### CLI options
+
+```
+download_video.py URL [--out DIR] [--max-height PX] [--overwrite]
+
+  URL            YouTube video URL (long or short form)
+  --out DIR      Output directory (default: shared/test-videos)
+  --max-height   Cap resolution — 360, 480, 720 (default), 1080
+  --overwrite    Re-download even if file already exists
+
+extract_keypoints.py VIDEO [--out FILE] [--max-frames N] [--model-complexity 0|1|2]
+
+  VIDEO              Path to local .mp4 file
+  --out FILE         Output JSON path
+  --max-frames N     Stop after N frames (fast preview)
+  --model-complexity 0=Lite  1=Full (default)  2=Heavy
 ```
 
 ---
@@ -164,16 +211,17 @@ All pipeline stages communicate via the `Segment` schema defined in [`shared/sch
 
 ## Tech Stack
 
-| Layer      | Technology                        |
-|------------|-----------------------------------|
-| Pose       | MediaPipe                         |
-| Classifier | PyTorch (LSTM / 1D-CNN)           |
-| OCR        | EasyOCR                           |
-| Segmentation | SceneDetect                     |
-| Backend    | FastAPI + Uvicorn                 |
-| Frontend   | React + Vite                      |
-| Testing    | pytest + httpx                    |
-| CI         | GitHub Actions                    |
+| Layer        | Technology                        |
+|--------------|-----------------------------------|
+| Download     | yt-dlp                            |
+| Pose         | MediaPipe (Tasks API)             |
+| Classifier   | PyTorch (LSTM / 1D-CNN)           |
+| OCR          | EasyOCR                           |
+| Segmentation | SceneDetect                       |
+| Backend      | FastAPI + Uvicorn                 |
+| Frontend     | React + Vite                      |
+| Testing      | pytest + httpx                    |
+| CI           | GitHub Actions                    |
 
 ---
 

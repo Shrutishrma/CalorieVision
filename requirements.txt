@@ -1,5 +1,7 @@
 # ─── Computer Vision Pipeline ─────────────────────────────────────────────────
 mediapipe
+opencv-python          # cv2: video decode + frame iteration
+yt-dlp                 # YouTube (and 1000+ sites) video downloader
 torch
 easyocr
 scenedetect[opencv]
