@@ -230,7 +230,7 @@ def main(argv: list[str] | None = None) -> None:
         out = Path(args.out)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(out_str, encoding="utf-8")
-        print(f"[calorie] Written → {out}")
+        print(f"[calorie] Written -> {out}")
     else:
         print(out_str)
 

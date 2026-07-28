@@ -22,10 +22,11 @@ from pydantic.dataclasses import dataclass
 
 class Source(str, Enum):
     """Which pipeline stage produced this segment."""
-    pose       = "pose"        # MediaPipe pose estimator
-    ocr        = "ocr"         # EasyOCR text detector
-    fused      = "fused"       # Fusion layer (merged / arbitrated)
-    scene_cut  = "scene_cut"   # PySceneDetect raw scene boundary
+    pose         = "pose"        # MediaPipe pose estimator
+    ocr          = "ocr"         # EasyOCR text detector
+    fused        = "fused"       # Fusion layer (merged / arbitrated)
+    scene_cut    = "scene_cut"   # PySceneDetect raw scene boundary
+    disagreement = "disagreement"# Pose and OCR predictions disagreed in fusion layer
 
 
 # ─── Unified Segment Schema (pydantic.dataclass) ─────────────────────────────

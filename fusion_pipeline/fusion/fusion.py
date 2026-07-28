@@ -50,30 +50,29 @@ from shared.schemas import Segment, Source
 
 # ─── Logging configuration ────────────────────────────────────────────────────
 
-_default_log_path = Path(__file__).resolve().parents[2] / "pipeline_run.log"
-LOG_FILE = Path(os.getenv("PIPELINE_LOG_PATH", str(_default_log_path)))
+# ─── Logging configuration ────────────────────────────────────────────────────
 
-_pipeline_logger: Optional[logging.Logger] = None
+_default_log_path = Path(__file__).resolve().parents[2] / "eval" / "failure_log.jsonl"
+LOG_FILE = Path(os.getenv("PIPELINE_LOG_PATH", str(_default_log_path)))
 
 
 def configure_logger(log_path: Path | None = None) -> logging.Logger:
     """
-    Return a logger writing to the given log_path.
-    If log_path is None, checks PIPELINE_LOG_PATH env var or defaults to pipeline_run.log.
-    Uses a per-path named logger so tests with temp log files get isolated
-    loggers and don't hold handles on each other's files.
+    Return a logger writing console messages to stderr and setting up log directory.
+    If log_path is None, checks PIPELINE_LOG_PATH env var or defaults to eval/failure_log.jsonl.
     """
     if log_path is None:
         log_path = Path(os.getenv("PIPELINE_LOG_PATH", str(_default_log_path)))
 
-    # Use path-based logger name so each temp file gets its own logger
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+
     logger_name = f"pipeline_run.{hash(str(log_path)) & 0xFFFFFF:06x}"
     logger = logging.getLogger(logger_name)
 
     if not logger.handlers:
         logger.setLevel(logging.DEBUG)
 
-        # File handler (append)
+        # File handler (append) for human-readable run logs
         fh = logging.FileHandler(str(log_path), mode="a", encoding="utf-8")
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s"))
@@ -86,6 +85,13 @@ def configure_logger(log_path: Path | None = None) -> logging.Logger:
         logger.addHandler(ch)
 
     return logger
+
+
+def _log_failure_jsonl(log_path: Path, event_dict: dict) -> None:
+    """Append a single JSONL event entry to log_path."""
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(log_path, "a", encoding="utf-8") as f:
+        f.write(json.dumps(event_dict) + "\n")
 
 
 # ─── Constants ────────────────────────────────────────────────────────────────
@@ -152,10 +158,12 @@ def fuse_segments(
 
     for pose_seg in sorted(pose_segments, key=lambda s: s.start_time):
         overlapping_ocr = _find_overlapping_ocr(pose_seg, ocr_segments)
+        ocr_majority = None
+        best_ocr = None
 
         # ── Determine outcome ─────────────────────────────────────────────────
         if not overlapping_ocr:
-            # No OCR signal → keep pose as-is but keep source=pose
+            # No OCR signal -> keep pose as-is but keep source=pose
             outcome_source    = Source.pose
             outcome_label     = pose_seg.label
             outcome_conf      = pose_seg.confidence
@@ -178,8 +186,8 @@ def fuse_segments(
                 )
                 outcome_tag    = "AGREE"
             else:
-                # DISAGREE — log, keep pose
-                outcome_source = Source.fused
+                # DISAGREE — log, keep pose, source=disagreement
+                outcome_source = Source.disagreement
                 outcome_label  = pose_seg.label
                 outcome_conf   = DISAGREE_CONF
                 outcome_tag    = "DISAGREE"
@@ -191,6 +199,22 @@ def fuse_segments(
                     ocr_majority, best_ocr.confidence,
                 )
 
+                _log_failure_jsonl(log_path, {
+                    "timestamp": datetime.now(tz=timezone.utc).isoformat(),
+                    "event_type": "DISAGREE",
+                    "segment_id": pose_seg.segment_id,
+                    "start_time": pose_seg.start_time,
+                    "end_time": pose_seg.end_time,
+                    "pose_label": pose_seg.label,
+                    "pose_confidence": pose_seg.confidence,
+                    "ocr_label": ocr_majority,
+                    "ocr_confidence": best_ocr.confidence if best_ocr else None,
+                    "fused_label": outcome_label,
+                    "fused_confidence": outcome_conf,
+                    "source": outcome_source.value,
+                    "outcome_tag": outcome_tag,
+                })
+
         # ── Low-confidence logging ────────────────────────────────────────────
         if outcome_conf < LOW_CONF_THRESHOLD:
             logger.warning(
@@ -199,6 +223,23 @@ def fuse_segments(
                 outcome_label, outcome_conf,
                 outcome_source.value, outcome_tag,
             )
+
+            if outcome_tag != "DISAGREE":
+                _log_failure_jsonl(log_path, {
+                    "timestamp": datetime.now(tz=timezone.utc).isoformat(),
+                    "event_type": "LOW_CONF",
+                    "segment_id": pose_seg.segment_id,
+                    "start_time": pose_seg.start_time,
+                    "end_time": pose_seg.end_time,
+                    "pose_label": pose_seg.label,
+                    "pose_confidence": pose_seg.confidence,
+                    "ocr_label": ocr_majority,
+                    "ocr_confidence": best_ocr.confidence if best_ocr else None,
+                    "fused_label": outcome_label,
+                    "fused_confidence": outcome_conf,
+                    "source": outcome_source.value,
+                    "outcome_tag": outcome_tag,
+                })
 
         # ── Build fused segment ───────────────────────────────────────────────
         fused_seg = Segment(
@@ -262,7 +303,7 @@ def main(argv: list[str] | None = None) -> None:
         out = Path(args.out)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json_str, encoding="utf-8")
-        print(f"[fusion] Written → {out}  ({len(fused)} segments)")
+        print(f"[fusion] Written -> {out}  ({len(fused)} segments)")
     else:
         print(json_str)
 

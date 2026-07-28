@@ -130,7 +130,7 @@ def detect_scenes(
         # Guard: end must be strictly after start
         if end_sec <= start_sec:
             logger.warning(
-                "[scene_detect] Skipping zero-length scene %s (%.3f → %.3f)",
+                "[scene_detect] Skipping zero-length scene %s (%.3f -> %.3f)",
                 segment_id, start_sec, end_sec,
             )
             continue
@@ -195,7 +195,7 @@ def main(argv: list[str] | None = None) -> None:
         out_path = Path(args.out)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json_str, encoding="utf-8")
-        print(f"[scene_detect] {len(segments)} scene(s) written → {out_path}")
+        print(f"[scene_detect] {len(segments)} scene(s) written -> {out_path}")
     else:
         print(json_str)
 

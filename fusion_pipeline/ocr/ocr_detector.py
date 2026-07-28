@@ -247,7 +247,7 @@ def main(argv: list[str] | None = None) -> None:
         out_path = Path(args.out)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json_str, encoding="utf-8")
-        print(f"[ocr_detector] {len(segments)} OCR segment(s) written → {out_path}")
+        print(f"[ocr_detector] {len(segments)} OCR segment(s) written -> {out_path}")
     else:
         print(json_str)
 

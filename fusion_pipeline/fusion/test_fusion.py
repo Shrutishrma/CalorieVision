@@ -155,6 +155,12 @@ class TestFuseSegments:
         result = self._run(pose, ocr)
         assert result[0].label == "squat"
 
+    def test_disagree_sets_source_disagreement(self):
+        pose = [_pose("squat",  0, 10, conf=0.8)]
+        ocr  = [_ocr("pushup", 2,  8, conf=0.75)]
+        result = self._run(pose, ocr)
+        assert result[0].source == Source.disagreement
+
     def test_disagree_sets_confidence_050(self):
         pose = [_pose("squat",  0, 10, conf=0.8)]
         ocr  = [_ocr("pushup", 2,  8, conf=0.75)]
@@ -162,39 +168,40 @@ class TestFuseSegments:
         assert result[0].confidence == pytest.approx(0.5)
 
     def test_disagree_logs_to_file(self):
-        """Disagreements must appear in the log file."""
-        import logging
+        """Disagreements must appear in the log file as JSONL."""
+        import json
         pose = [_pose("squat",  0, 10, conf=0.8)]
         ocr  = [_ocr("pushup", 2,  8, conf=0.75)]
-        with tempfile.NamedTemporaryFile(suffix=".log", delete=False, mode="w") as f:
+        with tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False, mode="w") as f:
             log_path = Path(f.name)
         try:
             fuse_segments(pose, ocr, log_path=log_path)
-            # Flush + close the logger's file handler before reading
-            logger_name = f"pipeline_run.{hash(str(log_path)) & 0xFFFFFF:06x}"
-            lg = logging.getLogger(logger_name)
-            for h in lg.handlers[:]:
-                h.flush(); h.close(); lg.removeHandler(h)
             log_content = log_path.read_text(encoding="utf-8")
             assert "DISAGREE" in log_content
+            # Verify JSONL lines can be parsed as JSON
+            lines = [json.loads(line) for line in log_content.strip().splitlines() if line.strip() and line.strip().startswith("{")]
+            assert len(lines) >= 1
+            disagree_entry = [l for l in lines if l.get("event_type") == "DISAGREE"][0]
+            assert disagree_entry["pose_label"] == "squat"
+            assert disagree_entry["ocr_label"] == "pushup"
+            assert disagree_entry["source"] == "disagreement"
         finally:
             log_path.unlink(missing_ok=True)
 
     def test_low_conf_logs_to_file(self):
         """Low-confidence pose predictions must be logged."""
-        import logging
+        import json
         pose = [_pose("squat", 0, 5, conf=0.3)]  # below LOW_CONF_THRESHOLD=0.5
-        with tempfile.NamedTemporaryFile(suffix=".log", delete=False, mode="w") as f:
+        with tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False, mode="w") as f:
             log_path = Path(f.name)
         try:
             fuse_segments(pose, [], log_path=log_path)
-            # Flush + close the logger's file handler before reading
-            logger_name = f"pipeline_run.{hash(str(log_path)) & 0xFFFFFF:06x}"
-            lg = logging.getLogger(logger_name)
-            for h in lg.handlers[:]:
-                h.flush(); h.close(); lg.removeHandler(h)
             log_content = log_path.read_text(encoding="utf-8")
             assert "LOW_CONF" in log_content
+            lines = [json.loads(line) for line in log_content.strip().splitlines() if line.strip() and line.strip().startswith("{")]
+            assert len(lines) >= 1
+            low_conf_entry = [l for l in lines if l.get("event_type") == "LOW_CONF"][0]
+            assert low_conf_entry["fused_confidence"] == 0.3
         finally:
             log_path.unlink(missing_ok=True)
 
