@@ -3,10 +3,9 @@
 > **Section 7 — Early Pipeline Validation**
 > Do not leave smoke testing to Week 5.
 
-**Generated:** 2026-07-21T07:26:05Z  
-**Max frames per video:** 150  
+**Generated:** 2026-07-28T07:54:37.159670+00:00  
+**Max frames per video:** 60  
 **Stages tested:** Download → Keypoint Extraction → Scene Detection  
-**Run environment:** Windows, Python 3.13, yt-dlp (no ffmpeg), no Deno JS runtime  
 
 ---
 
@@ -14,108 +13,148 @@
 
 | Video | Tags | Download | Keypoints | Detection Rate | Scenes | Notes |
 |-------|------|----------|-----------|----------------|--------|-------|
-| jNQXAC9IVRw | single-person, outdoor, short | ❌ | — | — | — | ffmpeg missing — yt-dlp cannot merge formats |
-| K-CrEL0DxMQ | single-person, indoor, exercise | ❌ | — | — | — | Video unavailable / region-blocked |
-| B-MkMGGpHig | multi-person, gym | ❌ | — | — | — | Video unavailable / region-blocked |
-
-> ⚠️ **None of the pipeline stages past download could run** because all three download attempts failed. The root causes are documented below.
+| jNQXAC9IVRw | camera:frontal | ✅ | ❌ | — | — ❌ | ❌ Keypoint extraction failed (rc=1); ❌ Scene detection failed (rc=1) |
+| IODxDxX7oi4 | camera:frontal | ✅ | ❌ | — | — ❌ | ❌ Keypoint extraction failed (rc=1); ❌ Scene detection failed (rc=1) |
+| aclHkVaku9U | camera:angled | ✅ | ❌ | — | — ❌ | ❌ Keypoint extraction failed (rc=1); ❌ Scene detection failed (rc=None) |
 
 ---
 
 ## Per-Video Detail
 
-### `jNQXAC9IVRw` — Me at the zoo (CC-BY, ~19 s)
+### `jNQXAC9IVRw` — Me at the zoo — single person, outdoor, stable, ~19 s (CC-BY)
 
-**Tags:** single-person, outdoor, short, stable-camera  
+**Tags:** camera:frontal  
+**Local file:** `C:\Users\shrut\OneDrive\Desktop\CV PROJECT\CalorieVision\shared\test-videos\jNQXAC9IVRw.mp4`  
 
 #### Download
-- **Status:** ❌ (rc=1)
-- **Root cause:** `ffmpeg` is not installed on this machine. yt-dlp downloads video and audio as separate streams and needs `ffmpeg` to merge them into a single `.mp4`.
-- **Raw error:**
-  ```
-  ERROR: You have requested merging of multiple formats but ffmpeg is not installed.
-  ```
-- **Secondary issue:** yt-dlp warns that YouTube extraction without a JS runtime (e.g. Deno) is deprecated. Some formats may be missing even after ffmpeg is added.
+- **Status:** ✅ (rc=0)  
+- File size: 0.51 MB  
 
-#### Fix
-1. Install ffmpeg: `winget install ffmpeg` or download from https://ffmpeg.org/
-2. Install Deno for the JS runtime warning: `winget install Deno.Deno`
+#### Keypoint Extraction
+- **Status:** ❌ (rc=1)  
+- stdout: ```
+[CalorieVision] Extracting keypoints from: C:\Users\shrut\OneDrive\Desktop\CV PROJECT\CalorieVision\shared\test-videos\jNQXAC9IVRw.mp4
+[CalorieVision] Model complexity: 0
+[CalorieVision] Processed 60 frames
+[CalorieVision] Pose detected in 60/60 frames (100.0%)
+```
+- stderr: ```
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shrut\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 29: character maps to <undefined>
+```
+
+#### Scene Detection
+- **Status:** ❌ (rc=1)  
+- stderr: ```
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shrut\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 34: character maps to <undefined>
+```
+
+#### Findings / Anomalies
+- ❌ Keypoint extraction failed (rc=1)  
+- ❌ Scene detection failed (rc=1)  
 
 ---
 
-### `K-CrEL0DxMQ` — Squat form tutorial
+### `IODxDxX7oi4` — The Perfect Push Up — single person, indoor, exercise-focused (verified public)
 
-**Tags:** single-person, indoor, exercise, tutorial  
+**Tags:** camera:frontal  
+**Local file:** `C:\Users\shrut\OneDrive\Desktop\CV PROJECT\CalorieVision\shared\test-videos\IODxDxX7oi4.mp4`  
 
 #### Download
-- **Status:** ❌ (rc=1)
-- **Root cause:** Video is unavailable (deleted, private, or region-restricted).
-- **Raw error:**
-  ```
-  ERROR: [youtube] K-CrEL0DxMQ: Video unavailable
-  ```
-- **Action required:** Replace this video ID in the smoke test catalogue with a verified public exercise tutorial.
+- **Status:** ✅ (rc=0)  
+- File size: 13.88 MB  
+
+#### Keypoint Extraction
+- **Status:** ❌ (rc=1)  
+- stdout: ```
+[CalorieVision] Extracting keypoints from: C:\Users\shrut\OneDrive\Desktop\CV PROJECT\CalorieVision\shared\test-videos\IODxDxX7oi4.mp4
+[CalorieVision] Model complexity: 0
+[CalorieVision] Processed 60 frames
+[CalorieVision] Pose detected in 50/60 frames (83.3%)
+```
+- stderr: ```
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shrut\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 29: character maps to <undefined>
+```
+
+#### Scene Detection
+- **Status:** ❌ (rc=1)  
+- stderr: ```
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shrut\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 35: character maps to <undefined>
+```
+
+#### Findings / Anomalies
+- ❌ Keypoint extraction failed (rc=1)  
+- ❌ Scene detection failed (rc=1)  
 
 ---
 
-### `B-MkMGGpHig` — Group workout / aerobics
+### `aclHkVaku9U` — Squats for Beginners — exercise instruction, indoor studio setting (verified public)
 
-**Tags:** multi-person, gym, dynamic-camera  
+**Tags:** camera:angled  
+**Local file:** `C:\Users\shrut\OneDrive\Desktop\CV PROJECT\CalorieVision\shared\test-videos\aclHkVaku9U.mp4`  
 
 #### Download
-- **Status:** ❌ (rc=1)
-- **Root cause:** Video is unavailable (same issue as above).
-- **Raw error:**
-  ```
-  ERROR: [youtube] B-MkMGGpHig: Video unavailable
-  ```
-- **Action required:** Replace with a verified public multi-person workout video.
+- **Status:** ✅ (rc=0)  
+- File size: 8.04 MB  
+
+#### Keypoint Extraction
+- **Status:** ❌ (rc=1)  
+- stdout: ```
+[CalorieVision] Extracting keypoints from: C:\Users\shrut\OneDrive\Desktop\CV PROJECT\CalorieVision\shared\test-videos\aclHkVaku9U.mp4
+[CalorieVision] Model complexity: 0
+[CalorieVision] Processed 60 frames
+[CalorieVision] Pose detected in 51/60 frames (85.0%)
+```
+- stderr: ```
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shrut\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 29: character maps to <undefined>
+```
+
+#### Scene Detection
+- **Status:** ❌ (rc=None)  
+- **Exception:** `TimeoutExpired (>120s)`  
+
+#### Findings / Anomalies
+- ❌ Keypoint extraction failed (rc=1)  
+- ❌ Scene detection failed (rc=None)  
 
 ---
 
 ## Open Issues
 
-| Priority | Issue | Action |
-|----------|-------|--------|
-| 🔴 BLOCKER | `ffmpeg` not installed — yt-dlp cannot merge video/audio streams | `winget install ffmpeg` |
-| 🔴 BLOCKER | No JS runtime (Deno/Node) — yt-dlp YouTube extraction partially degraded | `winget install Deno.Deno` |
-| 🟡 MEDIUM | 2 of 3 test video IDs are unavailable/region-blocked | Replace K-CrEL0DxMQ and B-MkMGGpHig in `smoke_test.py` catalogue |
-| 🟡 MEDIUM | Keypoint/scene stages completely untested on real footage | Blocked by ffmpeg fix above |
-| 🟢 LOW | MediaPipe multi-person limitation: `num_poses=1` in `extract_keypoints.py` | Multi-person testing deferred; increase `num_poses` when running group videos |
+| Video | Issue |
+|-------|-------|
+| jNQXAC9IVRw | ❌ Keypoint extraction failed (rc=1) |
+| jNQXAC9IVRw | ❌ Scene detection failed (rc=1) |
+| IODxDxX7oi4 | ❌ Keypoint extraction failed (rc=1) |
+| IODxDxX7oi4 | ❌ Scene detection failed (rc=1) |
+| aclHkVaku9U | ❌ Keypoint extraction failed (rc=1) |
+| aclHkVaku9U | ❌ Scene detection failed (rc=None) |
 
 ---
 
-## Pipeline Stages Not Yet Reachable
+## Next Steps
 
-Because all downloads failed, the following stages have NOT been validated on real footage:
-
-- **Keypoint extraction** — known to work on synthetic video (see `test_keypoints.py`); real-world pose detection rate unknown
-- **Scene detection** — known to work on synthetic video (see `test_scene_detect.py`); effectiveness on real workout cuts unknown
-- **OCR detection** — untested end-to-end; model weights not yet downloaded
-
----
-
-## Next Steps (Ordered by Priority)
-
-- [ ] **Install ffmpeg** (unblocks everything else)
-- [ ] **Replace unavailable video IDs** in `smoke_test.py` with verified public videos
-- [ ] Re-run `python smoke_test.py --skip-download` after fixing the above
-- [ ] Capture actual pose detection rates for single-person vs. multi-person videos
-- [ ] Measure scene cut counts on real exercise footage and tune `threshold` if needed
-- [ ] Run OCR stage on a video with on-screen rep counters and log detection quality
-- [ ] Document specific timestamps where the pipeline fails for Section 7 regression tracking
-
----
-
-## Environment Details
-
-```
-OS        : Windows 11
-Python    : 3.13.0
-yt-dlp    : installed (no ffmpeg, no Deno JS runtime)
-mediapipe : installed
-scenedetect : 0.7 (installed during this sprint)
-scikit-learn : 1.9.0 (installed during this sprint)
-easyocr   : installed (weights not yet downloaded)
-ffmpeg    : NOT INSTALLED ← primary blocker
-```
+- [ ] Review detection rates — low rates (<30%) suggest camera angle or occlusion issues
+- [ ] Check scene-cut counts — 0 cuts on exercise videos might mean threshold needs lowering
+- [ ] Attempt OCR stage on same videos once `ocr_detector.py` models are downloaded
+- [ ] Expand test set to include multi-person and angled-camera videos
+- [ ] Document specific timestamps where the pipeline fails for future regression tracking

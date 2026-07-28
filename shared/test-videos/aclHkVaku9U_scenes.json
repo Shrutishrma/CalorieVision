@@ -1,0 +1,70 @@
+{
+  "video_path": "C:\\Users\\shrut\\OneDrive\\Desktop\\CV PROJECT\\CalorieVision\\shared\\test-videos\\aclHkVaku9U.mp4",
+  "total_scenes": 8,
+  "segments": [
+    {
+      "segment_id": "scene_0000",
+      "start_time": 0.0,
+      "end_time": 42.917875,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0001",
+      "start_time": 42.917875,
+      "end_time": 52.719333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0002",
+      "start_time": 52.719333,
+      "end_time": 62.645917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0003",
+      "start_time": 62.645917,
+      "end_time": 70.195125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0004",
+      "start_time": 70.195125,
+      "end_time": 81.372958,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0005",
+      "start_time": 81.372958,
+      "end_time": 88.671917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0006",
+      "start_time": 88.671917,
+      "end_time": 95.095,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0007",
+      "start_time": 95.095,
+      "end_time": 111.778333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    }
+  ]
+}

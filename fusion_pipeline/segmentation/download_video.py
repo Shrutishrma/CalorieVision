@@ -66,6 +66,11 @@ def _check_ffmpeg() -> None:
     RuntimeError
         With platform-specific installation instructions if ffmpeg is missing.
     """
+    import os
+    venv_bin = Path(sys.executable).parent
+    if (venv_bin / "ffmpeg.exe").exists() or (venv_bin / "ffmpeg").exists():
+        os.environ["PATH"] = f"{str(venv_bin)}{os.pathsep}{os.environ.get('PATH', '')}"
+
     try:
         _subprocess.run(
             ["ffmpeg", "-version"],
@@ -203,9 +208,9 @@ def download_youtube_video(
         "outtmpl":          str(out_dir / f"{video_id}.%(ext)s"),
         "merge_output_format": "mp4",
         "quiet":            True,        # suppress verbose yt-dlp output
-        "no_warnings":      False,       # keep warnings visible
         "noplaylist":       True,        # never download a whole playlist
-        "socket_timeout":   30,          # seconds — fail fast on stale connections
+        "nocheckcertificate": True,       # prevent Windows Python SSL verification failures
+        "socket_timeout":   30,          # seconds - fail fast on stale connections
         "retries":          3,
         "fragment_retries": 3,
         "postprocessors": [
@@ -217,7 +222,7 @@ def download_youtube_video(
         ],
     }
 
-    print(f"[CalorieVision] Downloading video ID={video_id} (max {max_height}p) …")
+    print(f"[CalorieVision] Downloading video ID={video_id} (max {max_height}p)...")
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -246,7 +251,7 @@ def download_youtube_video(
             )
 
     size_mb = out_path.stat().st_size / 1_048_576
-    print(f"[CalorieVision] Saved → {out_path}  ({size_mb:.1f} MB)")
+    print(f"[CalorieVision] Saved -> {out_path}  ({size_mb:.1f} MB)")
     return str(out_path)
 
 

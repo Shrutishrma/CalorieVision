@@ -1,0 +1,126 @@
+{
+  "video_path": "C:\\Users\\shrut\\OneDrive\\Desktop\\CV PROJECT\\CalorieVision\\shared\\test-videos\\IODxDxX7oi4.mp4",
+  "total_scenes": 15,
+  "segments": [
+    {
+      "segment_id": "scene_0000",
+      "start_time": 0.0,
+      "end_time": 28.862167,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0001",
+      "start_time": 28.862167,
+      "end_time": 46.3463,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0002",
+      "start_time": 46.3463,
+      "end_time": 52.786067,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0003",
+      "start_time": 52.786067,
+      "end_time": 57.6576,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0004",
+      "start_time": 57.6576,
+      "end_time": 60.593867,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0005",
+      "start_time": 60.593867,
+      "end_time": 68.5685,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0006",
+      "start_time": 68.5685,
+      "end_time": 91.024267,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0007",
+      "start_time": 91.024267,
+      "end_time": 123.490033,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0008",
+      "start_time": 123.490033,
+      "end_time": 140.707233,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0009",
+      "start_time": 140.707233,
+      "end_time": 143.4433,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0010",
+      "start_time": 143.4433,
+      "end_time": 155.221733,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0011",
+      "start_time": 155.221733,
+      "end_time": 172.505667,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0012",
+      "start_time": 172.505667,
+      "end_time": 182.849333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0013",
+      "start_time": 182.849333,
+      "end_time": 193.026167,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0014",
+      "start_time": 193.026167,
+      "end_time": 217.217,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    }
+  ]
+}
