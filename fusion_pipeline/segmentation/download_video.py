@@ -1,5 +1,5 @@
 """
-fusion-pipeline/segmentation/download_video.py
+fusion_pipeline/segmentation/download_video.py
 ────────────────────────────────────────────────────────────────────────────────
 Stage 0 of the CalorieVision pipeline: YouTube (and generic URL) video download.
 
@@ -49,6 +49,42 @@ class NetworkError(DownloadError):
     """Raised on transient network failures."""
 
 
+# ─── ffmpeg check ──────────────────────────────────────────────────────────────
+
+import subprocess as _subprocess
+
+
+def _check_ffmpeg() -> None:
+    """
+    Verify that ffmpeg is installed and available on PATH.
+
+    yt-dlp downloads video and audio as separate streams and requires ffmpeg
+    to merge them into a single .mp4.  Without it, downloads silently fail.
+
+    Raises
+    ------
+    RuntimeError
+        With platform-specific installation instructions if ffmpeg is missing.
+    """
+    try:
+        _subprocess.run(
+            ["ffmpeg", "-version"],
+            stdout=_subprocess.DEVNULL,
+            stderr=_subprocess.DEVNULL,
+            check=True,
+        )
+    except (FileNotFoundError, _subprocess.CalledProcessError):
+        raise RuntimeError(
+            "ffmpeg is not installed or not found on PATH.\n"
+            "yt-dlp requires ffmpeg to merge video and audio streams.\n\n"
+            "Install instructions:\n"
+            "  Windows : winget install ffmpeg\n"
+            "  macOS   : brew install ffmpeg\n"
+            "  Linux   : sudo apt install ffmpeg\n\n"
+            "After installing, open a NEW terminal and retry."
+        )
+
+
 # ─── URL validation ───────────────────────────────────────────────────────────
 
 # Matches both youtube.com/watch?v= and youtu.be/ short links, plus Shorts.
@@ -83,6 +119,7 @@ def download_youtube_video(
 ) -> str:
     """
     Download a YouTube video and return its local file path.
+    (Also available as `download_video` alias).
 
     Parameters
     ----------
@@ -142,6 +179,9 @@ def download_youtube_video(
     if out_path.exists() and not overwrite:
         print(f"[CalorieVision] Cache hit — using existing file: {out_path}")
         return str(out_path)
+
+    # ── Check system dependency (only needed for actual download) ────────────
+    _check_ffmpeg()
 
     # ── yt-dlp options ────────────────────────────────────────────────────────
     # Format selector explanation:
@@ -293,3 +333,6 @@ def main(argv: list[str] | None = None) -> None:
 
 if __name__ == "__main__":
     main()
+
+# Clean alias matching real app function convention
+download_video = download_youtube_video

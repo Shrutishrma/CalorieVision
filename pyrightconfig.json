@@ -1,0 +1,23 @@
+{
+  "pythonVersion": "3.13",
+  "pythonPlatform": "Windows",
+  "venvPath": ".",
+  "venv": ".venv",
+  "typeCheckingMode": "basic",
+  // ── Extra search roots ──────────────────────────────────────────────────────
+  // Adding the repo root lets Pylance resolve `shared`, `app`, `cv_pipeline`,
+  // and `fusion_pipeline` directly — no path aliases needed since directories
+  // now use underscores and are valid Python package names.
+  "extraPaths": [
+    "."
+  ],
+  // ── Exclusions ──────────────────────────────────────────────────────────────
+  "exclude": [
+    ".venv",
+    "app/frontend/node_modules",
+    "**/__pycache__"
+  ],
+  // ── Diagnostic rules ────────────────────────────────────────────────────────
+  "reportMissingImports": true,
+  "reportMissingModuleSource": false
+}

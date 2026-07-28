@@ -59,10 +59,10 @@ shared/test-videos/*.mov
 shared/test-videos/*.mkv
 
 # Trained model weights
-cv-pipeline/models/*.pt
-cv-pipeline/models/*.pth
-cv-pipeline/models/*.onnx
-cv-pipeline/models/*.task         # MediaPipe pre-built task bundles (large binary)
+cv_pipeline/models/*.pt
+cv_pipeline/models/*.pth
+cv_pipeline/models/*.onnx
+cv_pipeline/models/*.task         # MediaPipe pre-built task bundles (large binary)
 
 # MediaPipe / EasyOCR caches
 .mediapipe/

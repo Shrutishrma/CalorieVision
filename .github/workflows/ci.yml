@@ -24,13 +24,46 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # Lightweight deps for CI (skip torch/mediapipe/easyocr — too heavy)
-          pip install fastapi uvicorn pydantic httpx pytest pytest-asyncio yt-dlp opencv-python
+          # Lightweight deps for CI (skip torch/mediapipe/easyocr — too heavy for CI runners).
+          # scikit-learn and scenedetect are included because cv_pipeline/eval/ and
+          # fusion_pipeline/segmentation/ tests run in CI.
+          pip install \
+            fastapi uvicorn pydantic httpx \
+            pytest pytest-asyncio \
+            yt-dlp opencv-python \
+            scikit-learn numpy \
+            "scenedetect[opencv]"
 
       - name: Run pytest (skip network + real_video tests)
         run: |
           pytest \
             tests/ \
-            fusion-pipeline/segmentation/ \
+            cv_pipeline/eval/ \
+            cv_pipeline/motion/ \
+            fusion_pipeline/segmentation/ \
+            fusion_pipeline/ocr/ \
+            fusion_pipeline/fusion/ \
             -v --tb=short \
             -m "not network and not real_video"
+
+  frontend-build:
+    name: Frontend Build Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app/frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build frontend
+        run: npm run build

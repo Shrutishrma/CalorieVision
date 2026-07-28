@@ -37,7 +37,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ─── Routes ───────────────────────────────────────────────────────────────────
+from shared.schemas import Segment, SegmentListResponse
 
 @app.get(
     "/health",
@@ -53,3 +53,17 @@ async def health() -> dict[str, str]:
     Suitable for use with Docker HEALTHCHECK, Kubernetes probes, or CI smoke tests.
     """
     return {"status": "ok"}
+
+
+@app.post(
+    "/validate-segments",
+    response_model=SegmentListResponse,
+    tags=["validation"],
+    summary="Validate segments schema directly via FastAPI",
+)
+async def validate_segments(segments: list[Segment]) -> SegmentListResponse:
+    """
+    Accepts a list of Segment objects directly in request body, validating them
+    using Pydantic dataclass validation, and returns a SegmentListResponse.
+    """
+    return SegmentListResponse(segments=segments, total=len(segments))

@@ -1,15 +1,41 @@
+# CalorieVision — Python dependencies
+# ─────────────────────────────────────────────────────────────────────────────
+# Install with:   pip install -r requirements.txt
+#
+# SYSTEM DEPENDENCIES (not pip — install these first):
+#   ffmpeg : required by yt-dlp to merge video+audio streams
+#            Windows: winget install ffmpeg   OR   https://ffmpeg.org/download.html
+#            macOS:   brew install ffmpeg
+#            Linux:   sudo apt install ffmpeg
+#   (optional) Deno: prevents yt-dlp JS-extractor deprecation warning
+#              Windows: winget install Deno.Deno
+#
+# PyTorch note: `torch` here installs the CPU-only wheel (fastest, ~250 MB).
+# For CUDA support, replace the torch line with the appropriate wheel URL from
+# https://pytorch.org/get-started/locally/ and run:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu121
+# ─────────────────────────────────────────────────────────────────────────────
+
 # ─── Computer Vision Pipeline ─────────────────────────────────────────────────
 mediapipe
 opencv-python          # cv2: video decode + frame iteration
 yt-dlp                 # YouTube (and 1000+ sites) video downloader
-torch
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch                  # CPU-only; see note above for CUDA
 easyocr
 scenedetect[opencv]
+
+# ─── ML / Baselines ────────────────────────────────────────────────────────────
+scikit-learn           # k-NN baseline classifier, metrics
+numpy                  # array ops used by baselines
 
 # ─── API / Serving ─────────────────────────────────────────────────────────────
 fastapi
 uvicorn[standard]
 pydantic>=2.0
+
+# ─── Config ────────────────────────────────────────────────────────────────────
+python-dotenv          # load .env files for local config (API keys, paths)
 
 # ─── Testing ───────────────────────────────────────────────────────────────────
 pytest

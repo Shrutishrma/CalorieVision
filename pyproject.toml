@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "setuptools-scm"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "calorievision"
+version = "0.1.0"
+description = "AI-powered exercise recognition and calorie estimation from video."
+requires-python = ">=3.11"
+
+# Runtime deps are tracked in requirements.txt; this file is for editable installs.
+# Keep the two in sync manually.
+dependencies = []
+
+[tool.setuptools.packages.find]
+# Directories now use underscores → normal Python package discovery works.
+where = ["."]
+include = ["shared*", "app*", "cv_pipeline*", "fusion_pipeline*"]
+
+[tool.pyright]
+# Keep in sync with pyrightconfig.json at repo root (the JSON file wins for IDE).
+pythonVersion = "3.11"
+venvPath = "."
+venv = ".venv"

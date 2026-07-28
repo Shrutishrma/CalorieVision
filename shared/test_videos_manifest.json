@@ -1,0 +1,35 @@
+[
+  {
+    "youtube_id": "jNQXAC9IVRw",
+    "url": "https://youtu.be/jNQXAC9IVRw",
+    "label": "me_at_the_zoo_stable",
+    "description": "Me at the zoo — single person, outdoor, stable, ~19 s (CC-BY)",
+    "tags": {
+      "camera_angle": "frontal",
+      "caption_present": false,
+      "num_subjects": 1
+    }
+  },
+  {
+    "youtube_id": "IODxDxX7oi4",
+    "url": "https://youtu.be/IODxDxX7oi4",
+    "label": "squat_tutorial_frontal",
+    "description": "Beginner squat tutorial — single person, indoor, exercise-focused (verified public)",
+    "tags": {
+      "camera_angle": "frontal",
+      "caption_present": false,
+      "num_subjects": 1
+    }
+  },
+  {
+    "youtube_id": "8-xBUKpSrHQ",
+    "url": "https://youtu.be/8-xBUKpSrHQ",
+    "label": "full_body_workout_gym",
+    "description": "Full body workout — multiple exercises, indoor gym setting (verified public)",
+    "tags": {
+      "camera_angle": "angled",
+      "caption_present": false,
+      "num_subjects": 1
+    }
+  }
+]

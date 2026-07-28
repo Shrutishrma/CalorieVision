@@ -1,20 +1,17 @@
 """
 tests/test_placeholder.py
 ─────────────────────────────────────────────────────────────────────────────
-Placeholder test suite for CalorieVision CI bootstrap.
-
-Includes:
-  • A trivial sanity-check that always passes (CI smoke test)
-  • Schema contract tests for shared/schemas.py
+Test suite for CalorieVision schema contracts and FastAPI backend routes.
 """
 
 import sys
 import os
+import pytest
 
 # Make sure the repo root is on sys.path so `shared` is importable
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from shared.schemas import Segment, Source
+from shared.schemas import Segment, SegmentListResponse, Source
 
 
 # ─── Sanity ───────────────────────────────────────────────────────────────────
@@ -24,7 +21,7 @@ def test_placeholder_always_passes():
     assert True
 
 
-# ─── Schema: Segment dataclass ────────────────────────────────────────────────
+# ─── Schema: Unified Segment (pydantic.dataclasses) ──────────────────────────
 
 def test_segment_creation():
     seg = Segment(
@@ -44,6 +41,7 @@ def test_segment_source_enum_values():
     assert Source.pose.value == "pose"
     assert Source.ocr.value == "ocr"
     assert Source.fused.value == "fused"
+    assert Source.scene_cut.value == "scene_cut"
 
 
 def test_segment_serialise_roundtrip():
@@ -59,42 +57,31 @@ def test_segment_serialise_roundtrip():
     assert restored == original
 
 
-# ─── Schema: Pydantic SegmentModel ────────────────────────────────────────────
-
-def test_pydantic_model_available():
-    from shared.schemas import SegmentModel
-    assert SegmentModel is not None
-
-
-def test_pydantic_model_creation():
-    from shared.schemas import SegmentModel
-    model = SegmentModel(
-        segment_id="seg_0003",
-        start_time=2.0,
-        end_time=6.0,
-        label="lunge",
-        confidence=0.78,
-        source=Source.ocr,
-    )
-    assert model.label == "lunge"
-    assert model.duration == 4.0
-
-
-def test_pydantic_model_end_before_start_raises():
-    from shared.schemas import SegmentModel
-    import pytest
-    with pytest.raises(Exception):
-        SegmentModel(
+def test_segment_end_before_start_raises():
+    with pytest.raises(ValueError, match="end_time must be greater than start_time"):
+        Segment(
             segment_id="seg_bad",
             start_time=10.0,
-            end_time=5.0,   # end < start → should raise
+            end_time=5.0,   # end < start → should raise ValueError
             label="invalid",
             confidence=0.5,
             source=Source.pose,
         )
 
 
-# ─── FastAPI health endpoint ───────────────────────────────────────────────────
+def test_segment_confidence_bounds():
+    with pytest.raises(Exception):
+        Segment(
+            segment_id="seg_bad_conf",
+            start_time=0.0,
+            end_time=1.0,
+            label="squat",
+            confidence=1.5,  # out of bounds [0.0, 1.0]
+            source=Source.pose,
+        )
+
+
+# ─── FastAPI endpoints ─────────────────────────────────────────────────────────
 
 def test_health_endpoint():
     """Smoke-test the /health endpoint without a live server."""
@@ -105,3 +92,27 @@ def test_health_endpoint():
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+
+
+def test_validate_segments_endpoint():
+    """Verify FastAPI request/response validation directly using Segment class."""
+    from fastapi.testclient import TestClient
+    from app.backend.main import app
+
+    client = TestClient(app)
+    payload = [
+        {
+            "segment_id": "seg_001",
+            "start_time": 0.0,
+            "end_time": 10.0,
+            "label": "squat",
+            "confidence": 0.95,
+            "source": "pose"
+        }
+    ]
+    response = client.post("/validate-segments", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total"] == 1
+    assert data["segments"][0]["label"] == "squat"
+    assert data["segments"][0]["source"] == "pose"

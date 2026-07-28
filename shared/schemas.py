@@ -2,39 +2,39 @@
 shared/schemas.py
 ─────────────────────────────────────────────────────────────────────────────
 Defines the canonical data contract passed between every stage of the
-CalorieVision pipeline.
+CalorieVision pipeline and FastAPI serialization.
 
-Two representations are provided:
-  • Segment        — plain Python dataclass (use inside pipeline code)
-  • SegmentModel   — Pydantic BaseModel (use in FastAPI request/response bodies)
-
-Both expose the same fields so conversion is trivial:
-    model = SegmentModel(**asdict(segment))
-    segment = Segment(**model.dict())
+Using `pydantic.dataclasses.dataclass`, `Segment` acts as both a fast, normal
+Python dataclass for pipeline internals and a fully validated Pydantic type
+for FastAPI request/response bodies.
 """
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
 from enum import Enum
 from typing import List
+from pydantic import Field, BaseModel
+from pydantic.dataclasses import dataclass
 
 
 # ─── Source enum ─────────────────────────────────────────────────────────────
 
 class Source(str, Enum):
     """Which pipeline stage produced this segment."""
-    pose  = "pose"   # MediaPipe pose estimator
-    ocr   = "ocr"    # EasyOCR text detector
-    fused = "fused"  # Fusion layer (merged / arbitrated)
+    pose       = "pose"        # MediaPipe pose estimator
+    ocr        = "ocr"         # EasyOCR text detector
+    fused      = "fused"       # Fusion layer (merged / arbitrated)
+    scene_cut  = "scene_cut"   # PySceneDetect raw scene boundary
 
 
-# ─── Dataclass (pipeline-internal) ───────────────────────────────────────────
+# ─── Unified Segment Schema (pydantic.dataclass) ─────────────────────────────
 
-@dataclass
+@dataclass(config={"use_enum_values": False})
 class Segment:
     """
-    One recognised exercise segment within a video.
+    One recognised exercise segment within a video. Serves as both internal
+    pipeline data structure and validated FastAPI request/response schema.
 
     Attributes
     ----------
@@ -43,7 +43,7 @@ class Segment:
     start_time : float
         Segment start in seconds from the beginning of the video.
     end_time : float
-        Segment end in seconds.
+        Segment end in seconds (must be strictly greater than start_time).
     label : str
         Human-readable exercise label, e.g. "squat", "pushup".
     confidence : float
@@ -58,6 +58,12 @@ class Segment:
     confidence: float
     source:     Source
 
+    def __post_init__(self) -> None:
+        if self.end_time <= self.start_time:
+            raise ValueError("end_time must be greater than start_time")
+        if not (0.0 <= self.confidence <= 1.0):
+            raise ValueError("confidence must be between 0.0 and 1.0")
+
     # ── helpers ──────────────────────────────────────────────────────────────
 
     @property
@@ -68,7 +74,7 @@ class Segment:
     def to_dict(self) -> dict:
         """Serialise to a plain dict (JSON-safe)."""
         d = asdict(self)
-        d["source"] = self.source.value  # enum → string
+        d["source"] = self.source.value if isinstance(self.source, Source) else self.source
         return d
 
     @classmethod
@@ -79,57 +85,9 @@ class Segment:
         return cls(**data)
 
 
-# ─── Pydantic model (FastAPI serialisation) ───────────────────────────────────
+# ─── Response Wrappers ───────────────────────────────────────────────────────
 
-try:
-    from pydantic import BaseModel, Field, field_validator
-
-    class SegmentModel(BaseModel):
-        """
-        Pydantic mirror of Segment — use as FastAPI request/response type.
-
-        Example JSON
-        ------------
-        {
-            "segment_id": "seg_0001",
-            "start_time": 3.14,
-            "end_time":   7.92,
-            "label":      "squat",
-            "confidence": 0.93,
-            "source":     "pose"
-        }
-        """
-        segment_id: str   = Field(..., description="Unique segment identifier")
-        start_time: float = Field(..., ge=0.0, description="Start time in seconds")
-        end_time:   float = Field(..., ge=0.0, description="End time in seconds")
-        label:      str   = Field(..., description="Exercise label")
-        confidence: float = Field(..., ge=0.0, le=1.0, description="Model confidence")
-        source:     Source = Field(..., description="Originating pipeline stage")
-
-        @field_validator("end_time")
-        @classmethod
-        def end_after_start(cls, v: float, info) -> float:
-            start = info.data.get("start_time", 0.0)
-            if v <= start:
-                raise ValueError("end_time must be greater than start_time")
-            return v
-
-        @property
-        def duration(self) -> float:
-            return self.end_time - self.start_time
-
-        def to_segment(self) -> Segment:
-            """Convert to pipeline-internal Segment dataclass."""
-            return Segment(**self.model_dump())
-
-        model_config = {"use_enum_values": False}
-
-
-    class SegmentListResponse(BaseModel):
-        """Wrapper returned by endpoints that emit multiple segments."""
-        segments: List[SegmentModel]
-        total:    int = Field(..., description="Total number of segments")
-
-except ImportError:  # pydantic not installed (pipeline-only environment)
-    SegmentModel = None          # type: ignore[assignment,misc]
-    SegmentListResponse = None   # type: ignore[assignment,misc]
+class SegmentListResponse(BaseModel):
+    """Wrapper returned by endpoints that emit multiple segments."""
+    segments: List[Segment]
+    total:    int = Field(..., description="Total number of segments")

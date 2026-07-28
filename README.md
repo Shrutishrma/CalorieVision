@@ -64,14 +64,15 @@ CalorieVision ingests a workout video (file upload or YouTube link) and returns 
 
 ```
 CalorieVision/
-├── cv-pipeline/
+├── cv_pipeline/
 │   ├── keypoints/       ← MediaPipe keypoint extraction
 │   ├── models/          ← LSTM / 1D-CNN weights & training scripts
-│   └── eval/            ← Evaluation metrics & confusion matrices
-├── fusion-pipeline/
-│   ├── segmentation/    ← SceneDetect integration
+│   ├── motion/          ← Active/rest motion magnitude filter
+│   └── eval/            ← Evaluation metrics, confusion matrices, eval set
+├── fusion_pipeline/
+│   ├── segmentation/    ← YouTube download + SceneDetect integration
 │   ├── ocr/             ← EasyOCR text detection
-│   └── fusion/          ← Segment fusion + calorie calculation
+│   └── fusion/          ← Segment fusion, calorie calc, duration extraction
 ├── app/
 │   ├── backend/         ← FastAPI application
 │   └── frontend/        ← React + Vite application
@@ -103,7 +104,26 @@ cd CalorieVision
 
 ---
 
-### 2 — Backend
+### 2 — System Dependencies  ⚠️ Install BEFORE pip install
+
+These are **required system binaries** (not Python packages). Install them first.
+
+| Tool | Why needed | Install |
+|------|-----------|---------|
+| **ffmpeg** | yt-dlp merges video+audio streams | Windows: `winget install ffmpeg` · macOS: `brew install ffmpeg` · Linux: `sudo apt install ffmpeg` |
+| **Deno** *(optional)* | Prevents yt-dlp JS-extractor deprecation warning | Windows: `winget install Deno.Deno` |
+
+Verify ffmpeg is installed:
+```bash
+ffmpeg -version
+```
+
+> **Without ffmpeg**, `download_video.py` will raise a `RuntimeError` before
+> attempting any download. This is the primary blocker for smoke testing.
+
+---
+
+### 3 — Backend
 
 ```bash
 # Create and activate virtual environment
@@ -117,12 +137,21 @@ source .venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
+# Fetch test videos via production YouTube download pipeline
+python shared/fetch_test_videos.py
+
+# Run end-to-end pipeline smoke test
+python smoke_test.py
+
 # Run the API server
 uvicorn app.backend.main:app --reload --port 8000
 ```
 
+> **Why YouTube links only?** The actual CalorieVision application takes a YouTube link as its primary input path (not uploaded files). Our testing infrastructure (`fetch_test_videos.py`) mirrors this exact production ingestion path by pulling videos from `shared/test_videos_manifest.json` using the real app's downloader. **No video files are ever committed to Git, stored on shared drives, or distributed directly between teammates.**
+
 The API will be available at **http://localhost:8000**
 Interactive docs at **http://localhost:8000/docs**
+
 
 ---
 

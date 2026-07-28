@@ -166,6 +166,10 @@ class TestCacheHit:
         fake = tmp_path / f"{video_id}.mp4"
         fake.write_bytes(b"\x00" * 512)
 
+        # Monkeypatch _check_ffmpeg so the test works without ffmpeg installed
+        import fusion_pipeline.segmentation.download_video as dv_mod
+        monkeypatch.setattr(dv_mod, "_check_ffmpeg", lambda: None)
+
         # Monkeypatch yt_dlp.YoutubeDL to raise immediately (simulates a call)
         import yt_dlp
 
