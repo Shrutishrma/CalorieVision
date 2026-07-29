@@ -167,13 +167,12 @@ class TestFuseSegments:
         result = self._run(pose, ocr)
         assert result[0].confidence == pytest.approx(0.5)
 
-    def test_disagree_logs_to_file(self):
+    def test_disagree_logs_to_file(self, tmp_path):
         """Disagreements must appear in the log file as JSONL."""
         import json
         pose = [_pose("squat",  0, 10, conf=0.8)]
         ocr  = [_ocr("pushup", 2,  8, conf=0.75)]
-        with tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False, mode="w") as f:
-            log_path = Path(f.name)
+        log_path = tmp_path / "failure_log.jsonl"
         try:
             fuse_segments(pose, ocr, log_path=log_path)
             log_content = log_path.read_text(encoding="utf-8")
@@ -186,14 +185,17 @@ class TestFuseSegments:
             assert disagree_entry["ocr_label"] == "pushup"
             assert disagree_entry["source"] == "disagreement"
         finally:
-            log_path.unlink(missing_ok=True)
+            logger_name = f"pipeline_run.{hash(str(log_path)) & 0xFFFFFF:06x}"
+            lg = logging.getLogger(logger_name)
+            for h in lg.handlers[:]:
+                h.close()
+                lg.removeHandler(h)
 
-    def test_low_conf_logs_to_file(self):
+    def test_low_conf_logs_to_file(self, tmp_path):
         """Low-confidence pose predictions must be logged."""
         import json
         pose = [_pose("squat", 0, 5, conf=0.3)]  # below LOW_CONF_THRESHOLD=0.5
-        with tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False, mode="w") as f:
-            log_path = Path(f.name)
+        log_path = tmp_path / "low_conf.jsonl"
         try:
             fuse_segments(pose, [], log_path=log_path)
             log_content = log_path.read_text(encoding="utf-8")
@@ -203,7 +205,11 @@ class TestFuseSegments:
             low_conf_entry = [l for l in lines if l.get("event_type") == "LOW_CONF"][0]
             assert low_conf_entry["fused_confidence"] == 0.3
         finally:
-            log_path.unlink(missing_ok=True)
+            logger_name = f"pipeline_run.{hash(str(log_path)) & 0xFFFFFF:06x}"
+            lg = logging.getLogger(logger_name)
+            for h in lg.handlers[:]:
+                h.close()
+                lg.removeHandler(h)
 
     def test_confidence_capped_at_one(self):
         pose = [_pose("squat", 0, 10, conf=0.99)]

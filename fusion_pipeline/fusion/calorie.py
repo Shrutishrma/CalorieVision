@@ -114,6 +114,7 @@ class SegmentCalorie:
     label:         str
     duration_secs: float
     confidence:    float
+    source:        str = "fused"
     kcal:          Dict[str, float] = field(default_factory=dict)  # tier → kcal
 
     def to_dict(self) -> dict:
@@ -124,6 +125,7 @@ class SegmentCalorie:
             "label":         self.label,
             "duration_secs": self.duration_secs,
             "confidence":    self.confidence,
+            "source":        self.source,
             "kcal":          self.kcal,
         }
 
@@ -183,6 +185,7 @@ def estimate_calories(
             label         = seg.label,
             duration_secs = round(dur, 3),
             confidence    = seg.confidence,
+            source        = seg.source.value if hasattr(seg.source, "value") else str(seg.source),
             kcal          = kcal_per_tier,
         ))
 

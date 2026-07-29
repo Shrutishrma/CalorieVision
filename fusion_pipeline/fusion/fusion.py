@@ -170,53 +170,61 @@ def fuse_segments(
             outcome_tag       = "POSE_ONLY"
 
         else:
-            # Majority-vote on OCR labels that cover this segment
-            ocr_labels = [s.label for s in overlapping_ocr]
-            from collections import Counter
-            ocr_majority, ocr_count = Counter(ocr_labels).most_common(1)[0]
-            best_ocr = max(overlapping_ocr, key=lambda s: s.confidence)
+            # Majority-vote on OCR labels that cover this segment (after normalising text)
+            from fusion_pipeline.ocr.ocr_normalise import normalise_ocr_text
+            ocr_norm_map = [(normalise_ocr_text(s.label), s) for s in overlapping_ocr]
+            valid_ocr = [(norm, s) for norm, s in ocr_norm_map if norm != "unknown"]
 
-            norm_ocr  = ocr_normalise(ocr_majority)
-            norm_pose = ocr_normalise(pose_seg.label)
-
-            if norm_ocr == norm_pose:
-                # AGREE
-                outcome_source = Source.fused
-                outcome_label  = pose_seg.label
-                outcome_conf   = min(
-                    1.0,
-                    max(pose_seg.confidence, best_ocr.confidence) + AGREE_CONF_BOOST
-                )
-                outcome_tag    = "AGREE"
+            if not valid_ocr:
+                # OCR present but no exercise label recognised -> POSE_ONLY
+                outcome_source    = Source.pose
+                outcome_label     = pose_seg.label
+                outcome_conf      = pose_seg.confidence
+                outcome_tag       = "POSE_ONLY"
             else:
-                # DISAGREE — log, keep pose, source=disagreement
-                outcome_source = Source.disagreement
-                outcome_label  = pose_seg.label
-                outcome_conf   = DISAGREE_CONF
-                outcome_tag    = "DISAGREE"
+                norm_labels = [norm for norm, _ in valid_ocr]
+                from collections import Counter
+                ocr_majority, ocr_count = Counter(norm_labels).most_common(1)[0]
+                best_ocr = max([s for norm, s in valid_ocr if norm == ocr_majority], key=lambda s: s.confidence)
 
-                logger.warning(
-                    "DISAGREE  t=%.1f-%.1fs  pose=%s(%.2f)  ocr=%s(%.2f)",
-                    pose_seg.start_time, pose_seg.end_time,
-                    pose_seg.label, pose_seg.confidence,
-                    ocr_majority, best_ocr.confidence,
-                )
+                if ocr_majority.lower() == pose_seg.label.lower():
+                    # AGREE
+                    outcome_source = Source.fused
+                    outcome_label  = pose_seg.label
+                    outcome_conf   = min(
+                        1.0,
+                        max(pose_seg.confidence, best_ocr.confidence) + AGREE_CONF_BOOST
+                    )
+                    outcome_tag    = "AGREE"
+                else:
+                    # DISAGREE — log, keep pose, source=disagreement
+                    outcome_source = Source.disagreement
+                    outcome_label  = pose_seg.label
+                    outcome_conf   = DISAGREE_CONF
+                    outcome_tag    = "DISAGREE"
 
-                _log_failure_jsonl(log_path, {
-                    "timestamp": datetime.now(tz=timezone.utc).isoformat(),
-                    "event_type": "DISAGREE",
-                    "segment_id": pose_seg.segment_id,
-                    "start_time": pose_seg.start_time,
-                    "end_time": pose_seg.end_time,
-                    "pose_label": pose_seg.label,
-                    "pose_confidence": pose_seg.confidence,
-                    "ocr_label": ocr_majority,
-                    "ocr_confidence": best_ocr.confidence if best_ocr else None,
-                    "fused_label": outcome_label,
-                    "fused_confidence": outcome_conf,
-                    "source": outcome_source.value,
-                    "outcome_tag": outcome_tag,
-                })
+                    logger.warning(
+                        "DISAGREE  t=%.1f-%.1fs  pose=%s(%.2f)  ocr=%s(%.2f)",
+                        pose_seg.start_time, pose_seg.end_time,
+                        pose_seg.label, pose_seg.confidence,
+                        ocr_majority, best_ocr.confidence,
+                    )
+
+                    _log_failure_jsonl(log_path, {
+                        "timestamp": datetime.now(tz=timezone.utc).isoformat(),
+                        "event_type": "DISAGREE",
+                        "segment_id": pose_seg.segment_id,
+                        "start_time": pose_seg.start_time,
+                        "end_time": pose_seg.end_time,
+                        "pose_label": pose_seg.label,
+                        "pose_confidence": pose_seg.confidence,
+                        "ocr_label": ocr_majority,
+                        "ocr_confidence": best_ocr.confidence if best_ocr else None,
+                        "fused_label": outcome_label,
+                        "fused_confidence": outcome_conf,
+                        "source": outcome_source.value,
+                        "outcome_tag": outcome_tag,
+                    })
 
         # ── Low-confidence logging ────────────────────────────────────────────
         if outcome_conf < LOW_CONF_THRESHOLD:
