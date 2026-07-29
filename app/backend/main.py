@@ -74,6 +74,7 @@ class AnalyzeRequest(BaseModel):
     video_url: Optional[str] = Field(None, description="Direct YouTube URL")
     weight_kg: float = Field(70.0, ge=30.0, le=250.0, description="User body weight in kg")
     user_tier: str = Field("intermediate", description="Target difficulty tier: beginner, intermediate, advanced")
+    video_duration_mins: Optional[float] = Field(None, ge=0.1, le=300.0, description="Video duration in minutes (required for uncached custom URLs)")
 
 
 class AnalyzeResponse(BaseModel):
@@ -186,10 +187,11 @@ async def analyze_workout(req: AnalyzeRequest) -> AnalyzeResponse:
     frame_preds = predictor.predict(frames)
 
     # 3. Construct Pose Segments
-    # Use manifest duration_secs first, then keypoint-derived, then hard minimum
+    # Priority: user-supplied duration > manifest duration > keypoint-derived > 30s floor
+    user_dur = float(req.video_duration_mins * 60) if req.video_duration_mins else 0.0
     manifest_dur = float(video_item.get("duration_secs", 0))
     keypoint_dur = max(30.0, len(frames) / 10.0) if frames else 30.0
-    canonical_dur = manifest_dur if manifest_dur > 0 else keypoint_dur
+    canonical_dur = user_dur if user_dur > 0 else (manifest_dur if manifest_dur > 0 else keypoint_dur)
     pose_segments = _build_pose_segments(vid_id, canonical_dur)
     duration_total = max([s.end_time for s in pose_segments]) if pose_segments else canonical_dur
 

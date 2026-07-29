@@ -725,6 +725,60 @@ body {
   to { transform: rotate(360deg); }
 }
 
+/* Custom duration input (appears for uncached URLs) */
+.custom-duration-group {
+  animation: slideDown 0.2s ease;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  margin-top: -0.5rem;
+}
+
+.custom-duration-group .form-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  color: var(--accent-amber);
+  margin-bottom: 0.6rem;
+}
+
+.duration-hint {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.duration-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.duration-input {
+  max-width: 120px;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.duration-unit {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.duration-warning {
+  font-size: 0.78rem;
+  color: var(--accent-amber);
+  margin-top: 0.4rem;
+}
+
 .footer {
   text-align: center;
   color: var(--text-dim);

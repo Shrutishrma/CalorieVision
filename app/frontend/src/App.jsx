@@ -55,6 +55,7 @@ export default function App() {
   const [analyzing, setAnalyzing] = useState(false)
   const [result, setResult] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
+  const [videoDurationMins, setVideoDurationMins] = useState('')
 
   // Timeline interaction state
   const [hoveredSeg, setHoveredSeg] = useState(null)
@@ -111,11 +112,16 @@ export default function App() {
     setActiveSeg(null)
     setHoveredSeg(null)
 
+    const durationMins = customUrl.trim() && videoDurationMins
+      ? parseFloat(videoDurationMins)
+      : undefined
+
     const payload = {
       video_id: selectedVideoId,
       video_url: customUrl.trim() || undefined,
       weight_kg: parseFloat(weightKg),
       user_tier: userTier,
+      video_duration_mins: durationMins,
     }
 
     fetch(`${activeBackendUrl}/analyze`, {
@@ -217,6 +223,33 @@ export default function App() {
               }}
             />
           </div>
+
+          {/* Duration input — shown only for custom URLs not in the manifest */}
+          {customUrl.trim() && !manifest.find(m => m.youtube_id === selectedVideoId && customUrl.includes(m.youtube_id)) && (
+            <div className="form-group custom-duration-group">
+              <label className="form-label">
+                📏 Video Duration (minutes)
+                <span className="duration-hint">Required for uncached URLs — how long is the workout?</span>
+              </label>
+              <div className="duration-input-row">
+                <input
+                  id="video-duration-input"
+                  type="number"
+                  className="input-text duration-input"
+                  placeholder="e.g. 20"
+                  min="1"
+                  max="180"
+                  step="1"
+                  value={videoDurationMins}
+                  onChange={(e) => setVideoDurationMins(e.target.value)}
+                />
+                <span className="duration-unit">min</span>
+              </div>
+              {!videoDurationMins && (
+                <p className="duration-warning">⚠️ Without a duration the pipeline defaults to 30 seconds</p>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="card">
