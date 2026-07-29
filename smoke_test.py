@@ -46,7 +46,8 @@ _REPO_ROOT = Path(__file__).resolve().parent
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-_PYTHON = str(_REPO_ROOT / ".venv" / "Scripts" / "python.exe")
+_venv_python = _REPO_ROOT / ".venv" / "Scripts" / "python.exe"
+_PYTHON = str(_venv_python) if _venv_python.exists() else sys.executable
 _VIDEOS_DIR = _REPO_ROOT / "shared" / "test-videos"
 _KEYPOINTS_DIR = _REPO_ROOT / "shared" / "test-videos"
 

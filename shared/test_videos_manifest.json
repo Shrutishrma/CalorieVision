@@ -5,31 +5,163 @@
     "label": "me_at_the_zoo_stable",
     "description": "Me at the zoo — single person, outdoor, stable, ~19 s (CC-BY)",
     "tags": {
-      "camera_angle": "frontal",
+      "camera_angle": "single",
       "caption_present": false,
-      "num_subjects": 1
+      "num_subjects": "single"
     }
   },
   {
     "youtube_id": "IODxDxX7oi4",
     "url": "https://youtu.be/IODxDxX7oi4",
     "label": "push_up_tutorial_frontal",
-    "description": "The Perfect Push Up — single person, indoor, exercise-focused (verified public)",
+    "description": "The Perfect Push Up — single person, indoor, exercise-focused",
     "tags": {
-      "camera_angle": "frontal",
+      "camera_angle": "single",
       "caption_present": false,
-      "num_subjects": 1
+      "num_subjects": "single"
     }
   },
   {
     "youtube_id": "aclHkVaku9U",
     "url": "https://youtu.be/aclHkVaku9U",
     "label": "squats_for_beginners_angled",
-    "description": "Squats for Beginners — exercise instruction, indoor studio setting (verified public)",
+    "description": "Squats for Beginners — exercise instruction, indoor studio setting",
     "tags": {
-      "camera_angle": "angled",
+      "camera_angle": "single",
       "caption_present": false,
-      "num_subjects": 1
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "v7AYKMP6rOE",
+    "url": "https://youtu.be/v7AYKMP6rOE",
+    "label": "morning_workout_captioned",
+    "description": "10 Min Morning Workout — full body, frontal camera with on-screen captions",
+    "tags": {
+      "camera_angle": "single",
+      "caption_present": true,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "UBMkG03HOHU",
+    "url": "https://youtu.be/UBMkG03HOHU",
+    "label": "full_body_hiit_multi",
+    "description": "20 Min Full Body HIIT — multi-angle camera cuts with captions",
+    "tags": {
+      "camera_angle": "multi",
+      "caption_present": true,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "gC_L9qAHVJ8",
+    "url": "https://youtu.be/gC_L9qAHVJ8",
+    "label": "plank_challenge_angled",
+    "description": "5 Min Plank Challenge — angled camera view, indoor setting",
+    "tags": {
+      "camera_angle": "single",
+      "caption_present": false,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "ml6cT4AZdqI",
+    "url": "https://youtu.be/ml6cT4AZdqI",
+    "label": "ab_workout_captioned",
+    "description": "10 Min Ab Workout — frontal camera with text overlays / exercise timers",
+    "tags": {
+      "camera_angle": "single",
+      "caption_present": true,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "cbKkB3POqaY",
+    "url": "https://youtu.be/cbKkB3POqaY",
+    "label": "hiit_cardio_multi",
+    "description": "15 Min HIIT Workout — multi-person background with exercise captions",
+    "tags": {
+      "camera_angle": "multi",
+      "caption_present": true,
+      "num_subjects": "multiple"
+    }
+  },
+  {
+    "youtube_id": "2pLT-ilgU7w",
+    "url": "https://youtu.be/2pLT-ilgU7w",
+    "label": "leg_workout_captioned",
+    "description": "10 Min Leg Workout — squats and lunges, frontal view with captions",
+    "tags": {
+      "camera_angle": "single",
+      "caption_present": true,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "bO_xN_0aB-E",
+    "url": "https://youtu.be/bO_xN_0aB-E",
+    "label": "jump_rope_outdoor",
+    "description": "5 Min Jump Rope Workout — outdoor setting, single subject",
+    "tags": {
+      "camera_angle": "single",
+      "caption_present": false,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "vc1E5CfRfos",
+    "url": "https://youtu.be/vc1E5CfRfos",
+    "label": "bodyweight_multi_angled",
+    "description": "20 Min Bodyweight Workout — multi-angle shot transitions",
+    "tags": {
+      "camera_angle": "multi",
+      "caption_present": true,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "dJlFmxiL11s",
+    "url": "https://youtu.be/dJlFmxiL11s",
+    "label": "arm_workout_captioned",
+    "description": "10 Min Arm Workout — pushups and presses with timer captions",
+    "tags": {
+      "camera_angle": "single",
+      "caption_present": true,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "1f8yoFFdkcY",
+    "url": "https://youtu.be/1f8yoFFdkcY",
+    "label": "cardio_class_multi_person",
+    "description": "15 Min Group Cardio Class — multi-person group setting with instructor",
+    "tags": {
+      "camera_angle": "multi",
+      "caption_present": false,
+      "num_subjects": "multiple"
+    }
+  },
+  {
+    "youtube_id": "L_xrDAtykMI",
+    "url": "https://youtu.be/L_xrDAtykMI",
+    "label": "high_knees_cardio",
+    "description": "10 Min High Knees Cardio — frontal view with timer overlays",
+    "tags": {
+      "camera_angle": "single",
+      "caption_present": true,
+      "num_subjects": "single"
+    }
+  },
+  {
+    "youtube_id": "wI__eN_Jm0s",
+    "url": "https://youtu.be/wI__eN_Jm0s",
+    "label": "squat_challenge_multi",
+    "description": "10 Min Squat Challenge — multi-person demo with text captions",
+    "tags": {
+      "camera_angle": "multi",
+      "caption_present": true,
+      "num_subjects": "multiple"
     }
   }
 ]

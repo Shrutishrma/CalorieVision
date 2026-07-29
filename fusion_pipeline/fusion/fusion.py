@@ -47,8 +47,7 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 from shared.schemas import Segment, Source
-
-# ─── Logging configuration ────────────────────────────────────────────────────
+from fusion_pipeline.fusion.ocr_normalise import ocr_normalise
 
 # ─── Logging configuration ────────────────────────────────────────────────────
 
@@ -72,11 +71,12 @@ def configure_logger(log_path: Path | None = None) -> logging.Logger:
     if not logger.handlers:
         logger.setLevel(logging.DEBUG)
 
-        # File handler (append) for human-readable run logs
-        fh = logging.FileHandler(str(log_path), mode="a", encoding="utf-8")
-        fh.setLevel(logging.DEBUG)
-        fh.setFormatter(logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s"))
-        logger.addHandler(fh)
+        # File handler (append) for human-readable run logs (only if not .jsonl file)
+        if not str(log_path).endswith(".jsonl"):
+            fh = logging.FileHandler(str(log_path), mode="a", encoding="utf-8")
+            fh.setLevel(logging.DEBUG)
+            fh.setFormatter(logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s"))
+            logger.addHandler(fh)
 
         # Console handler (INFO only)
         ch = logging.StreamHandler(sys.stderr)
@@ -176,7 +176,10 @@ def fuse_segments(
             ocr_majority, ocr_count = Counter(ocr_labels).most_common(1)[0]
             best_ocr = max(overlapping_ocr, key=lambda s: s.confidence)
 
-            if ocr_majority.lower() == pose_seg.label.lower():
+            norm_ocr  = ocr_normalise(ocr_majority)
+            norm_pose = ocr_normalise(pose_seg.label)
+
+            if norm_ocr == norm_pose:
                 # AGREE
                 outcome_source = Source.fused
                 outcome_label  = pose_seg.label
