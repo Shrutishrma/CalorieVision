@@ -6,7 +6,7 @@ build-backend = "setuptools.backends.legacy:build"
 name = "calorievision"
 version = "0.1.0"
 description = "AI-powered exercise recognition and calorie estimation from video."
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 
 # Runtime deps are tracked in requirements.txt; this file is for editable installs.
 # Keep the two in sync manually.

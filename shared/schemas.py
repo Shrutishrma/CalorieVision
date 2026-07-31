@@ -92,3 +92,23 @@ class SegmentListResponse(BaseModel):
     """Wrapper returned by endpoints that emit multiple segments."""
     segments: List[Segment]
     total:    int = Field(..., description="Total number of segments")
+
+
+@dataclass
+class PipelineResult:
+    """Full internal result object emitted by the pipeline orchestrator."""
+    video_id: str
+    video_path: str
+    duration_secs: float
+    fps: float
+    total_frames: int
+    active_frame_count: int
+    rest_frame_count: int
+    classifier_used: str
+    scene_segments: List[Segment]
+    pose_segments: List[Segment]
+    ocr_segments: List[Segment]
+    fused_segments: List[Segment]
+    failure_events: List[dict]
+    stage_timings: dict[str, float]
+

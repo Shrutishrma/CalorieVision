@@ -52,6 +52,7 @@ from shared.schemas import Segment
 
 MET_TABLE: Dict[str, Dict[str, float]] = {
     # exercise class        beginner  intermediate  advanced
+    # ── Original 12 ──
     "squat":              {"beginner": 3.5, "intermediate": 5.0, "advanced": 6.0},
     "pushup":             {"beginner": 3.8, "intermediate": 5.0, "advanced": 6.5},
     "jumping_jack":       {"beginner": 7.7, "intermediate": 8.0, "advanced": 9.0},
@@ -64,6 +65,21 @@ MET_TABLE: Dict[str, Dict[str, float]] = {
     "jump_rope":          {"beginner": 8.8, "intermediate": 10.0, "advanced": 12.3},
     "bicycle_crunch":     {"beginner": 3.0, "intermediate": 4.0, "advanced": 5.0},
     "shoulder_press":     {"beginner": 3.5, "intermediate": 5.0, "advanced": 6.0},
+    # ── Expanded 14 ──
+    "deadlift":           {"beginner": 3.5, "intermediate": 6.0, "advanced": 8.0},
+    "pull_up":            {"beginner": 3.8, "intermediate": 5.5, "advanced": 7.5},
+    "bench_press":        {"beginner": 3.0, "intermediate": 5.0, "advanced": 6.5},
+    "tricep_dip":         {"beginner": 3.5, "intermediate": 4.5, "advanced": 6.0},
+    "leg_raise":          {"beginner": 2.5, "intermediate": 3.5, "advanced": 4.5},
+    "wall_sit":           {"beginner": 2.0, "intermediate": 3.0, "advanced": 3.5},
+    "box_jump":           {"beginner": 6.0, "intermediate": 8.0, "advanced": 10.0},
+    "russian_twist":      {"beginner": 3.0, "intermediate": 4.0, "advanced": 5.5},
+    "hip_thrust":         {"beginner": 3.0, "intermediate": 4.5, "advanced": 6.0},
+    "calf_raise":         {"beginner": 2.5, "intermediate": 3.5, "advanced": 4.5},
+    "lateral_raise":      {"beginner": 2.5, "intermediate": 4.0, "advanced": 5.0},
+    "bicep_curl":         {"beginner": 3.0, "intermediate": 4.5, "advanced": 5.5},
+    "kettlebell_swing":   {"beginner": 6.0, "intermediate": 9.0, "advanced": 12.0},
+    "superman_hold":      {"beginner": 2.5, "intermediate": 3.5, "advanced": 4.0},
     # Fallback for unknown / scene_cut segments
     "unknown":            {"beginner": 1.5, "intermediate": 1.5, "advanced": 1.5},
 }

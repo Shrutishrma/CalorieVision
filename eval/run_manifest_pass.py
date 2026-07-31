@@ -3,8 +3,9 @@ eval/run_manifest_pass.py
 ────────────────────────────────────────────────────────────────────────────────
 Robustness pass script for CalorieVision.
 
-Runs all videos defined in shared/test_videos_manifest.json through the pipeline:
-  scene_detect → motion_filter → ocr_detector → baseline classifier → fusion → calorie
+Runs all 15 videos defined in shared/test_videos_manifest.json through the
+central pipeline orchestrator (fusion_pipeline/pipeline.py):
+  download -> keypoints -> motion_filter -> scene_detect -> classify -> ocr -> fusion -> calorie
 
 Disagreements and low-confidence predictions are automatically written to
 eval/failure_log.jsonl.
@@ -21,11 +22,7 @@ _REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from shared.schemas import Segment, Source
-from fusion_pipeline.segmentation.scene_detect import detect_scenes
-from fusion_pipeline.fusion.fusion import fuse_segments
-from fusion_pipeline.fusion.calorie import estimate_calories
-from cv_pipeline.models.baseline import MajorityClassPredictor
+from fusion_pipeline.pipeline import run_pipeline
 
 logger = logging.getLogger("eval.manifest_pass")
 
@@ -51,77 +48,28 @@ def run_robustness_pass(
     manifest_entries = json.loads(manifest_path.read_text(encoding="utf-8"))
     logger.info("Loaded %d manifest entries from %s", len(manifest_entries), manifest_path)
 
-    # Initialize baseline classifier
-    clf = MajorityClassPredictor()
-    # Fit baseline on standard 12-class vocabulary
-    vocab = [
-        "squat", "pushup", "jumping_jack", "lunge", "plank", "burpee",
-        "mountain_climber", "high_knees", "situp", "jump_rope", "bicycle_crunch", "shoulder_press",
-    ]
-    clf.fit([{"landmarks": [{"x": 0.5, "y": 0.5, "z": 0.0}] * 33}], ["squat"])
-
     processed_count = 0
     total_fused_segments = 0
+    classifiers_used = {}
 
     for entry in manifest_entries:
         vid_id = entry["youtube_id"]
-        local_video = _REPO_ROOT / "shared" / "test-videos" / f"{vid_id}.mp4"
+        logger.info("Processing manifest video %s...", vid_id)
 
-        # Construct synthetic/detected pose segments for scene windows
-        if local_video.exists():
-            try:
-                scenes = detect_scenes(str(local_video), threshold=27.0)
-            except Exception as exc:
-                logger.warning("Scene detect failed for %s: %s", vid_id, exc)
-                scenes = []
-        else:
-            # Fallback synthetic scenes if video file not yet downloaded
-            scenes = [
-                Segment("scene_0001", 0.0, 10.0, "unknown", 1.0, Source.scene_cut),
-                Segment("scene_0002", 10.0, 20.0, "unknown", 1.0, Source.scene_cut),
-            ]
-
-        if not scenes:
-            scenes = [Segment("scene_0000", 0.0, 15.0, "unknown", 1.0, Source.scene_cut)]
-
-        pose_segs = []
-        for idx, sc in enumerate(scenes):
-            pred_label = clf.predict([{"landmarks": [{"x": 0.5, "y": 0.5, "z": 0.0}] * 33}])[0]
-            # Alternate confidence to produce realistic LOW_CONF log events
-            conf = 0.85 if idx % 2 == 0 else 0.40
-            pose_segs.append(
-                Segment(
-                    segment_id=f"pose_{idx:04d}",
-                    start_time=sc.start_time,
-                    end_time=sc.end_time,
-                    label=pred_label,
-                    confidence=conf,
-                    source=Source.pose,
-                )
+        try:
+            res = run_pipeline(
+                video_source=vid_id,
+                weight_kg=70.0,
+                user_tier="intermediate",
+                force_recompute=False,
             )
+            processed_count += 1
+            total_fused_segments += len(res.fused_segments)
+            cls_name = res.classifier_used
+            classifiers_used[cls_name] = classifiers_used.get(cls_name, 0) + 1
 
-        # OCR segment (simulating raw OCR output from video overlays)
-        has_caption = entry.get("tags", {}).get("caption_present", False)
-        ocr_segs = []
-        if has_caption:
-            ocr_segs.append(
-                Segment(
-                    segment_id="ocr_0001",
-                    start_time=0.0,
-                    end_time=10.0,
-                    label="30 Push Ups",  # triggers disagreement against pose "squat"
-                    confidence=0.88,
-                    source=Source.ocr,
-                )
-            )
-
-        # Run fusion layer — writes to log_path (eval/failure_log.jsonl)
-        fused = fuse_segments(pose_segs, ocr_segs, log_path=log_path)
-        total_fused_segments += len(fused)
-
-        # Run calorie calculation
-        _ = estimate_calories(fused, weight_kg=70.0)
-        processed_count += 1
+        except Exception as exc:
+            logger.warning("Pipeline run failed for %s: %s", vid_id, exc)
 
     # Read failure log stats
     disagreements, low_confs = 0, 0
@@ -143,6 +91,7 @@ def run_robustness_pass(
         "total_manifest_entries": len(manifest_entries),
         "processed_videos": processed_count,
         "total_fused_segments": total_fused_segments,
+        "classifiers_used": classifiers_used,
         "logged_disagreements": disagreements,
         "logged_low_confidence": low_confs,
         "failure_log_path": str(log_path),

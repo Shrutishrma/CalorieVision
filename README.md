@@ -223,7 +223,7 @@ extract_keypoints.py VIDEO [--out FILE] [--max-frames N] [--model-complexity 0|1
 
 ---
 
-## Data Contract
+## Data Contract & Exercise Taxonomy
 
 All pipeline stages communicate via the `Segment` schema defined in [`shared/schemas.py`](shared/schemas.py):
 
@@ -235,6 +235,36 @@ All pipeline stages communicate via the `Segment` schema defined in [`shared/sch
 | `label`      | `str`   | Exercise label (e.g. `"squat"`)          |
 | `confidence` | `float` | Model confidence `[0.0, 1.0]`            |
 | `source`     | `enum`  | `"pose"` \| `"ocr"` \| `"fused"`        |
+
+### Supported Exercise Classes (26 Total)
+The pipeline supports **26 canonical exercise classes** across keypoint action classification, EasyOCR text normalisation, 3-tier MET calorie burn calculation, and interactive visual timelines:
+
+1. `squat`
+2. `pushup`
+3. `jumping_jack`
+4. `lunge`
+5. `plank`
+6. `burpee`
+7. `mountain_climber`
+8. `high_knees`
+9. `situp`
+10. `jump_rope`
+11. `bicycle_crunch`
+12. `shoulder_press`
+13. `deadlift`
+14. `pull_up`
+15. `bench_press`
+16. `tricep_dip`
+17. `leg_raise`
+18. `wall_sit`
+19. `box_jump`
+20. `russian_twist`
+21. `hip_thrust`
+22. `calf_raise`
+23. `lateral_raise`
+24. `bicep_curl`
+25. `kettlebell_swing`
+26. `superman_hold`
 
 ---
 

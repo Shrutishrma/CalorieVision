@@ -47,11 +47,15 @@ def _seg(label: str, start: float, end: float, conf: float = 0.9) -> Segment:
 # ─── MET table ────────────────────────────────────────────────────────────────
 
 class TestMETTable:
-    def test_all_12_classes_present(self):
+    def test_all_26_classes_present(self):
         expected = {
             "squat", "pushup", "jumping_jack", "lunge", "plank",
             "burpee", "mountain_climber", "high_knees", "situp",
             "jump_rope", "bicycle_crunch", "shoulder_press",
+            "deadlift", "pull_up", "bench_press", "tricep_dip",
+            "leg_raise", "wall_sit", "box_jump", "russian_twist",
+            "hip_thrust", "calf_raise", "lateral_raise", "bicep_curl",
+            "kettlebell_swing", "superman_hold",
         }
         for cls in expected:
             assert cls in MET_TABLE, f"Missing MET entry: {cls}"
@@ -115,6 +119,10 @@ class TestKcalForSegment:
         "squat", "pushup", "jumping_jack", "lunge", "plank",
         "burpee", "mountain_climber", "high_knees", "situp",
         "jump_rope", "bicycle_crunch", "shoulder_press",
+        "deadlift", "pull_up", "bench_press", "tricep_dip",
+        "leg_raise", "wall_sit", "box_jump", "russian_twist",
+        "hip_thrust", "calf_raise", "lateral_raise", "bicep_curl",
+        "kettlebell_swing", "superman_hold",
     ])
     def test_all_classes_return_positive_kcal(self, cls):
         result = kcal_for_segment(cls, 300.0, 70.0, "intermediate")

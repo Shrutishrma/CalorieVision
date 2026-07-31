@@ -48,6 +48,7 @@ logger = logging.getLogger(__name__)
 # ─── Exercise taxonomy ────────────────────────────────────────────────────────
 
 EXERCISE_CLASSES: List[str] = [
+    # ── Original 12 classes ──
     "squat",
     "pushup",
     "jumping_jack",
@@ -60,6 +61,21 @@ EXERCISE_CLASSES: List[str] = [
     "jump_rope",
     "bicycle_crunch",
     "shoulder_press",
+    # ── Expanded 14 classes ──
+    "deadlift",
+    "pull_up",
+    "bench_press",
+    "tricep_dip",
+    "leg_raise",
+    "wall_sit",
+    "box_jump",
+    "russian_twist",
+    "hip_thrust",
+    "calf_raise",
+    "lateral_raise",
+    "bicep_curl",
+    "kettlebell_swing",
+    "superman_hold",
 ]
 
 NUM_CLASSES   = len(EXERCISE_CLASSES)
