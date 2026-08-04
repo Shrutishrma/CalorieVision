@@ -1,17 +1,5 @@
 [
   {
-    "youtube_id": "jNQXAC9IVRw",
-    "url": "https://youtu.be/jNQXAC9IVRw",
-    "label": "me_at_the_zoo_stable",
-    "description": "Me at the Zoo — single person, outdoor, stable (~19 s)",
-    "duration_secs": 19,
-    "tags": {
-      "camera_angle": "single",
-      "caption_present": false,
-      "num_subjects": "single"
-    }
-  },
-  {
     "youtube_id": "IODxDxX7oi4",
     "url": "https://youtu.be/IODxDxX7oi4",
     "label": "push_up_tutorial_frontal",

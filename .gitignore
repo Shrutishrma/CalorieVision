@@ -72,3 +72,6 @@ leMON_implementation_plan.md
 IMPLEMENTATION_PLAN_v2.md
 CalorieVision_final_project_summary.md
 CALORIEVISION_PROJECT_DOCUMENTATION.md
+
+# Dataset collector output (downloaded videos + extracted keypoints)
+dataset/

@@ -126,12 +126,8 @@ try:
                 batch_first=True,
                 dropout=dropout if num_layers > 1 else 0.0,
             )
-            self.head = nn.Sequential(
-                nn.Linear(hidden_dim, 64),
-                nn.ReLU(),
-                nn.Dropout(dropout),
-                nn.Linear(64, num_classes),
-            )
+            self.head = nn.Linear(hidden_dim, num_classes)
+            self.fc = self.head
             self.num_classes = num_classes
             self.input_dim   = input_dim
             self.hidden_dim  = hidden_dim
@@ -146,8 +142,8 @@ try:
             -------
             Tensor of shape (batch, num_classes) — raw logits
             """
-            _, (h_n, _) = self.lstm(x)   # h_n: (num_layers, batch, hidden)
-            last_hidden  = h_n[-1]        # (batch, hidden)
+            out, _ = self.lstm(x)       # out: (batch, seq_len, hidden)
+            last_hidden = out[:, -1, :]  # last time step: (batch, hidden)
             return self.head(last_hidden)
 
         def predict(self, x: "torch.Tensor") -> Tuple["torch.Tensor", "torch.Tensor"]:
@@ -174,9 +170,26 @@ try:
         def from_checkpoint(cls, path: str | Path, **kwargs) -> "LSTMClassifier":
             """Load a saved checkpoint."""
             ckpt = torch.load(str(path), map_location="cpu")
-            model = cls(**{**kwargs, **ckpt.get("model_kwargs", {})})
-            model.load_state_dict(ckpt["model_state_dict"])
-            logger.info("Loaded LSTM checkpoint from %s", path)
+            state_dict = ckpt.get("model_state_dict", ckpt)
+            
+            # Determine num_classes and input dimensions from checkpoint metadata
+            num_classes = kwargs.pop("num_classes", None) or ckpt.get("model_kwargs", {}).get("num_classes") or len(ckpt.get("classes", EXERCISE_CLASSES))
+            input_dim = kwargs.pop("input_dim", None) or ckpt.get("model_kwargs", {}).get("input_dim") or INPUT_DIM
+            hidden_dim = kwargs.pop("hidden_dim", None) or ckpt.get("model_kwargs", {}).get("hidden_dim") or HIDDEN_DIM
+
+            model = cls(input_dim=input_dim, hidden_dim=hidden_dim, num_classes=num_classes, **kwargs)
+
+            # Check if checkpoint used fc layer or head layer
+            if any(k.startswith("fc.") for k in state_dict.keys()):
+                model.head = nn.Linear(hidden_dim, num_classes)
+                model.fc = model.head
+                # Also map fc -> head in state_dict
+                for k in list(state_dict.keys()):
+                    if k.startswith("fc."):
+                        state_dict[k.replace("fc.", "head.")] = state_dict[k]
+
+            model.load_state_dict(state_dict, strict=False)
+            logger.info("Loaded LSTM checkpoint from %s (%d classes)", path, num_classes)
             return model
 
         def save_checkpoint(self, path: str | Path, **extra) -> None:
@@ -240,15 +253,21 @@ def frames_to_windows(
     X = np.zeros((n_frames, INPUT_DIM), dtype=np.float32)
     for i, frame in enumerate(frames):
         lms = frame.get("landmarks", [])
-        if lms:
+        if lms and len(lms) >= 33:
             try:
-                vec = np.array(
-                    [coord for lm in lms for coord in (lm["x"], lm["y"], lm["z"])],
-                    dtype=np.float32,
-                )
-                if vec.shape[0] == INPUT_DIM:
-                    X[i] = vec
-            except (KeyError, TypeError):
+                coords = np.array([[lm["x"], lm["y"], lm["z"]] for lm in lms[:33]], dtype=np.float32)
+                # 1. Hip center normalization (landmarks 23 left_hip, 24 right_hip)
+                hip_center = (coords[23] + coords[24]) / 2.0
+                coords -= hip_center
+
+                # 2. Torso scale normalization (distance from shoulder center to hip center)
+                shoulder_center = (coords[11] + coords[12]) / 2.0
+                torso_height = float(np.linalg.norm(shoulder_center))
+                if torso_height > 1e-4:
+                    coords /= torso_height
+
+                X[i] = coords.flatten()
+            except (KeyError, TypeError, IndexError):
                 pass  # leave as zeros
 
     # Slice into windows
@@ -325,13 +344,17 @@ def predict_sequence(
         conf   = float(prob_vec[c_idx])
         prob_d = {cls: round(float(p), 4) for cls, p in zip(EXERCISE_CLASSES, prob_vec)}
 
+        start_t = float(frames[start_f].get("timestamp", round(start_f / fps, 3))) if start_f < len(frames) else round(start_f / fps, 3)
+        end_idx = min(end_f - 1, len(frames) - 1)
+        end_t = float(frames[end_idx].get("timestamp", round(end_f / fps, 3))) if end_idx >= 0 else round(end_f / fps, 3)
+
         results.append(
             {
                 "window_index": w_idx,
                 "start_frame":  start_f,
                 "end_frame":    end_f,
-                "start_time":   round(start_f / fps, 3),
-                "end_time":     round(end_f   / fps, 3),
+                "start_time":   round(start_t, 3),
+                "end_time":     round(end_t, 3),
                 "label":        label,
                 "confidence":   round(conf, 4),
                 "probs":        prob_d,

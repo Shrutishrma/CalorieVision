@@ -1,0 +1,86 @@
+{
+  "video_id": "IODxDxX7oi4",
+  "total_ocr_segments": 10,
+  "segments": [
+    {
+      "segment_id": "ocr_0000",
+      "start_time": 147.6475,
+      "end_time": 149.6475,
+      "label": "3",
+      "confidence": 0.5918917984041059,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0001",
+      "start_time": 200.8006,
+      "end_time": 202.8006,
+      "label": "calisthenic calimove movement",
+      "confidence": 0.8599350201747599,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0002",
+      "start_time": 202.769233,
+      "end_time": 204.769233,
+      "label": "calisthenic calimove movement",
+      "confidence": 0.8474106836902647,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0003",
+      "start_time": 204.737867,
+      "end_time": 206.737867,
+      "label": "calisthenic calimove movement",
+      "confidence": 0.8652393583644685,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0004",
+      "start_time": 206.7065,
+      "end_time": 208.7065,
+      "label": "calisthenic calimove movement",
+      "confidence": 0.9042059065580248,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0005",
+      "start_time": 208.675133,
+      "end_time": 210.675133,
+      "label": "calisthenic calimove movement",
+      "confidence": 0.8234021892499072,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0006",
+      "start_time": 210.643767,
+      "end_time": 212.643767,
+      "label": "calisthenic calimove movement",
+      "confidence": 0.8694777839497637,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0007",
+      "start_time": 212.6124,
+      "end_time": 214.6124,
+      "label": "calisthenic calimove movement",
+      "confidence": 0.8609653647757549,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0008",
+      "start_time": 214.581033,
+      "end_time": 216.581033,
+      "label": "vhb most [mportant push] up exercises calisthenic calimove",
+      "confidence": 0.9051385135664043,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0009",
+      "start_time": 216.549667,
+      "end_time": 218.549667,
+      "label": "#he most push] up execises calisthenic calimove movement",
+      "confidence": 0.8745574212818779,
+      "source": "ocr"
+    }
+  ]
+}

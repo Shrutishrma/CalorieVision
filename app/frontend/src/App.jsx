@@ -8,11 +8,11 @@ import Timeline from './components/Timeline'
 import SegmentTable from './components/SegmentTable'
 import FailureLog from './components/FailureLog'
 
-const DEFAULT_URL = 'http://localhost:8000'
-const ALT_URL = 'http://127.0.0.1:8000'
+const PORT_8005 = 'http://localhost:8005'
+const PORT_8000 = 'http://localhost:8000'
 
 export default function App() {
-  const [activeBackendUrl, setActiveBackendUrl] = useState(DEFAULT_URL)
+  const [activeBackendUrl, setActiveBackendUrl] = useState(PORT_8005)
   const [backendStatus, setBackendStatus] = useState('loading')
   const [manifest, setManifest] = useState([])
 
@@ -21,7 +21,6 @@ export default function App() {
   const [weightKg, setWeightKg] = useState(70)
   const [userTier, setUserTier] = useState('intermediate')
   const [videoDurationMins, setVideoDurationMins] = useState('')
-  const [forceRecompute, setForceRecompute] = useState(false)
 
   const [analyzing, setAnalyzing] = useState(false)
   const [activeJobId, setActiveJobId] = useState(null)
@@ -32,22 +31,24 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null)
   const [activeSeg, setActiveSeg] = useState(null)
 
-  // 1. Probe backend health & load manifest
+  // 1. Probe backend health & verify service is 'CalorieVision API'
   useEffect(() => {
-    const probeUrl = (url) => {
+    const probeUrl = (url, fallbackUrl) => {
       fetch(`${url}/health`)
         .then((res) => res.json())
         .then((data) => {
-          if (data.status === 'ok') {
+          if (data.status === 'ok' && data.service === 'CalorieVision API') {
             setActiveBackendUrl(url)
             setBackendStatus('ok')
             fetchManifest(url)
+          } else if (fallbackUrl) {
+            probeUrl(fallbackUrl, null)
           } else {
             setBackendStatus('error')
           }
         })
         .catch(() => {
-          if (url === DEFAULT_URL) probeUrl(ALT_URL)
+          if (fallbackUrl) probeUrl(fallbackUrl, null)
           else setBackendStatus('error')
         })
     }
@@ -64,7 +65,7 @@ export default function App() {
         .catch((err) => console.warn('Manifest load warning:', err))
     }
 
-    probeUrl(DEFAULT_URL)
+    probeUrl(PORT_8005, PORT_8000)
   }, [])
 
   // Auto-analyze on initial load once healthy
@@ -74,7 +75,7 @@ export default function App() {
     }
   }, [backendStatus])
 
-  // 2. Poll job status if an active async job is running
+  // 2. Poll job status if an active background job is running
   useEffect(() => {
     if (!activeJobId) return
 
@@ -82,7 +83,7 @@ export default function App() {
       fetch(`${activeBackendUrl}/status/${activeJobId}`)
         .then((res) => res.json())
         .then((data) => {
-          setJobProgress(data.progress || 0)
+          setJobProgress(data.progress || 0.1)
           setJobStage(data.stage || 'Processing')
 
           if (data.status === 'completed' && data.result) {
@@ -95,10 +96,8 @@ export default function App() {
             setActiveJobId(null)
           }
         })
-        .catch((err) => {
-          console.warn('Status poll error:', err)
-        })
-    }, 1500)
+        .catch((err) => console.warn('Status poll warning:', err))
+    }, 1000)
 
     return () => clearInterval(interval)
   }, [activeJobId, activeBackendUrl])
@@ -120,11 +119,11 @@ export default function App() {
       weight_kg: parseFloat(weightKg),
       user_tier: userTier,
       video_duration_mins: durationMins,
-      force_recompute: forceRecompute,
+      force_recompute: false,
     }
 
-    // Default to sync=true for fast cached videos, falls back to async job polling
-    fetch(`${activeBackendUrl}/analyze?sync=true`, {
+    // Use background async job execution for smooth non-blocking progress updates
+    fetch(`${activeBackendUrl}/analyze?sync=false`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -144,9 +143,9 @@ export default function App() {
           setAnalyzing(false)
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setErrorMsg(
-          `Failed to connect to backend (${activeBackendUrl}/analyze). Make sure the Uvicorn backend is running.`
+          `Failed to connect to CalorieVision API at ${activeBackendUrl}. Make sure Uvicorn is running.`
         )
         setAnalyzing(false)
       })
@@ -168,8 +167,6 @@ export default function App() {
         setWeightKg={setWeightKg}
         userTier={userTier}
         setUserTier={setUserTier}
-        forceRecompute={forceRecompute}
-        setForceRecompute={setForceRecompute}
         handleAnalyze={handleAnalyze}
         analyzing={analyzing}
         backendStatus={backendStatus}

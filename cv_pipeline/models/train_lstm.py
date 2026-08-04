@@ -106,11 +106,11 @@ def _real_dataset(
     stride:     int = DEFAULT_STRIDE,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Load real keypoints + labels and slice into windows."""
-    with open(kp_path, encoding="utf-8") as fh:
+    with open(kp_path, "rb") as fh:
         raw = json.load(fh)
     frames = raw["frames"] if isinstance(raw, dict) else raw
 
-    with open(label_path, encoding="utf-8") as fh:
+    with open(label_path, "rb") as fh:
         per_frame_labels: List[str] = json.load(fh)
 
     if len(frames) != len(per_frame_labels):
@@ -178,9 +178,13 @@ def train(
         raise ImportError("torch is required for training. pip install torch")
 
     n = len(X)
+    # Randomly shuffle data before splitting to ensure all classes are in train and val
+    perm = np.random.default_rng(seed=42).permutation(n)
+    X_shuffled, y_shuffled = X[perm], y[perm]
+
     split_idx = int(n * (1 - test_split))
-    X_train, X_test = X[:split_idx], X[split_idx:]
-    y_train, y_test = y[:split_idx], y[split_idx:]
+    X_train, X_test = X_shuffled[:split_idx], X_shuffled[split_idx:]
+    y_train, y_test = y_shuffled[:split_idx], y_shuffled[split_idx:]
 
     X_tr = torch.from_numpy(X_train)
     y_tr = torch.from_numpy(y_train)
@@ -199,7 +203,7 @@ def train(
     best_state    = None
 
     print(f"\n{'='*60}")
-    print(f"LSTM Training  [{n} windows → train={split_idx} / test={n-split_idx}]")
+    print(f"LSTM Training  [{n} windows -> train={split_idx} / test={n-split_idx}]")
     print(f"Epochs={epochs}  Batch={batch_size}  LR={lr}  Patience={patience}")
     print(f"{'='*60}")
 
@@ -210,6 +214,7 @@ def train(
             optimiser.zero_grad()
             loss = criterion(model(xb), yb)
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimiser.step()
 
         # ── Validation (on test set — for early stopping only) ────────────────
@@ -351,10 +356,10 @@ def main(argv: list[str] | None = None) -> None:
         X, y = _real_dataset(kp_path, label_path)
 
         # Build frame/label lists from raw files for baseline comparison
-        with open(kp_path, encoding="utf-8") as fh:
+        with open(kp_path, "rb") as fh:
             raw = json.load(fh)
         all_frames = raw["frames"] if isinstance(raw, dict) else raw
-        with open(label_path, encoding="utf-8") as fh:
+        with open(label_path, "rb") as fh:
             all_labels: list[str] = json.load(fh)
 
         n = len(all_frames)
@@ -400,7 +405,7 @@ def main(argv: list[str] | None = None) -> None:
         print("\n" + _SYNTH_BANNER + "\n")
 
     if ckpt and not args.no_checkpoint:
-        print(f"\nCheckpoint saved → {ckpt}")
+        print(f"\nCheckpoint saved -> {ckpt}")
 
 
 if __name__ == "__main__":

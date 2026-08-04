@@ -28,6 +28,7 @@ if str(_REPO_ROOT) not in sys.path:
 
 from shared.schemas import Segment, Source, SegmentListResponse
 from fusion_pipeline.pipeline import run_pipeline
+from fusion_pipeline.segmentation.download_video import extract_video_id
 from fusion_pipeline.fusion.calorie import MET_TABLE
 from app.backend.job_store import job_store, Job
 
@@ -155,10 +156,10 @@ async def analyze_workout(
     manifest_items = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else []
 
     target_id = req.video_id or ""
-    if req.video_url and "v=" in req.video_url:
-        target_id = req.video_url.split("v=")[-1].split("&")[0]
-    elif req.video_url and "youtu.be/" in req.video_url:
-        target_id = req.video_url.split("youtu.be/")[-1].split("?")[0]
+    if req.video_url:
+        extracted = extract_video_id(req.video_url)
+        if extracted:
+            target_id = extracted
 
     video_item = None
     for item in manifest_items:
