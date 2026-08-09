@@ -48,7 +48,7 @@ def _write_solid_video(
     height: int = 120,
     color: int = 100,
 ) -> Path:
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv2.VideoWriter.fourcc(*"mp4v")
     writer = cv2.VideoWriter(str(path), fourcc, fps, (width, height))
     frame = np.full((height, width, 3), color, dtype=np.uint8)
     for _ in range(n_frames):

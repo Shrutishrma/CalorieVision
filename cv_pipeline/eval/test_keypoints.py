@@ -57,7 +57,7 @@ def _make_synthetic_video(
 
     Returns the path for convenience.
     """
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv2.VideoWriter.fourcc(*"mp4v")
     writer = cv2.VideoWriter(str(path), fourcc, fps, (width, height))
     frame = np.full((height, width, 3), color, dtype=np.uint8)
     for _ in range(n_frames):

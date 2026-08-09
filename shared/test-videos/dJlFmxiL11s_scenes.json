@@ -1,0 +1,1318 @@
+{
+  "video_path": "C:\\SattyGithub\\CalorieVision\\shared\\test-videos\\dJlFmxiL11s.mp4",
+  "total_scenes": 164,
+  "segments": [
+    {
+      "segment_id": "scene_0000",
+      "start_time": 0.0,
+      "end_time": 4.379375,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0001",
+      "start_time": 4.379375,
+      "end_time": 6.297958,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0002",
+      "start_time": 6.297958,
+      "end_time": 10.343667,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0003",
+      "start_time": 10.343667,
+      "end_time": 13.680333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0004",
+      "start_time": 13.680333,
+      "end_time": 25.358667,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0005",
+      "start_time": 25.358667,
+      "end_time": 28.653625,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0006",
+      "start_time": 28.653625,
+      "end_time": 33.158125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0007",
+      "start_time": 33.158125,
+      "end_time": 39.706333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0008",
+      "start_time": 39.706333,
+      "end_time": 42.042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0009",
+      "start_time": 42.042,
+      "end_time": 45.211833,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0010",
+      "start_time": 45.211833,
+      "end_time": 51.718333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0011",
+      "start_time": 51.718333,
+      "end_time": 55.263542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0012",
+      "start_time": 55.263542,
+      "end_time": 56.890167,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0013",
+      "start_time": 56.890167,
+      "end_time": 60.852458,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0014",
+      "start_time": 60.852458,
+      "end_time": 62.187125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0015",
+      "start_time": 62.187125,
+      "end_time": 65.31525,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0016",
+      "start_time": 65.31525,
+      "end_time": 67.275542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0017",
+      "start_time": 67.275542,
+      "end_time": 69.611208,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0018",
+      "start_time": 69.611208,
+      "end_time": 72.32225,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0019",
+      "start_time": 72.32225,
+      "end_time": 76.117708,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0020",
+      "start_time": 76.117708,
+      "end_time": 81.83175,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0021",
+      "start_time": 81.83175,
+      "end_time": 84.250833,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0022",
+      "start_time": 84.250833,
+      "end_time": 86.169417,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0023",
+      "start_time": 86.169417,
+      "end_time": 88.171417,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0024",
+      "start_time": 88.171417,
+      "end_time": 97.889458,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0025",
+      "start_time": 97.889458,
+      "end_time": 101.35125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0026",
+      "start_time": 101.35125,
+      "end_time": 104.6045,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0027",
+      "start_time": 104.6045,
+      "end_time": 108.191417,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0028",
+      "start_time": 108.191417,
+      "end_time": 110.36025,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0029",
+      "start_time": 110.36025,
+      "end_time": 111.277833,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0030",
+      "start_time": 111.277833,
+      "end_time": 112.028583,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0031",
+      "start_time": 112.028583,
+      "end_time": 120.578792,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0032",
+      "start_time": 120.578792,
+      "end_time": 121.287833,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0033",
+      "start_time": 121.287833,
+      "end_time": 125.667208,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0034",
+      "start_time": 125.667208,
+      "end_time": 128.044583,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0035",
+      "start_time": 128.044583,
+      "end_time": 130.713917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0036",
+      "start_time": 130.713917,
+      "end_time": 135.093292,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0037",
+      "start_time": 135.093292,
+      "end_time": 136.219417,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0038",
+      "start_time": 136.219417,
+      "end_time": 137.220417,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0039",
+      "start_time": 137.220417,
+      "end_time": 138.847042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0040",
+      "start_time": 138.847042,
+      "end_time": 143.601792,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0041",
+      "start_time": 143.601792,
+      "end_time": 148.189708,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0042",
+      "start_time": 148.189708,
+      "end_time": 155.238417,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0043",
+      "start_time": 155.238417,
+      "end_time": 158.324833,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0044",
+      "start_time": 158.324833,
+      "end_time": 161.369542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0045",
+      "start_time": 161.369542,
+      "end_time": 162.453958,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0046",
+      "start_time": 162.453958,
+      "end_time": 168.209708,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0047",
+      "start_time": 168.209708,
+      "end_time": 173.590083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0048",
+      "start_time": 173.590083,
+      "end_time": 179.053875,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0049",
+      "start_time": 179.053875,
+      "end_time": 183.391542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0050",
+      "start_time": 183.391542,
+      "end_time": 184.6845,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0051",
+      "start_time": 184.6845,
+      "end_time": 190.19,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0052",
+      "start_time": 190.19,
+      "end_time": 194.861333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0053",
+      "start_time": 194.861333,
+      "end_time": 202.619083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0054",
+      "start_time": 202.619083,
+      "end_time": 205.330125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0055",
+      "start_time": 205.330125,
+      "end_time": 206.331125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0056",
+      "start_time": 206.331125,
+      "end_time": 208.95875,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0057",
+      "start_time": 208.95875,
+      "end_time": 215.215,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0058",
+      "start_time": 215.215,
+      "end_time": 227.810917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0059",
+      "start_time": 227.810917,
+      "end_time": 230.23,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0060",
+      "start_time": 230.23,
+      "end_time": 231.272708,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0061",
+      "start_time": 231.272708,
+      "end_time": 237.111875,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0062",
+      "start_time": 237.111875,
+      "end_time": 240.823917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0063",
+      "start_time": 240.823917,
+      "end_time": 246.371125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0064",
+      "start_time": 246.371125,
+      "end_time": 250.25,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0065",
+      "start_time": 250.25,
+      "end_time": 252.085167,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0066",
+      "start_time": 252.085167,
+      "end_time": 254.462542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0067",
+      "start_time": 254.462542,
+      "end_time": 260.134875,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0068",
+      "start_time": 260.134875,
+      "end_time": 263.7635,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0069",
+      "start_time": 263.7635,
+      "end_time": 266.724792,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0070",
+      "start_time": 266.724792,
+      "end_time": 268.977042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0071",
+      "start_time": 268.977042,
+      "end_time": 271.02075,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0072",
+      "start_time": 271.02075,
+      "end_time": 276.442833,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0073",
+      "start_time": 276.442833,
+      "end_time": 277.235292,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0074",
+      "start_time": 277.235292,
+      "end_time": 279.487542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0075",
+      "start_time": 279.487542,
+      "end_time": 280.697083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0076",
+      "start_time": 280.697083,
+      "end_time": 288.7885,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0077",
+      "start_time": 288.7885,
+      "end_time": 291.332708,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0078",
+      "start_time": 291.332708,
+      "end_time": 294.085458,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0079",
+      "start_time": 294.085458,
+      "end_time": 299.215583,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0080",
+      "start_time": 299.215583,
+      "end_time": 301.426125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0081",
+      "start_time": 301.426125,
+      "end_time": 302.260292,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0082",
+      "start_time": 302.260292,
+      "end_time": 306.764792,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0083",
+      "start_time": 306.764792,
+      "end_time": 308.975333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0084",
+      "start_time": 308.975333,
+      "end_time": 314.397417,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0085",
+      "start_time": 314.397417,
+      "end_time": 316.899917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0086",
+      "start_time": 316.899917,
+      "end_time": 320.737083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0087",
+      "start_time": 320.737083,
+      "end_time": 322.363708,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0088",
+      "start_time": 322.363708,
+      "end_time": 328.953625,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0089",
+      "start_time": 328.953625,
+      "end_time": 331.039042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0090",
+      "start_time": 331.039042,
+      "end_time": 335.335,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0091",
+      "start_time": 335.335,
+      "end_time": 339.881208,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0092",
+      "start_time": 339.881208,
+      "end_time": 343.176167,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0093",
+      "start_time": 343.176167,
+      "end_time": 347.638958,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0094",
+      "start_time": 347.638958,
+      "end_time": 350.35,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0095",
+      "start_time": 350.35,
+      "end_time": 351.267583,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0096",
+      "start_time": 351.267583,
+      "end_time": 354.60425,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0097",
+      "start_time": 354.60425,
+      "end_time": 358.066042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0098",
+      "start_time": 358.066042,
+      "end_time": 359.650958,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0099",
+      "start_time": 359.650958,
+      "end_time": 362.779083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0100",
+      "start_time": 362.779083,
+      "end_time": 366.032333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0101",
+      "start_time": 366.032333,
+      "end_time": 370.578542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0102",
+      "start_time": 370.578542,
+      "end_time": 375.208167,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0103",
+      "start_time": 375.208167,
+      "end_time": 376.834792,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0104",
+      "start_time": 376.834792,
+      "end_time": 379.796083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0105",
+      "start_time": 379.796083,
+      "end_time": 381.756375,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0106",
+      "start_time": 381.756375,
+      "end_time": 384.342292,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0107",
+      "start_time": 384.342292,
+      "end_time": 388.513125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0108",
+      "start_time": 388.513125,
+      "end_time": 391.8915,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0109",
+      "start_time": 391.8915,
+      "end_time": 395.853792,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0110",
+      "start_time": 395.853792,
+      "end_time": 398.106042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0111",
+      "start_time": 398.106042,
+      "end_time": 399.982917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0112",
+      "start_time": 399.982917,
+      "end_time": 402.527125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0113",
+      "start_time": 402.527125,
+      "end_time": 407.698958,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0114",
+      "start_time": 407.698958,
+      "end_time": 410.034625,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0115",
+      "start_time": 410.034625,
+      "end_time": 412.328583,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0116",
+      "start_time": 412.328583,
+      "end_time": 422.380292,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0117",
+      "start_time": 422.380292,
+      "end_time": 426.134042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0118",
+      "start_time": 426.134042,
+      "end_time": 427.135042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0119",
+      "start_time": 427.135042,
+      "end_time": 429.17875,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0120",
+      "start_time": 429.17875,
+      "end_time": 432.265167,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0121",
+      "start_time": 432.265167,
+      "end_time": 440.69025,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0122",
+      "start_time": 440.69025,
+      "end_time": 445.361583,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0123",
+      "start_time": 445.361583,
+      "end_time": 446.112333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0124",
+      "start_time": 446.112333,
+      "end_time": 447.071625,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0125",
+      "start_time": 447.071625,
+      "end_time": 456.164042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0126",
+      "start_time": 456.164042,
+      "end_time": 464.380583,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0127",
+      "start_time": 464.380583,
+      "end_time": 466.21575,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0128",
+      "start_time": 466.21575,
+      "end_time": 468.885083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0129",
+      "start_time": 468.885083,
+      "end_time": 469.9695,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0130",
+      "start_time": 469.9695,
+      "end_time": 475.266458,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0131",
+      "start_time": 475.266458,
+      "end_time": 486.611125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0132",
+      "start_time": 486.611125,
+      "end_time": 488.821667,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0133",
+      "start_time": 488.821667,
+      "end_time": 493.075917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0134",
+      "start_time": 493.075917,
+      "end_time": 494.785958,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0135",
+      "start_time": 494.785958,
+      "end_time": 498.831667,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0136",
+      "start_time": 498.831667,
+      "end_time": 503.044208,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0137",
+      "start_time": 503.044208,
+      "end_time": 509.091917,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0138",
+      "start_time": 509.091917,
+      "end_time": 512.178333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0139",
+      "start_time": 512.178333,
+      "end_time": 516.724542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0140",
+      "start_time": 516.724542,
+      "end_time": 519.352167,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0141",
+      "start_time": 519.352167,
+      "end_time": 521.395875,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0142",
+      "start_time": 521.395875,
+      "end_time": 524.982792,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0143",
+      "start_time": 524.982792,
+      "end_time": 532.240042,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0144",
+      "start_time": 532.240042,
+      "end_time": 537.078208,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0145",
+      "start_time": 537.078208,
+      "end_time": 541.958083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0146",
+      "start_time": 541.958083,
+      "end_time": 544.752542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0147",
+      "start_time": 544.752542,
+      "end_time": 547.088208,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0148",
+      "start_time": 547.088208,
+      "end_time": 552.885667,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0149",
+      "start_time": 552.885667,
+      "end_time": 556.0555,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0150",
+      "start_time": 556.0555,
+      "end_time": 560.226333,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0151",
+      "start_time": 560.226333,
+      "end_time": 564.939375,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0152",
+      "start_time": 564.939375,
+      "end_time": 579.32875,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0153",
+      "start_time": 579.32875,
+      "end_time": 587.128208,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0154",
+      "start_time": 587.128208,
+      "end_time": 589.797542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0155",
+      "start_time": 589.797542,
+      "end_time": 592.008083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0156",
+      "start_time": 592.008083,
+      "end_time": 593.968375,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0157",
+      "start_time": 593.968375,
+      "end_time": 596.637708,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0158",
+      "start_time": 596.637708,
+      "end_time": 598.014083,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0159",
+      "start_time": 598.014083,
+      "end_time": 599.599,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0160",
+      "start_time": 599.599,
+      "end_time": 602.810542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0161",
+      "start_time": 602.810542,
+      "end_time": 603.728125,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0162",
+      "start_time": 603.728125,
+      "end_time": 608.774833,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    },
+    {
+      "segment_id": "scene_0163",
+      "start_time": 608.774833,
+      "end_time": 615.823542,
+      "label": "unknown",
+      "confidence": 1.0,
+      "source": "scene_cut"
+    }
+  ]
+}

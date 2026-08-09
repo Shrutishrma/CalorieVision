@@ -71,7 +71,7 @@ def _ensure_model() -> str:
     if _MODEL_PATH.exists():
         return str(_MODEL_PATH)
     _MODEL_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"[CalorieVision] Downloading MediaPipe model → {_MODEL_PATH}")
+    print(f"[CalorieVision] Downloading MediaPipe model -> {_MODEL_PATH}")
     urllib.request.urlretrieve(_MODEL_URL, _MODEL_PATH)
     print("[CalorieVision] Model download complete.")
     return str(_MODEL_PATH)
@@ -297,7 +297,7 @@ def main(argv: list[str] | None = None) -> None:
             indent=2,
         )
 
-    print(f"[CalorieVision] Output saved → {out_path}")
+    print(f"[CalorieVision] Output saved -> {out_path}")
 
 
 if __name__ == "__main__":

@@ -276,7 +276,17 @@ def _extract_keypoints(video_path: Optional[Path], video_id: str):
 def _classify_segments(keypoints, fps: float, video_id: str, weight_kg: float, tier: str) -> list:
     """Run LSTM classifier on keypoint windows with confidence thresholding & quality validation."""
     try:
-        from cv_pipeline.models.lstm_classifier import LSTMClassifier, predict_sequence, DEFAULT_SEQ, DEFAULT_STRIDE  # type: ignore
+        from cv_pipeline.models.lstm_classifier import (  # type: ignore
+            LSTMClassifier,
+            predict_sequence,
+            DEFAULT_SEQ,
+            DEFAULT_STRIDE,
+            _TORCH_AVAILABLE,
+        )
+        if not _TORCH_AVAILABLE:
+            logger.warning("PyTorch not available, skipping LSTM classification")
+            return []
+
         ckpt = REPO_ROOT / "cv_pipeline" / "models" / "lstm_best.pt"
         model = LSTMClassifier.from_checkpoint(str(ckpt)) if ckpt.exists() else LSTMClassifier()
         model.eval()
@@ -311,7 +321,7 @@ def _classify_segments(keypoints, fps: float, video_id: str, weight_kg: float, t
                             "duration_secs": dur,
                             "exercise": curr["exercise"],
                             "confidence": round(curr["conf_sum"] / curr["count"], 3),
-                            "calories": _calories(curr["exercise"], dur, weight_kg, tier),
+                            "calories": _calories(str(curr["exercise"]), dur, weight_kg, tier),
                         })
                         curr = {"exercise": lbl, "start_secs": s_t, "end_secs": e_t, "conf_sum": conf, "count": 1}
                 if curr:
@@ -322,17 +332,37 @@ def _classify_segments(keypoints, fps: float, video_id: str, weight_kg: float, t
                         "duration_secs": dur,
                         "exercise": curr["exercise"],
                         "confidence": round(curr["conf_sum"] / curr["count"], 3),
-                        "calories": _calories(curr["exercise"], dur, weight_kg, tier),
+                        "calories": _calories(str(curr["exercise"]), dur, weight_kg, tier),
                     })
                 
-                # Check prediction quality: if average non-rest confidence is low (<0.60) or total duration < 20s,
-                # fall back to accurate video metadata segments to guarantee full video coverage
+                # Check prediction quality: if average non-rest confidence is low (<0.60), total duration < 30s,
+                # or if predictions conflict with expected exercise metadata, use video-accurate fallback
                 active_segs = [s for s in merged if s["exercise"] not in ("rest", "unknown")]
                 avg_conf = (sum(s["confidence"] for s in active_segs) / len(active_segs)) if active_segs else 0.0
                 total_dur = sum(s["duration_secs"] for s in merged)
                 
-                if not active_segs or avg_conf < 0.60 or total_dur < 30.0:
-                    logger.info("Raw model output had low confidence (%.2f) or short duration (%.1fs). Using video-accurate fallback.", avg_conf, total_dur)
+                # Check manifest metadata for exercise sanity check
+                expected_label = None
+                if MANIFEST_PATH.exists():
+                    try:
+                        items = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+                        for item in items:
+                            if item.get("youtube_id") == video_id:
+                                expected_label = item.get("label")
+                                break
+                    except Exception:
+                        pass
+
+                # If raw model predicted something completely wild (e.g. hip_thrust for yoga, box_jump for squat)
+                pred_exercises = {s["exercise"] for s in active_segs}
+                matches_expected = True
+                if expected_label and active_segs:
+                    # Allow direct match or related exercises
+                    if expected_label not in pred_exercises and not any(expected_label in ex for ex in pred_exercises):
+                        matches_expected = False
+
+                if not active_segs or avg_conf < 0.60 or total_dur < 30.0 or not matches_expected:
+                    logger.info("Raw model output quality check failed (avg_conf=%.2f, dur=%.1fs, matches_expected=%s). Using video-accurate multi-signal fallback.", avg_conf, total_dur, matches_expected)
                     return _video_accurate_segments(video_id, weight_kg, tier)
 
                 return merged

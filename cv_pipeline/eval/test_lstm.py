@@ -59,8 +59,8 @@ def _make_frames(n: int) -> list[dict]:
 # ─── EXERCISE_CLASSES ─────────────────────────────────────────────────────────
 
 class TestExerciseClasses:
-    def test_exactly_12_classes(self):
-        assert len(EXERCISE_CLASSES) == 12
+    def test_26_classes(self):
+        assert len(EXERCISE_CLASSES) == 26
 
     def test_no_duplicates(self):
         assert len(EXERCISE_CLASSES) == len(set(EXERCISE_CLASSES))

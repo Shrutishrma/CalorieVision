@@ -36,7 +36,7 @@ from cv_pipeline.motion.motion_filter import filter_active
 def _create_synthetic_video(path: Path, duration_sec: float = 2.0, fps: int = 30) -> None:
     """Create a temporary MP4 video with a hard scene cut halfway through."""
     import cv2
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv2.VideoWriter.fourcc(*"mp4v")
     writer = cv2.VideoWriter(str(path), fourcc, float(fps), (320, 240))
 
     total_frames = int(duration_sec * fps)

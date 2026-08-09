@@ -45,7 +45,7 @@ def _write_video(
     Write a synthetic video composed of solid-colour sections.
     Each tuple in `frames_per_section` is (n_frames, BGR_color_scalar).
     """
-    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    fourcc = cv2.VideoWriter.fourcc(*"mp4v")
     writer = cv2.VideoWriter(str(path), fourcc, fps, (width, height))
     for n_frames, color in frames_per_section:
         frame = np.full((height, width, 3), color, dtype=np.uint8)
