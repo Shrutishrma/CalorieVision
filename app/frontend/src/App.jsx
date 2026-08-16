@@ -61,14 +61,15 @@ const STAGES = [
 
 function stageIndex(stageName = '') {
   const s = stageName.toLowerCase()
-  if (s.includes('0') || s.includes('video') || s.includes('init')) return 0
-  if (s.includes('1') || s.includes('pose')) return 1
-  if (s.includes('2') || s.includes('motion')) return 2
-  if (s.includes('3') || s.includes('scene')) return 3
-  if (s.includes('4') || s.includes('lstm') || s.includes('classif')) return 4
-  if (s.includes('5') || s.includes('ocr')) return 5
-  if (s.includes('6') || s.includes('fusion')) return 6
-  if (s.includes('7') || s.includes('calor') || s.includes('met')) return 7
+  // Match "stage N" as a phrase to avoid '0' matching "100%" etc.
+  if (s.match(/stage\s*0/) || s.includes('video') || s.includes('init') || s.includes('acqui')) return 0
+  if (s.match(/stage\s*1/) || s.includes('pose')) return 1
+  if (s.match(/stage\s*2/) || s.includes('motion') || s.includes('fusion') || s.includes('title')) return 2
+  if (s.match(/stage\s*3/) || s.includes('scene') || s.includes('kine')) return 3
+  if (s.match(/stage\s*4/) || s.includes('lstm') || s.includes('classif')) return 4
+  if (s.match(/stage\s*5/) || s.includes('ocr') || s.includes('caption') || s.includes('calor') || s.includes('met')) return 5
+  if (s.match(/stage\s*6/) || s.includes('multi') || s.includes('signal')) return 6
+  if (s.match(/stage\s*7/) || s.includes('calorie') || s.includes('expenditure')) return 7
   return 0
 }
 
