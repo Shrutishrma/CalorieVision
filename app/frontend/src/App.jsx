@@ -203,9 +203,11 @@ export default function App() {
   const exList = Object.entries(exMap).sort((a, b) => b[1].dur - a[1].dur)
   const maxDur = exList[0]?.[1]?.dur || 1
 
-  const calBeg = computeCalories(segments, weightKg, 'beginner')
-  const calInt = computeCalories(segments, weightKg, 'intermediate')
-  const calAdv = computeCalories(segments, weightKg, 'advanced')
+  // Derive tier comparison from the backend result (single source of truth).
+  // Avoids MET table mismatch between frontend and backend.
+  const calInt = result?.total_calories || 0
+  const calBeg = Math.round(calInt * 0.85)
+  const calAdv = Math.round(calInt * 1.2)
 
   return (
     <div className="app">
