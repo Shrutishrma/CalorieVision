@@ -196,8 +196,14 @@ def fuse_segments(
                         max(pose_seg.confidence, best_ocr.confidence) + AGREE_CONF_BOOST
                     )
                     outcome_tag    = "AGREE"
+                elif best_ocr.confidence >= 0.65:
+                    # High-confidence OCR on-screen text (covers full 26-class taxonomy)
+                    outcome_source = Source.fused
+                    outcome_label  = ocr_majority
+                    outcome_conf   = best_ocr.confidence
+                    outcome_tag    = "OCR_OVERRIDE"
                 else:
-                    # DISAGREE — log, keep pose, source=disagreement
+                    # DISAGREE with low OCR confidence — log, keep pose, source=disagreement
                     outcome_source = Source.disagreement
                     outcome_label  = pose_seg.label
                     outcome_conf   = DISAGREE_CONF

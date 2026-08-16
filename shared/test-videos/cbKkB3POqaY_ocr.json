@@ -1,0 +1,942 @@
+{
+  "video_id": "cbKkB3POqaY",
+  "total_ocr_segments": 117,
+  "segments": [
+    {
+      "segment_id": "ocr_0000",
+      "start_time": 0.5,
+      "end_time": 14.654,
+      "label": "workout",
+      "confidence": 0.9788312735409821,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0001",
+      "start_time": 14.654,
+      "end_time": 28.808,
+      "label": "next: standing jacks 40 sec on, 10 sec rest",
+      "confidence": 0.9172314367842533,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0002",
+      "start_time": 28.808,
+      "end_time": 42.962,
+      "label": "standing jacks 27",
+      "confidence": 0.9999568418999045,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0003",
+      "start_time": 42.962,
+      "end_time": 57.116,
+      "label": "standing jacks 13",
+      "confidence": 0.9999873559688595,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0004",
+      "start_time": 57.116,
+      "end_time": 71.27,
+      "label": "next: 4 crunches 4 squat pulses 8",
+      "confidence": 1.0,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0005",
+      "start_time": 71.27,
+      "end_time": 85.424,
+      "label": "crunches squat pulses 34",
+      "confidence": 0.8219443143509918,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0006",
+      "start_time": 85.424,
+      "end_time": 99.578,
+      "label": "crunches squat pulses 20",
+      "confidence": 0.9999825512493038,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0007",
+      "start_time": 99.578,
+      "end_time": 113.732,
+      "label": "crunches squat pulses 6",
+      "confidence": 0.9615165087349311,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0008",
+      "start_time": 113.732,
+      "end_time": 127.886,
+      "label": "next: squats 2",
+      "confidence": 0.9999837876023321,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0009",
+      "start_time": 127.886,
+      "end_time": 142.04,
+      "label": "squats 28",
+      "confidence": 0.9999994942378553,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0010",
+      "start_time": 142.04,
+      "end_time": 156.194,
+      "label": "squats 13",
+      "confidence": 0.9999855015148964,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0011",
+      "start_time": 170.348,
+      "end_time": 184.502,
+      "label": "35",
+      "confidence": 0.7195439540569945,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0012",
+      "start_time": 184.502,
+      "end_time": 198.656,
+      "label": "21",
+      "confidence": 0.9999998314126102,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0013",
+      "start_time": 212.81,
+      "end_time": 226.964,
+      "label": "next: reach up & dowm 3",
+      "confidence": 0.9999980926522767,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0014",
+      "start_time": 226.964,
+      "end_time": 241.118,
+      "label": "reach up dowm 29",
+      "confidence": 0.9999981455391691,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0015",
+      "start_time": 241.118,
+      "end_time": 255.272,
+      "label": "reach up dowm 14",
+      "confidence": 0.9999935936850367,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0016",
+      "start_time": 255.272,
+      "end_time": 269.426,
+      "label": "next: plank side steps 10",
+      "confidence": 0.9998953088334614,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0017",
+      "start_time": 269.426,
+      "end_time": 283.58,
+      "label": "plank side steps shoulders directly 36",
+      "confidence": 0.8889302604206066,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0018",
+      "start_time": 283.58,
+      "end_time": 297.734,
+      "label": "plank side steps 22",
+      "confidence": 0.9999992413568111,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0019",
+      "start_time": 297.734,
+      "end_time": 311.888,
+      "label": "plank side steps 8",
+      "confidence": 0.999989390401371,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0020",
+      "start_time": 311.888,
+      "end_time": 326.042,
+      "label": "next: push up child\"s pose",
+      "confidence": 0.894905185724359,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0021",
+      "start_time": 326.042,
+      "end_time": 340.196,
+      "label": "push up child\"s pose 29",
+      "confidence": 0.9999981455391691,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0022",
+      "start_time": 340.196,
+      "end_time": 354.35,
+      "label": "push up + child s pose 15",
+      "confidence": 0.999705069094287,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0023",
+      "start_time": 354.35,
+      "end_time": 368.504,
+      "label": "push up + child s pose",
+      "confidence": 0.6902781040806153,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0024",
+      "start_time": 368.504,
+      "end_time": 382.658,
+      "label": "split squat 37",
+      "confidence": 0.7684826478900423,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0025",
+      "start_time": 382.658,
+      "end_time": 396.812,
+      "label": "split squat 23",
+      "confidence": 0.9854043880241028,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0026",
+      "start_time": 396.812,
+      "end_time": 410.966,
+      "label": "split squat 9",
+      "confidence": 0.9996000928229911,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0027",
+      "start_time": 410.966,
+      "end_time": 425.12,
+      "label": "next: split squat 5",
+      "confidence": 0.9999933242909265,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0028",
+      "start_time": 425.12,
+      "end_time": 439.274,
+      "label": "leftleg split squat 30",
+      "confidence": 0.9680056040411825,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0029",
+      "start_time": 439.274,
+      "end_time": 453.428,
+      "label": "leftleg split squat 16",
+      "confidence": 0.9999898847713415,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0030",
+      "start_time": 453.428,
+      "end_time": 467.582,
+      "label": "leftleg split squat 2",
+      "confidence": 0.999949694312491,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0031",
+      "start_time": 467.582,
+      "end_time": 481.736,
+      "label": "step back burpee 38",
+      "confidence": 0.9999967125473989,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0032",
+      "start_time": 481.736,
+      "end_time": 495.89,
+      "label": "step back burpee 24",
+      "confidence": 0.9999988198884456,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0033",
+      "start_time": 495.89,
+      "end_time": 510.044,
+      "label": "step back burpee 10",
+      "confidence": 0.9998801364669812,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0034",
+      "start_time": 510.044,
+      "end_time": 524.198,
+      "label": "next: plank toe tap 5",
+      "confidence": 0.9999933242909265,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0035",
+      "start_time": 524.198,
+      "end_time": 538.352,
+      "label": "plank toe tap 31",
+      "confidence": 0.8499033451080322,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0036",
+      "start_time": 538.352,
+      "end_time": 552.506,
+      "label": "plank toe tap 17",
+      "confidence": 0.9998081529360349,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0037",
+      "start_time": 552.506,
+      "end_time": 566.66,
+      "label": "plank toe tap 3",
+      "confidence": 0.9999992847443906,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0038",
+      "start_time": 566.66,
+      "end_time": 580.814,
+      "label": "squat crunch 39",
+      "confidence": 0.9903740841344753,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0039",
+      "start_time": 580.814,
+      "end_time": 594.968,
+      "label": "squat crunch 25",
+      "confidence": 0.9999943523269706,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0040",
+      "start_time": 594.968,
+      "end_time": 609.122,
+      "label": "squat crunch",
+      "confidence": 0.9923664458381966,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0041",
+      "start_time": 609.122,
+      "end_time": 623.276,
+      "label": "next: slow climbers 6",
+      "confidence": 0.9943435206641358,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0042",
+      "start_time": 623.276,
+      "end_time": 637.43,
+      "label": "slow climbers slow and controlled 32",
+      "confidence": 0.8237800733643692,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0043",
+      "start_time": 637.43,
+      "end_time": 651.584,
+      "label": "slow climbers 18",
+      "confidence": 0.9999873559688595,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0044",
+      "start_time": 651.584,
+      "end_time": 665.738,
+      "label": "slow climbers",
+      "confidence": 0.7734878026164917,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0045",
+      "start_time": 665.738,
+      "end_time": 679.892,
+      "label": "squat 3 sec hold 40",
+      "confidence": 0.9999273396063612,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0046",
+      "start_time": 679.892,
+      "end_time": 694.046,
+      "label": "squat 3 sec hold 26",
+      "confidence": 0.999979432399878,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0047",
+      "start_time": 694.046,
+      "end_time": 708.2,
+      "label": "squat + 3 sec hold",
+      "confidence": 0.6277603675725636,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0048",
+      "start_time": 708.2,
+      "end_time": 722.354,
+      "label": "next: shoulder taps",
+      "confidence": 0.9590308406066055,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0049",
+      "start_time": 722.354,
+      "end_time": 736.508,
+      "label": "shoulder taps 33",
+      "confidence": 0.7127081317185677,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0050",
+      "start_time": 736.508,
+      "end_time": 750.662,
+      "label": "shoulder taps 19",
+      "confidence": 0.9697595415449662,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0051",
+      "start_time": 750.662,
+      "end_time": 764.816,
+      "label": "shoulder taps 5",
+      "confidence": 0.9999690058248802,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0052",
+      "start_time": 764.816,
+      "end_time": 778.97,
+      "label": "next: superman",
+      "confidence": 0.9893066789647348,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0053",
+      "start_time": 778.97,
+      "end_time": 793.124,
+      "label": "superman 27",
+      "confidence": 0.9999512785907602,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0054",
+      "start_time": 793.124,
+      "end_time": 807.278,
+      "label": "superman 12",
+      "confidence": 0.9999871873820939,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0055",
+      "start_time": 807.278,
+      "end_time": 821.432,
+      "label": "next: push ups 8",
+      "confidence": 1.0,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0056",
+      "start_time": 821.432,
+      "end_time": 835.586,
+      "label": "push ups you can do it 34",
+      "confidence": 0.9733962705031388,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0057",
+      "start_time": 835.586,
+      "end_time": 849.74,
+      "label": "push ups 20",
+      "confidence": 0.9999817926099921,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0058",
+      "start_time": 849.74,
+      "end_time": 863.894,
+      "label": "push ups 6",
+      "confidence": 0.999547771094754,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0059",
+      "start_time": 863.894,
+      "end_time": 878.048,
+      "label": "next: low plank leg raises 2",
+      "confidence": 0.9999797345234498,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0060",
+      "start_time": 878.048,
+      "end_time": 892.202,
+      "label": "low plank leg raises 27",
+      "confidence": 0.9999635853170821,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0061",
+      "start_time": 892.202,
+      "end_time": 906.356,
+      "label": "low plank leg raises 13",
+      "confidence": 0.9999887046632835,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0062",
+      "start_time": 906.356,
+      "end_time": 920.51,
+      "label": "next: crunches 14 30 sec on, 10 sec rest",
+      "confidence": 0.885609709741981,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0063",
+      "start_time": 920.51,
+      "end_time": 934.664,
+      "label": "crunches 30",
+      "confidence": 0.9932051196405264,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0064",
+      "start_time": 934.664,
+      "end_time": 948.818,
+      "label": "crunches 16",
+      "confidence": 0.9999909805863321,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0065",
+      "start_time": 948.818,
+      "end_time": 962.972,
+      "label": "crunches 2",
+      "confidence": 0.9999814034372889,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0066",
+      "start_time": 962.972,
+      "end_time": 977.126,
+      "label": "lean back body twists 28",
+      "confidence": 0.9999995785315409,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0067",
+      "start_time": 977.126,
+      "end_time": 991.28,
+      "label": "lean back body twists 13",
+      "confidence": 0.9999865130351151,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0068",
+      "start_time": 991.28,
+      "end_time": 1005.434,
+      "label": "next: reach knee huc",
+      "confidence": 0.9929442888500108,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0069",
+      "start_time": 1005.434,
+      "end_time": 1019.588,
+      "label": "reach knee huc 25",
+      "confidence": 0.9999939308592087,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0070",
+      "start_time": 1019.588,
+      "end_time": 1033.742,
+      "label": "reach knee huc",
+      "confidence": 0.9985105445637986,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0071",
+      "start_time": 1033.742,
+      "end_time": 1047.896,
+      "label": "next: lecs im up dowm",
+      "confidence": 0.6470507074117605,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0072",
+      "start_time": 1047.896,
+      "end_time": 1062.05,
+      "label": "legs im up dowm 23",
+      "confidence": 0.5349769314790994,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0073",
+      "start_time": 1062.05,
+      "end_time": 1076.204,
+      "label": "legs im up dowm 8",
+      "confidence": 0.9999878406894283,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0074",
+      "start_time": 1076.204,
+      "end_time": 1090.358,
+      "label": "next: ab hold",
+      "confidence": 0.980960092904803,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0075",
+      "start_time": 1090.358,
+      "end_time": 1104.512,
+      "label": "ab hold cot this 20",
+      "confidence": 0.9999817926099921,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0076",
+      "start_time": 1104.512,
+      "end_time": 1118.666,
+      "label": "ab hold 6",
+      "confidence": 0.9996515816007765,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0077",
+      "start_time": 1118.666,
+      "end_time": 1132.82,
+      "label": "next: leg clute bridge right leg 2",
+      "confidence": 0.9999437340068198,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0078",
+      "start_time": 1132.82,
+      "end_time": 1146.974,
+      "label": "1 leg glute bridge 18",
+      "confidence": 0.9999892104238298,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0079",
+      "start_time": 1146.974,
+      "end_time": 1161.128,
+      "label": "1 leg clute bridge",
+      "confidence": 0.5485595025782232,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0080",
+      "start_time": 1161.128,
+      "end_time": 1175.282,
+      "label": "1 leg glute bridge pulses 29",
+      "confidence": 0.9999978926582248,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0081",
+      "start_time": 1175.282,
+      "end_time": 1189.436,
+      "label": "1 leg glute bridge pulses 15",
+      "confidence": 0.9996421920080898,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0082",
+      "start_time": 1189.436,
+      "end_time": 1203.59,
+      "label": "1 leg glute bridge pulses",
+      "confidence": 0.45108066359569104,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0083",
+      "start_time": 1203.59,
+      "end_time": 1217.744,
+      "label": "leftleg 1 leg glute bridge 27",
+      "confidence": 0.9999689800604141,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0084",
+      "start_time": 1217.744,
+      "end_time": 1231.898,
+      "label": "leftleg 1 leg clute bridge 13",
+      "confidence": 0.9999863444483912,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0085",
+      "start_time": 1231.898,
+      "end_time": 1246.052,
+      "label": "next: leg clute bridge pulses same leg",
+      "confidence": 0.9873880438086591,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0086",
+      "start_time": 1246.052,
+      "end_time": 1260.206,
+      "label": "1 lec glute bridge pulses 24",
+      "confidence": 0.9998743944912646,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0087",
+      "start_time": 1260.206,
+      "end_time": 1274.36,
+      "label": "1 leg glute bridge pulses 10",
+      "confidence": 0.9998897456245891,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0088",
+      "start_time": 1274.36,
+      "end_time": 1288.514,
+      "label": "next: step back burpee 2 punches 6",
+      "confidence": 0.9996239300552681,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0089",
+      "start_time": 1288.514,
+      "end_time": 1302.668,
+      "label": "step back burpee 2 punches 22",
+      "confidence": 0.9999991570631338,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0090",
+      "start_time": 1302.668,
+      "end_time": 1316.822,
+      "label": "step back burpee 2 punches 8",
+      "confidence": 1.0,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0091",
+      "start_time": 1316.822,
+      "end_time": 1330.976,
+      "label": "next: leg lift push up right leg",
+      "confidence": 0.799676980429803,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0092",
+      "start_time": 1330.976,
+      "end_time": 1345.13,
+      "label": "push up 20",
+      "confidence": 0.9999846585816098,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0093",
+      "start_time": 1345.13,
+      "end_time": 1359.284,
+      "label": "push up 5",
+      "confidence": 0.9999744893747362,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0094",
+      "start_time": 1359.284,
+      "end_time": 1373.438,
+      "label": "next: leg lift push up",
+      "confidence": 0.8142683434481132,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0095",
+      "start_time": 1373.438,
+      "end_time": 1387.592,
+      "label": "leftleg push up 17",
+      "confidence": 0.9998328496907055,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0096",
+      "start_time": 1387.592,
+      "end_time": 1401.746,
+      "label": "leftleg push up 3",
+      "confidence": 0.9999995231628986,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0097",
+      "start_time": 1401.746,
+      "end_time": 1415.9,
+      "label": "plank front back walk 29",
+      "confidence": 0.9999974711900259,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0098",
+      "start_time": 1415.9,
+      "end_time": 1430.054,
+      "label": "plank front back walk 15",
+      "confidence": 0.9996506205046933,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0099",
+      "start_time": 1430.054,
+      "end_time": 1444.208,
+      "label": "next: low plank dips 10",
+      "confidence": 0.9998755847701863,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0100",
+      "start_time": 1444.208,
+      "end_time": 1458.362,
+      "label": "low plank dips 26",
+      "confidence": 0.9999853329282224,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0101",
+      "start_time": 1458.362,
+      "end_time": 1472.516,
+      "label": "low plank dips 12",
+      "confidence": 0.999988873250124,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0102",
+      "start_time": 1472.516,
+      "end_time": 1486.67,
+      "label": "next: low plank hold 8",
+      "confidence": 1.0,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0103",
+      "start_time": 1486.67,
+      "end_time": 1500.824,
+      "label": "24",
+      "confidence": 0.9997977933748732,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0104",
+      "start_time": 1500.824,
+      "end_time": 1514.978,
+      "label": "10",
+      "confidence": 0.9998938758848547,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0105",
+      "start_time": 1514.978,
+      "end_time": 1529.132,
+      "label": "next: child's pose 30 sec on, 10 sec rest am so proud of vou",
+      "confidence": 0.9151913421100305,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0106",
+      "start_time": 1529.132,
+      "end_time": 1543.286,
+      "label": "child\"s pose 26",
+      "confidence": 0.9999855015148964,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0107",
+      "start_time": 1543.286,
+      "end_time": 1557.44,
+      "label": "child\"s pose 12",
+      "confidence": 0.9999871873820939,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0108",
+      "start_time": 1557.44,
+      "end_time": 1571.594,
+      "label": "next: deep lunge right leg 8",
+      "confidence": 0.9999892711927174,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0109",
+      "start_time": 1571.594,
+      "end_time": 1585.748,
+      "label": "deep lunge 24",
+      "confidence": 0.9969356918871065,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0110",
+      "start_time": 1585.748,
+      "end_time": 1599.902,
+      "label": "deep lunge 10",
+      "confidence": 0.999893791593779,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0111",
+      "start_time": 1599.902,
+      "end_time": 1614.056,
+      "label": "next: deep lunge 6",
+      "confidence": 0.9996165404828652,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0112",
+      "start_time": 1614.056,
+      "end_time": 1628.21,
+      "label": "leftleg deep lunge 21",
+      "confidence": 0.9999996628252286,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0113",
+      "start_time": 1628.21,
+      "end_time": 1642.364,
+      "label": "leftleg deep lunge",
+      "confidence": 0.8221131072788126,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0114",
+      "start_time": 1642.364,
+      "end_time": 1656.518,
+      "label": "next: inhale exhale 3",
+      "confidence": 0.9999980926522767,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0115",
+      "start_time": 1656.518,
+      "end_time": 1670.672,
+      "label": "inhale exhale 19",
+      "confidence": 0.9760438130066645,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0116",
+      "start_time": 1670.672,
+      "end_time": 1684.826,
+      "label": "inhale exhale 5",
+      "confidence": 0.999796520094808,
+      "source": "ocr"
+    }
+  ]
+}

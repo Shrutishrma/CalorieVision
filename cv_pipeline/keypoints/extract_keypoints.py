@@ -87,55 +87,13 @@ def extract_keypoints(
     min_tracking_confidence: float = 0.5,
     model_complexity: int = 1,
     max_frames: Optional[int] = None,
+    sample_fps: Optional[float] = None,
+    frame_stride: int = 1,
+    progress_callback: Optional[Any] = None,
 ) -> list[dict]:
     """
-    Extract MediaPipe Pose landmarks from every frame of a video.
-
-    Parameters
-    ----------
-    video_path : str
-        Path to the input video file (MP4, AVI, MOV, MKV, …).
-    min_detection_confidence : float
-        Minimum confidence for initial pose detection (0–1). Default 0.5.
-    min_tracking_confidence : float
-        Minimum confidence for pose tracking between frames (0–1). Default 0.5.
-    model_complexity : int
-        Ignored in Tasks API (kept for API compatibility). Use 0/1/2 to select
-        Lite/Full/Heavy model bundles once multi-model support is added.
-    max_frames : int | None
-        If set, stop after this many frames. Useful for quick tests.
-
-    Returns
-    -------
-    list[dict]
-        One dict per frame, **always** including frames where no pose was
-        detected (landmarks will be an empty list in that case).
-
-        Each dict has the shape::
-
-            {
-                "frame_index":   int,      # 0-based frame number
-                "timestamp":     float,    # seconds from start of video
-                "pose_detected": bool,     # True if MediaPipe found a pose
-                "landmarks": [
-                    {
-                        "index":      int,    # 0–32
-                        "name":       str,    # e.g. "left_shoulder"
-                        "x":          float,  # normalised [0, 1] (horizontal)
-                        "y":          float,  # normalised [0, 1] (vertical)
-                        "z":          float,  # depth relative to hip midpoint
-                        "visibility": float,  # landmark confidence [0, 1]
-                    },
-                    … × 33
-                ]
-            }
-
-    Raises
-    ------
-    FileNotFoundError
-        If `video_path` does not exist.
-    RuntimeError
-        If OpenCV cannot open the video file.
+    Extract MediaPipe Pose landmarks across video frames.
+    Optimized with direct timestamp seeks for fast extraction on long videos.
     """
     path = Path(video_path)
     if not path.exists():
@@ -146,6 +104,8 @@ def extract_keypoints(
         raise RuntimeError(f"OpenCV could not open video: {video_path}")
 
     fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    total_frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+    duration_secs = (total_frame_count / fps) if (total_frame_count > 0 and fps > 0) else 300.0
 
     # ── Build the Tasks-API landmarker ────────────────────────────────────────
     model_path = _ensure_model()
@@ -158,15 +118,24 @@ def extract_keypoints(
         num_poses=1,
     )
 
+    interval_sec = (1.0 / sample_fps) if sample_fps else (float(frame_stride) / fps)
+    sample_timestamps = []
+    t = 0.0
+    while t < duration_secs:
+        sample_timestamps.append(t)
+        t += interval_sec
+        if max_frames is not None and len(sample_timestamps) >= max_frames:
+            break
+
+    total_samples = len(sample_timestamps)
     results_list: list[dict] = []
 
     with mp_vision.PoseLandmarker.create_from_options(options) as landmarker:
-        frame_index = 0
-
-        while True:
+        for idx, timestamp_sec in enumerate(sample_timestamps):
+            cap.set(cv2.CAP_PROP_POS_MSEC, timestamp_sec * 1000.0)
             ret, frame = cap.read()
-            if not ret:
-                break
+            if not ret or frame is None:
+                continue
 
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             mp_image = mp.Image(
@@ -175,42 +144,44 @@ def extract_keypoints(
             )
 
             # Tasks VIDEO mode requires a monotonically increasing timestamp in ms
-            timestamp_ms = int(frame_index * 1000 / fps)
+            timestamp_ms = int(timestamp_sec * 1000)
             detection = landmarker.detect_for_video(mp_image, timestamp_ms)
 
-            timestamp_sec = frame_index / fps
             pose_detected = bool(
                 detection.pose_landmarks and len(detection.pose_landmarks) > 0
             )
 
             if pose_detected:
-                raw_lms = detection.pose_landmarks[0]  # first (only) person
+                raw_lms = detection.pose_landmarks[0]
                 landmarks = [
                     {
-                        "index":      idx,
-                        "name":       LANDMARK_NAMES[idx],
+                        "index":      l_idx,
+                        "name":       LANDMARK_NAMES[l_idx],
                         "x":          float(lm.x),
                         "y":          float(lm.y),
                         "z":          float(lm.z),
                         "visibility": float(lm.visibility),
                     }
-                    for idx, lm in enumerate(raw_lms)
+                    for l_idx, lm in enumerate(raw_lms)
                 ]
             else:
                 landmarks = []
 
+            frame_num = int(round(timestamp_sec * fps))
             results_list.append(
                 {
-                    "frame_index":   frame_index,
+                    "frame_index":   frame_num,
                     "timestamp":     round(timestamp_sec, 6),
                     "pose_detected": pose_detected,
                     "landmarks":     landmarks,
                 }
             )
 
-            frame_index += 1
-            if max_frames is not None and frame_index >= max_frames:
-                break
+            if progress_callback is not None and (idx % 15 == 0 or idx == total_samples - 1):
+                try:
+                    progress_callback(idx + 1, total_samples)
+                except Exception:
+                    pass
 
     cap.release()
     return results_list

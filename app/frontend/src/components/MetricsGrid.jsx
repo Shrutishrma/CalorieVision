@@ -13,7 +13,7 @@ function fmtDuration(secs) {
 export default function MetricsGrid({ result, userTier }) {
   const isLstm = result.classifier_used === 'lstm'
   const classifierBadgeText = isLstm
-    ? 'PyTorch LSTM (95.3% Val Acc)'
+    ? 'PyTorch LSTM Action Classifier'
     : result.classifier_used
     ? result.classifier_used.toUpperCase().replace(/_/g, ' ')
     : 'POSE + OCR'

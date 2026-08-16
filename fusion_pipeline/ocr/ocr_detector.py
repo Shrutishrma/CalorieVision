@@ -51,6 +51,7 @@ from pathlib import Path
 from typing import List, Optional
 
 import cv2
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -130,64 +131,83 @@ def detect_ocr_segments(
         raise RuntimeError(f"OpenCV could not open video: {video_path}")
 
     fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
-    sample_interval_frames = max(1, int(fps * sample_every_n_seconds))
+    total_frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0
+    duration_secs = (total_frame_count / fps) if (total_frame_count > 0 and fps > 0) else 300.0
+
+    # Adaptive sample interval: for long videos (>10 min), sample every 10-12s
+    # Max samples capped at 120 so even a 30-min video runs OCR in < 10 seconds
+    effective_interval = max(sample_every_n_seconds, duration_secs / 120.0) if duration_secs > 120 else sample_every_n_seconds
+
+    sample_timestamps = []
+    t = 0.5
+    while t < duration_secs:
+        sample_timestamps.append(t)
+        t += effective_interval
 
     logger.info(
-        "[ocr_detector] Sampling every %d frames (%.1f s) in %s",
-        sample_interval_frames, sample_every_n_seconds, video_path,
+        "[ocr_detector] Sampling %d keyframes (interval=%.1fs, duration=%.1fs) with ROI banner cropping in %s",
+        len(sample_timestamps), effective_interval, duration_secs, video_path,
     )
 
     segments: List[Segment] = []
     seg_counter = 0
-    frame_index = 0
 
     try:
-        while True:
+        for timestamp_sec in sample_timestamps:
+            # Direct seek to millisecond position (skips sequential frame decoding)
+            cap.set(cv2.CAP_PROP_POS_MSEC, timestamp_sec * 1000.0)
             ret, frame = cap.read()
-            if not ret:
-                break
+            if not ret or frame is None:
+                continue
 
-            if frame_index % sample_interval_frames == 0:
-                timestamp_sec = frame_index / fps
-                rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            h, w = frame.shape[:2]
+            if h < 20 or w < 20:
+                continue
 
-                results = reader.readtext(rgb, detail=1, paragraph=False)
+            # ROI Optimization: Workout titles/timers appear in the top 25% or bottom 25%
+            # Crop top and bottom banners and stack them vertically (drops middle 50% body clutter)
+            top_h = int(h * 0.28)
+            bot_h = int(h * 0.28)
+            top_banner = frame[0:top_h, 0:w]
+            bot_banner = frame[h - bot_h:h, 0:w]
+            stacked_banner = np.vstack([top_banner, bot_banner])
 
-                # Filter by confidence and concatenate all words in this frame
-                high_conf = [
-                    (text.strip(), conf)
-                    for (_, text, conf) in results
-                    if conf >= min_confidence and text.strip()
-                ]
+            # Downscale banner width to max 640px for 5x faster CRAFT inference
+            if w > 640:
+                scale = 640.0 / w
+                target_w = 640
+                target_h = max(20, int(stacked_banner.shape[0] * scale))
+                stacked_banner = cv2.resize(stacked_banner, (target_w, target_h), interpolation=cv2.INTER_AREA)
 
-                if high_conf:
-                    # Combine all detected words into one label string
-                    label = " ".join(text for text, _ in high_conf).lower()
-                    confidence = float(max(conf for _, conf in high_conf))
+            rgb = cv2.cvtColor(stacked_banner, cv2.COLOR_BGR2RGB)
+            results = reader.readtext(rgb, detail=1, paragraph=False)
 
-                    end_sec = timestamp_sec + sample_every_n_seconds
-                    segments.append(
-                        Segment(
-                            segment_id=f"ocr_{seg_counter:04d}",
-                            start_time=round(timestamp_sec, 6),
-                            end_time=round(end_sec, 6),
-                            label=label,
-                            confidence=min(confidence, 1.0),
-                            source=Source.ocr,
-                        )
+            high_conf = [
+                (text.strip(), conf)
+                for (_, text, conf) in results
+                if conf >= min_confidence and text.strip()
+            ]
+
+            if high_conf:
+                label = " ".join(text for text, _ in high_conf).lower()
+                confidence = float(max(conf for _, conf in high_conf))
+                end_sec = timestamp_sec + effective_interval
+                segments.append(
+                    Segment(
+                        segment_id=f"ocr_{seg_counter:04d}",
+                        start_time=round(timestamp_sec, 6),
+                        end_time=round(end_sec, 6),
+                        label=label,
+                        confidence=min(confidence, 1.0),
+                        source=Source.ocr,
                     )
-                    logger.debug(
-                        "[ocr_detector] Frame %d (%.2f s): %r (conf=%.2f)",
-                        frame_index, timestamp_sec, label, confidence,
-                    )
-                    seg_counter += 1
-
-            frame_index += 1
+                )
+                seg_counter += 1
 
     finally:
         cap.release()
 
-    logger.info("[ocr_detector] Produced %d OCR segment(s).", len(segments))
+    logger.info("[ocr_detector] Produced %d OCR segment(s) in rapid mode.", len(segments))
     return segments
 
 

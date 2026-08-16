@@ -81,8 +81,9 @@ _PATTERNS = [
     (re.compile(r"\btricep[\s\-_]*dip(s)?\b", re.IGNORECASE), "tricep_dip"),
     (re.compile(r"\bbench[\s\-_]*press\b", re.IGNORECASE), "bench_press"),
     (re.compile(r"\bpull[\s\-_]*up(s)?\b", re.IGNORECASE), "pull_up"),
-    (re.compile(r"\bchin[\s\-_]*up(s)?\b", re.IGNORECASE), "pull_up"),
     (re.compile(r"\bdead[\s\-_]*lift(s)?\b", re.IGNORECASE), "deadlift"),
+    # ── Rest & Breaks ──
+    (re.compile(r"\b(rest|break|pause|recover(y)?|water[\s\-_]*break)\b", re.IGNORECASE), "rest"),
 ]
 
 

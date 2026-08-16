@@ -16,6 +16,9 @@ from cv_pipeline.models.baseline import MajorityClassPredictor, KNNBaselineClass
 from cv_pipeline.models.lstm_classifier import (
     EXERCISE_CLASSES,
     LSTMClassifier,
+    KeypointLSTM,
+    load_lstm_model,
+    classify_run,
     predict_sequence,
     _TORCH_AVAILABLE,
 )
@@ -23,7 +26,7 @@ from cv_pipeline.models.lstm_classifier import (
 logger = logging.getLogger("cv_pipeline.models.classify")
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_CHECKPOINT = _REPO_ROOT / "cv_pipeline" / "models" / "lstm_best.pt"
+DEFAULT_CHECKPOINT = _REPO_ROOT / "cv_pipeline" / "models" / "lstm.pt"
 
 
 def classify_video_frames(
@@ -43,17 +46,31 @@ def classify_video_frames(
     if not frames:
         return [], "none"
 
-    ckpt = checkpoint_path or DEFAULT_CHECKPOINT
-
-    # 1. Try LSTM
-    if _TORCH_AVAILABLE and ckpt.exists():
+    # 1. Try unified LSTM model (Shruti 11-class or Kinematic 9-class)
+    if _TORCH_AVAILABLE:
         try:
-            model = LSTMClassifier.from_checkpoint(ckpt)
-            model.eval()
-            predictions = predict_sequence(frames, model, fps=fps)
-            if predictions:
-                pose_segs = _predictions_to_segments(predictions)
-                logger.info("Classified video using LSTM classifier (%d segments)", len(pose_segs))
+            model, model_type = load_lstm_model(checkpoint_path)
+            # Use classify_run on sliding windows or scene segments
+            window_size = int(fps * 5)  # 5-second windows
+            segments = []
+            for i in range(0, len(frames), max(1, window_size // 2)):
+                win = frames[i : i + window_size]
+                if not win:
+                    continue
+                st = win[0].get("timestamp", i / fps)
+                et = win[-1].get("timestamp", (i + len(win)) / fps)
+                label, conf = classify_run(win, model)
+                if label != "unknown":
+                    segments.append({
+                        "label": label,
+                        "confidence": conf,
+                        "start_time": st,
+                        "end_time": et,
+                    })
+
+            if segments:
+                pose_segs = _predictions_to_segments(segments)
+                logger.info("Classified video using %s model (%d segments)", model_type, len(pose_segs))
                 return pose_segs, "lstm"
         except Exception as exc:
             logger.warning("LSTM inference failed, falling back to k-NN: %s", exc)

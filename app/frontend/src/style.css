@@ -557,6 +557,27 @@ body {
   line-height: 1.5;
 }
 
+.cancel-analysis-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  background: transparent;
+  border: 1px solid rgba(248, 81, 73, 0.45);
+  border-radius: 6px;
+  color: rgba(248, 81, 73, 0.85);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+.cancel-analysis-btn:hover {
+  background: rgba(248, 81, 73, 0.12);
+  border-color: rgba(248, 81, 73, 0.7);
+  color: #f85149;
+}
+
+
 /* ── Results ─────────────────────────────────────────────────────────────────── */
 .results-section {
   animation: fadeUp 0.4s ease;
@@ -966,50 +987,68 @@ body {
 }
 
 /* ── Exercise colour map ─────────────────────────────────────────────────────── */
-.ex-pushup           { background: rgba(88,166,255,0.15); color: #79b8ff; }
-.ex-squat            { background: rgba(63,185,80,0.15);  color: #56d364; }
-.ex-jumping_jack     { background: rgba(188,140,255,0.15);color: #d2a8ff; }
-.ex-lunge            { background: rgba(210,153,34,0.15); color: #e3b341; }
-.ex-plank            { background: rgba(248,81,73,0.15);  color: #ff7b72; }
-.ex-burpee           { background: rgba(255,123,114,0.15);color: #ffa198; }
-.ex-mountain_climber { background: rgba(255,166,87,0.15); color: #ffb347; }
-.ex-high_knees       { background: rgba(87,207,180,0.15); color: #56cfba; }
-.ex-situp            { background: rgba(87,166,255,0.15); color: #79b8ff; }
-.ex-jump_rope        { background: rgba(188,100,255,0.15);color: #c084fc; }
-.ex-bicycle_crunch   { background: rgba(244,114,182,0.15);color: #f472b6; }
-.ex-shoulder_press   { background: rgba(52,211,153,0.15); color: #34d399; }
-.ex-rest             { background: transparent; color: var(--text-3); }
-.ex-unknown          { background: transparent; color: var(--text-3); }
+.ex-pushup                { background: rgba(88,166,255,0.15); color: #79b8ff; }
+.ex-squat                 { background: rgba(63,185,80,0.15);  color: #56d364; }
+.ex-jumping_jack          { background: rgba(188,140,255,0.15);color: #d2a8ff; }
+.ex-lunge                 { background: rgba(210,153,34,0.15); color: #e3b341; }
+.ex-plank                 { background: rgba(248,81,73,0.15);  color: #ff7b72; }
+.ex-burpee                { background: rgba(255,123,114,0.15);color: #ffa198; }
+.ex-mountain_climber      { background: rgba(255,166,87,0.15); color: #ffb347; }
+.ex-high_knees            { background: rgba(87,207,180,0.15); color: #56cfba; }
+.ex-situp                 { background: rgba(87,166,255,0.15); color: #79b8ff; }
+.ex-jump_rope             { background: rgba(188,100,255,0.15);color: #c084fc; }
+.ex-bicycle_crunch        { background: rgba(244,114,182,0.15);color: #f472b6; }
+.ex-shoulder_press        { background: rgba(52,211,153,0.15); color: #34d399; }
+.ex-pull_up               { background: rgba(88,166,255,0.15); color: #79b8ff; }
+.ex-tricep_dip            { background: rgba(210,153,34,0.15); color: #e3b341; }
+.ex-russian_twist         { background: rgba(244,114,182,0.15);color: #f472b6; }
+.ex-leg_raise             { background: rgba(87,207,180,0.15); color: #56cfba; }
+.ex-unclassified_exercise { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); }
+.ex-active_exercise       { background: rgba(56,189,248,0.15); color: #38bdf8; }
+.ex-rest                  { background: transparent; color: var(--text-3); }
+.ex-unknown               { background: transparent; color: var(--text-3); }
 
 /* Bar colours */
-.bar-pushup           { background: #58a6ff; }
-.bar-squat            { background: #3fb950; }
-.bar-jumping_jack     { background: #bc8cff; }
-.bar-lunge            { background: #d29922; }
-.bar-plank            { background: #f85149; }
-.bar-burpee           { background: #ff7b72; }
-.bar-mountain_climber { background: #ffa657; }
-.bar-high_knees       { background: #39d353; }
-.bar-situp            { background: #58a6ff; }
-.bar-jump_rope        { background: #c084fc; }
-.bar-bicycle_crunch   { background: #f472b6; }
-.bar-shoulder_press   { background: #34d399; }
+.bar-pushup                { background: #58a6ff; }
+.bar-squat                 { background: #3fb950; }
+.bar-jumping_jack          { background: #bc8cff; }
+.bar-lunge                 { background: #d29922; }
+.bar-plank                 { background: #f85149; }
+.bar-burpee                { background: #ff7b72; }
+.bar-mountain_climber      { background: #ffa657; }
+.bar-high_knees            { background: #39d353; }
+.bar-situp                 { background: #58a6ff; }
+.bar-jump_rope             { background: #c084fc; }
+.bar-bicycle_crunch        { background: #f472b6; }
+.bar-shoulder_press        { background: #34d399; }
+.bar-pull_up               { background: #58a6ff; }
+.bar-tricep_dip            { background: #d29922; }
+.bar-russian_twist         { background: #f472b6; }
+.bar-leg_raise             { background: #56cfba; }
+.bar-unclassified_exercise { background: #38bdf8; }
+.bar-active_exercise       { background: #38bdf8; }
 
 /* Timeline segment colours */
-.tl-pushup           { background: #1a3a6b; }
-.tl-squat            { background: #14532d; }
-.tl-jumping_jack     { background: #3b1f7a; }
-.tl-lunge            { background: #713f12; }
-.tl-plank            { background: #7f1d1d; }
-.tl-burpee           { background: #7c2d12; }
-.tl-mountain_climber { background: #78350f; }
-.tl-high_knees       { background: #064e3b; }
-.tl-situp            { background: #1e3a5f; }
-.tl-jump_rope        { background: #4a1d96; }
-.tl-bicycle_crunch   { background: #831843; }
-.tl-shoulder_press   { background: #064e3b; }
-.tl-rest             { background: #21262d; }
-.tl-unknown          { background: #21262d; }
+.tl-pushup                { background: #1a3a6b; }
+.tl-squat                 { background: #14532d; }
+.tl-jumping_jack          { background: #3b1f7a; }
+.tl-lunge                 { background: #713f12; }
+.tl-plank                 { background: #7f1d1d; }
+.tl-burpee                { background: #7c2d12; }
+.tl-mountain_climber      { background: #78350f; }
+.tl-high_knees            { background: #064e3b; }
+.tl-situp                 { background: #1e3a5f; }
+.tl-jump_rope             { background: #4a1d96; }
+.tl-bicycle_crunch        { background: #831843; }
+.tl-shoulder_press        { background: #064e3b; }
+.tl-pull_up               { background: #1a3a6b; }
+.tl-tricep_dip            { background: #713f12; }
+.tl-russian_twist         { background: #831843; }
+.tl-leg_raise             { background: #064e3b; }
+.tl-unclassified_exercise { background: #0c4a6e; }
+.tl-active_exercise       { background: #0c4a6e; }
+.tl-rest                  { background: #21262d; }
+.tl-unknown               { background: #21262d; }
 
 /* ── Footer ──────────────────────────────────────────────────────────────────── */
 .site-footer {

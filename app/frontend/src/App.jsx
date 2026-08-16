@@ -5,9 +5,9 @@ import './style.css'
 /* ── helpers ─────────────────────────────────────────────────────────────────── */
 function extractVideoId(url) {
   if (!url) return ''
-  if (url.includes('v='))       return url.split('v=')[1].split('&')[0].split('?')[0]
-  if (url.includes('youtu.be/'))return url.split('youtu.be/')[1].split('?')[0]
-  if (url.includes('shorts/'))  return url.split('shorts/')[1].split('?')[0]
+  if (url.includes('v=')) return url.split('v=')[1].split('&')[0].split('?')[0]
+  if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0]
+  if (url.includes('shorts/')) return url.split('shorts/')[1].split('?')[0]
   return ''
 }
 
@@ -22,41 +22,53 @@ function fmtTime(secs) {
 function fmtClock(secs) {
   const s = Math.round(secs || 0)
   const m = Math.floor(s / 60), r = s % 60
-  return `${m}:${String(r).padStart(2,'0')}`
+  return `${m}:${String(r).padStart(2, '0')}`
 }
 
-const MET = { squat:5,pushup:8,jumping_jack:8,lunge:5.5,plank:4,burpee:10,
-              mountain_climber:9,high_knees:8.5,situp:5.5,jump_rope:10,
-              bicycle_crunch:5.5,shoulder_press:5,rest:1,unknown:3 }
-const SCALE = { beginner:0.85, intermediate:1.0, advanced:1.2 }
+function formatExName(name) {
+  if (!name) return 'Unknown'
+  if (name === 'unclassified_exercise') return 'Unclassified Exercise'
+  if (name === 'active_exercise') return 'Active Exercise'
+  if (name === 'rest') return 'Rest'
+  return name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+}
+
+const MET = {
+  squat: 5, pushup: 8, jumping_jack: 8, lunge: 5.5, plank: 4, burpee: 10,
+  mountain_climber: 9, high_knees: 8.5, situp: 5.5, jump_rope: 10,
+  bicycle_crunch: 5.5, shoulder_press: 5, pull_up: 6, tricep_dip: 5,
+  russian_twist: 5, leg_raise: 4, unclassified_exercise: 4.5, active_exercise: 4.5,
+  rest: 1, unknown: 4
+}
+const SCALE = { beginner: 0.85, intermediate: 1.0, advanced: 1.2 }
 
 function computeCalories(segs, wt, tier) {
-  return segs.reduce((s, seg) => s + (MET[seg.exercise]||3) * (SCALE[tier]||1) * wt * (seg.duration_secs/3600), 0)
+  return segs.reduce((s, seg) => s + (MET[seg.exercise] || 4.5) * (SCALE[tier] || 1) * wt * (seg.duration_secs / 3600), 0)
 }
 
-const BACKENDS = ['http://localhost:8005','http://localhost:8000']
+const BACKENDS = ['http://localhost:8005', 'http://localhost:8000']
 
 const STAGES = [
-  { label:'Video Acquisition',      desc:'yt-dlp + ffmpeg download' },
-  { label:'Pose Estimation',        desc:'MediaPipe — 33 3D landmarks/frame' },
-  { label:'Motion Filtering',       desc:'Active vs rest frame separation' },
-  { label:'Scene Cut Detection',    desc:'PySceneDetect shot boundaries' },
-  { label:'Action Classification',  desc:'PyTorch LSTM · 95.3% val accuracy' },
-  { label:'EasyOCR Captions',       desc:'On-screen text & rep counter extraction' },
-  { label:'Multi-Signal Fusion',    desc:'Pose + OCR confidence arbitration' },
-  { label:'Calorie Estimation',     desc:'MET × weight × duration per segment' },
+  { label: 'Video Acquisition', desc: 'yt-dlp + ffmpeg download' },
+  { label: 'Pose Estimation', desc: 'MediaPipe — 33 3D landmarks/frame' },
+  { label: 'Motion Filtering', desc: 'Active vs rest frame separation' },
+  { label: 'Scene Cut Detection', desc: 'PySceneDetect shot boundaries' },
+  { label: 'Action Classification', desc: 'PyTorch LSTM · 11 Exercise Classes' },
+  { label: 'EasyOCR Captions', desc: 'On-screen text & rep counter extraction' },
+  { label: 'Multi-Signal Fusion', desc: 'Pose + OCR confidence arbitration' },
+  { label: 'Calorie Estimation', desc: 'MET × weight × duration per segment' },
 ]
 
-function stageIndex(stageName='') {
+function stageIndex(stageName = '') {
   const s = stageName.toLowerCase()
-  if (s.includes('0')||s.includes('video')||s.includes('init'))  return 0
-  if (s.includes('1')||s.includes('pose'))                        return 1
-  if (s.includes('2')||s.includes('motion'))                      return 2
-  if (s.includes('3')||s.includes('scene'))                       return 3
-  if (s.includes('4')||s.includes('lstm')||s.includes('classif')) return 4
-  if (s.includes('5')||s.includes('ocr'))                         return 5
-  if (s.includes('6')||s.includes('fusion'))                      return 6
-  if (s.includes('7')||s.includes('calor')||s.includes('met'))    return 7
+  if (s.includes('0') || s.includes('video') || s.includes('init')) return 0
+  if (s.includes('1') || s.includes('pose')) return 1
+  if (s.includes('2') || s.includes('motion')) return 2
+  if (s.includes('3') || s.includes('scene')) return 3
+  if (s.includes('4') || s.includes('lstm') || s.includes('classif')) return 4
+  if (s.includes('5') || s.includes('ocr')) return 5
+  if (s.includes('6') || s.includes('fusion')) return 6
+  if (s.includes('7') || s.includes('calor') || s.includes('met')) return 7
   return 0
 }
 
@@ -64,67 +76,64 @@ function stageIndex(stageName='') {
    APP
 ══════════════════════════════════════════════════════════════════════════════ */
 export default function App() {
-  const [backendUrl, setBackendUrl]   = useState('')
-  const [status, setStatus]           = useState('loading')
-  const [manifest, setManifest]       = useState([])
+  const [backendUrl, setBackendUrl] = useState('')
+  const [status, setStatus] = useState('loading')
+  const [manifest, setManifest] = useState([])
 
-  const [selectedId, setSelectedId]   = useState('')
-  const [customUrl, setCustomUrl]     = useState('')
-  const [weightKg, setWeightKg]       = useState(70)
-  const [tier, setTier]               = useState('intermediate')
+  const [selectedId, setSelectedId] = useState('')
+  const [customUrl, setCustomUrl] = useState('')
+  const [weightKg, setWeightKg] = useState(70)
+  const [tier, setTier] = useState('intermediate')
 
-  const [analyzing, setAnalyzing]     = useState(false)
-  const [jobId, setJobId]             = useState(null)
-  const [progress, setProgress]       = useState(0)
-  const [stageName, setStageName]     = useState('')
+  const [analyzing, setAnalyzing] = useState(false)
+  const [jobId, setJobId] = useState(null)
+  const [progress, setProgress] = useState(0)
+  const [stageName, setStageName] = useState('')
 
-  const [result, setResult]           = useState(null)
+  const [result, setResult] = useState(null)
   const [activeVideoId, setActiveVideoId] = useState('')
-  const [activeSeg, setActiveSeg]     = useState(null)
-  const [errorMsg, setErrorMsg]       = useState('')
+  const [activeSeg, setActiveSeg] = useState(null)
+  const [errorMsg, setErrorMsg] = useState('')
 
   /* ── Probe backend ── */
   useEffect(() => {
     let cancelled = false
-    ;(async () => {
-      for (const url of BACKENDS) {
-        try {
-          const d = await fetch(`${url}/health`).then(r=>r.json())
-          if (d.status==='ok' && d.service==='CalorieVision API') {
-            if (cancelled) return
-            setBackendUrl(url); setStatus('ok')
-            const mf = await fetch(`${url}/manifest`).then(r=>r.json())
-            if (Array.isArray(mf) && mf.length) {
-              setManifest(mf); setSelectedId(mf[0].youtube_id)
+      ; (async () => {
+        for (const url of BACKENDS) {
+          try {
+            const d = await fetch(`${url}/health`).then(r => r.json())
+            if (d.status === 'ok' && d.service === 'CalorieVision API') {
+              if (cancelled) return
+              setBackendUrl(url); setStatus('ok')
+              const mf = await fetch(`${url}/manifest`).then(r => r.json())
+              if (Array.isArray(mf) && mf.length) {
+                setManifest(mf); setSelectedId(mf[0].youtube_id)
+              }
+              return
             }
-            return
-          }
-        } catch (_) {}
-      }
-      if (!cancelled) setStatus('error')
-    })()
-    return () => { cancelled=true }
+          } catch (_) { }
+        }
+        if (!cancelled) setStatus('error')
+      })()
+    return () => { cancelled = true }
   }, [])
-
-  /* ── Auto-analyse on connect ── */
-  useEffect(() => {
-    if (status==='ok' && backendUrl && !result && !analyzing && !jobId && selectedId) handleAnalyse()
-  }, [status, backendUrl, selectedId])
 
   /* ── Poll job ── */
   useEffect(() => {
     if (!jobId || !backendUrl) return
     const iv = setInterval(async () => {
       try {
-        const d = await fetch(`${backendUrl}/status/${jobId}`).then(r=>r.json())
+        const d = await fetch(`${backendUrl}/status/${jobId}`).then(r => r.json())
         setProgress(d.progress || 0)
         setStageName(d.stage || '')
-        if (d.status==='completed') {
+        if (d.status === 'completed') {
           setResult(d.result); setAnalyzing(false); setJobId(null)
-        } else if (d.status==='failed') {
-          setErrorMsg(d.error||'Pipeline failed'); setAnalyzing(false); setJobId(null)
+        } else if (d.status === 'failed') {
+          setErrorMsg(d.error || 'Pipeline failed'); setAnalyzing(false); setJobId(null)
+        } else if (d.status === 'cancelled') {
+          setAnalyzing(false); setJobId(null)
         }
-      } catch (_) {}
+      } catch (_) { }
     }, 1200)
     return () => clearInterval(iv)
   }, [jobId, backendUrl])
@@ -138,7 +147,7 @@ export default function App() {
     setProgress(0.04); setStageName('Initializing')
 
     const payload = {
-      video_id:  customUrl.trim() ? undefined : selectedId,
+      video_id: customUrl.trim() ? undefined : selectedId,
       video_url: customUrl.trim() || undefined,
       weight_kg: parseFloat(weightKg),
       user_tier: tier,
@@ -146,14 +155,14 @@ export default function App() {
     }
 
     fetch(`${backendUrl}/analyze?sync=false`, {
-      method:'POST', headers:{'Content-Type':'application/json'},
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
       .then(d => {
-        if (d.job_id)       setJobId(d.job_id)
-        else if (d.segments){ setResult(d); setAnalyzing(false) }
-        else                { setResult(d); setAnalyzing(false) }
+        if (d.job_id) setJobId(d.job_id)
+        else if (d.segments) { setResult(d); setAnalyzing(false) }
+        else { setResult(d); setAnalyzing(false) }
       })
       .catch(() => {
         setErrorMsg(`Cannot reach ${backendUrl}. Is the backend running?`)
@@ -161,27 +170,41 @@ export default function App() {
       })
   }
 
+  /* ── Cancel ── */
+  const handleCancel = () => {
+    if (!jobId || !backendUrl) {
+      setAnalyzing(false)
+      return
+    }
+    fetch(`${backendUrl}/cancel/${jobId}`, { method: 'POST' })
+      .catch(() => {})
+      .finally(() => {
+        setAnalyzing(false)
+        setJobId(null)
+      })
+  }
+
   /* ── Derived for results ── */
   const segments = result?.segments || []
-  const nonRest  = segments.filter(s => s.exercise!=='rest' && s.exercise!=='unknown')
-  const totalDur = result?.total_duration_secs || segments.reduce((s,x)=>s+x.duration_secs, 0)
-  const activeDur= result?.active_duration_secs || nonRest.reduce((s,x)=>s+x.duration_secs, 0)
-  const activeRatio = totalDur > 0 ? Math.round((activeDur/totalDur)*100) : 0
+  const nonRest = segments.filter(s => s.exercise !== 'rest' && s.exercise !== 'unknown')
+  const totalDur = result?.total_duration_secs || segments.reduce((s, x) => s + x.duration_secs, 0)
+  const activeDur = result?.active_duration_secs || nonRest.reduce((s, x) => s + x.duration_secs, 0)
+  const activeRatio = totalDur > 0 ? Math.round((activeDur / totalDur) * 100) : 0
 
   /* Exercise breakdown map */
   const exMap = {}
   nonRest.forEach(s => {
-    if (!exMap[s.exercise]) exMap[s.exercise]={dur:0, kcal:0, count:0}
-    exMap[s.exercise].dur  += s.duration_secs
+    if (!exMap[s.exercise]) exMap[s.exercise] = { dur: 0, kcal: 0, count: 0 }
+    exMap[s.exercise].dur += s.duration_secs
     exMap[s.exercise].kcal += s.calories || 0
     exMap[s.exercise].count++
   })
-  const exList = Object.entries(exMap).sort((a,b)=>b[1].dur-a[1].dur)
+  const exList = Object.entries(exMap).sort((a, b) => b[1].dur - a[1].dur)
   const maxDur = exList[0]?.[1]?.dur || 1
 
-  const calBeg  = computeCalories(segments, weightKg, 'beginner')
-  const calInt  = computeCalories(segments, weightKg, 'intermediate')
-  const calAdv  = computeCalories(segments, weightKg, 'advanced')
+  const calBeg = computeCalories(segments, weightKg, 'beginner')
+  const calInt = computeCalories(segments, weightKg, 'intermediate')
+  const calAdv = computeCalories(segments, weightKg, 'advanced')
 
   return (
     <div className="app">
@@ -198,9 +221,9 @@ export default function App() {
         <div className="header-right">
           <div className={`status-pill ${status}`}>
             <span className="status-dot" />
-            {status==='ok' ? 'Backend Connected' : status==='error' ? 'Backend Offline' : 'Checking API…'}
+            {status === 'ok' ? 'Backend Connected' : status === 'error' ? 'Backend Offline' : 'Checking API…'}
           </div>
-          {status==='ok' && (
+          {status === 'ok' && (
             <a className="docs-link" href={`${backendUrl}/docs`} target="_blank" rel="noreferrer">
               API Docs ↗
             </a>
@@ -240,7 +263,7 @@ export default function App() {
                 onChange={e => {
                   setCustomUrl(e.target.value)
                   const vid = extractVideoId(e.target.value)
-                  if (vid) { const m = manifest.find(x=>x.youtube_id===vid); if(m) setSelectedId(m.youtube_id) }
+                  if (vid) { const m = manifest.find(x => x.youtube_id === vid); if (m) setSelectedId(m.youtube_id) }
                 }}
               />
               {customUrl.trim() && (
@@ -250,7 +273,7 @@ export default function App() {
           </div>
 
           {/* Right — params */}
-          <div className="input-pane" style={{display:'flex',flexDirection:'column',gap:'1.1rem'}}>
+          <div className="input-pane" style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
             <div>
               <div className="pane-label">Parameters</div>
             </div>
@@ -259,7 +282,7 @@ export default function App() {
               <div className="param-label">Body Weight</div>
               <div className="weight-control">
                 <input type="range" className="weight-slider" min="40" max="150"
-                  value={weightKg} onChange={e=>setWeightKg(e.target.value)} />
+                  value={weightKg} onChange={e => setWeightKg(e.target.value)} />
                 <span className="weight-val">{weightKg} kg</span>
               </div>
             </div>
@@ -267,27 +290,27 @@ export default function App() {
             <div className="param-group">
               <div className="param-label">Intensity Tier</div>
               <div className="tier-group">
-                {['beginner','intermediate','advanced'].map(t => (
-                  <button key={t} className={`tier-btn ${tier===t?'active':''}`} onClick={()=>setTier(t)}>
-                    {t.charAt(0).toUpperCase()+t.slice(1)}
+                {['beginner', 'intermediate', 'advanced'].map(t => (
+                  <button key={t} className={`tier-btn ${tier === t ? 'active' : ''}`} onClick={() => setTier(t)}>
+                    {t.charAt(0).toUpperCase() + t.slice(1)}
                   </button>
                 ))}
               </div>
             </div>
 
-            <div style={{marginTop:'auto'}}>
+            <div style={{ marginTop: 'auto' }}>
               <button
-                className={`analyse-btn ${analyzing?'running':''}`}
+                className={`analyse-btn ${analyzing ? 'running' : ''}`}
                 onClick={handleAnalyse}
-                disabled={analyzing || status!=='ok'}
+                disabled={analyzing || status !== 'ok'}
               >
                 {analyzing
                   ? <><SpinIcon /> Analysing…</>
                   : <>▶ Analyse Workout Video</>
                 }
               </button>
-              {status!=='ok' && !analyzing && (
-                <p style={{fontSize:'0.72rem',color:'var(--text-3)',marginTop:'0.5rem',textAlign:'center'}}>
+              {status !== 'ok' && !analyzing && (
+                <p style={{ fontSize: '0.72rem', color: 'var(--text-3)', marginTop: '0.5rem', textAlign: 'center' }}>
                   Waiting for backend…
                 </p>
               )}
@@ -301,7 +324,7 @@ export default function App() {
 
       {/* ── Loading Modal ──────────────────────────────────────────────────── */}
       {analyzing && (
-        <PipelineModal progress={progress} stageName={stageName} />
+        <PipelineModal progress={progress} stageName={stageName} onCancel={handleCancel} />
       )}
 
       {/* ── Results ────────────────────────────────────────────────────────── */}
@@ -312,13 +335,13 @@ export default function App() {
           <div className="section-header">
             <span className="section-title">Analysis Results</span>
             <span className="section-meta">
-              {segments.length} segments · {[...new Set(nonRest.map(s=>s.exercise))].length} active exercise type(s)
+              {segments.length} segments · {[...new Set(nonRest.map(s => s.exercise))].length} active exercise type(s)
             </span>
           </div>
 
           <div className="video-results-grid">
             {/* YouTube embed */}
-            <div className="video-embed-block" style={{position:'relative'}}>
+            <div className="video-embed-block" style={{ position: 'relative' }}>
               <span className="video-embed-label">Source Video</span>
               <iframe
                 src={`https://www.youtube.com/embed/${activeVideoId}?modestbranding=1&rel=0`}
@@ -332,7 +355,7 @@ export default function App() {
             <div className="stats-sidebar">
               <div className="stat-block accent-green">
                 <div className="stat-block-label">Calories Burned</div>
-                <div className="stat-block-value">{Math.round(result.total_calories||0)}</div>
+                <div className="stat-block-value">{Math.round(result.total_calories || 0)}</div>
                 <div className="stat-block-sub">kcal · {tier} tier</div>
               </div>
 
@@ -343,16 +366,16 @@ export default function App() {
               </div>
 
               <div className="tier-comparison">
-                <div className="stat-block-label" style={{marginBottom:'0.6rem'}}>Calorie comparison</div>
-                <div className={`tier-row ${tier==='beginner'?'active-tier':''}`}>
+                <div className="stat-block-label" style={{ marginBottom: '0.6rem' }}>Calorie comparison</div>
+                <div className={`tier-row ${tier === 'beginner' ? 'active-tier' : ''}`}>
                   <span className="tier-row-label">🟢 Beginner</span>
                   <span className="tier-row-val">{Math.round(calBeg)} kcal</span>
                 </div>
-                <div className={`tier-row ${tier==='intermediate'?'active-tier':''}`}>
+                <div className={`tier-row ${tier === 'intermediate' ? 'active-tier' : ''}`}>
                   <span className="tier-row-label">🟡 Intermediate</span>
                   <span className="tier-row-val">{Math.round(calInt)} kcal</span>
                 </div>
-                <div className={`tier-row ${tier==='advanced'?'active-tier':''}`}>
+                <div className={`tier-row ${tier === 'advanced' ? 'active-tier' : ''}`}>
                   <span className="tier-row-label">🔴 Advanced</span>
                   <span className="tier-row-val">{Math.round(calAdv)} kcal</span>
                 </div>
@@ -361,8 +384,12 @@ export default function App() {
               <div className="model-chip">
                 <div className="model-chip-icon">⚡</div>
                 <div>
-                  <div className="model-chip-name">PyTorch LSTM</div>
-                  <div className="model-chip-acc">95.3% Validation Accuracy</div>
+                  <div className="model-chip-name">
+                    {result.classifier_used === 'pose_heuristic' ? 'Pose Heuristic Classifier' : 'PyTorch LSTM'}
+                  </div>
+                  <div className="model-chip-acc">
+                    {result.classifier_used === 'pose_heuristic' ? 'Rule-based geometry' : '11 Exercise Classes'}
+                  </div>
                 </div>
               </div>
             </div>
@@ -378,13 +405,13 @@ export default function App() {
               {exList.map(([ex, data]) => (
                 <div className="breakdown-row" key={ex}>
                   <div className="breakdown-label">
-                    {ex.replace(/_/g,' ')}
+                    {formatExName(ex)}
                     <span>×{data.count}</span>
                   </div>
                   <div className="breakdown-bar-track">
                     <div
                       className={`breakdown-bar-fill bar-${ex}`}
-                      style={{width:`${Math.round((data.dur/maxDur)*100)}%`}}
+                      style={{ width: `${Math.round((data.dur / maxDur) * 100)}%` }}
                     />
                   </div>
                   <div className="breakdown-time">{fmtTime(data.dur)}</div>
@@ -403,33 +430,33 @@ export default function App() {
 
             <div className="timeline-track">
               {segments.map((seg, idx) => {
-                const w = ((seg.end_secs - seg.start_secs) / (totalDur||1)) * 100
+                const w = ((seg.end_secs - seg.start_secs) / (totalDur || 1)) * 100
                 const isActive = activeSeg?.start_secs === seg.start_secs
                 return (
                   <div
                     key={idx}
-                    className={`timeline-segment tl-${seg.exercise} ${seg.exercise==='rest'?'tl-rest':''} ${isActive?'tl-active':''}`}
+                    className={`timeline-segment tl-${seg.exercise} ${seg.exercise === 'rest' ? 'tl-rest' : ''} ${isActive ? 'tl-active' : ''}`}
                     style={{ width: `${Math.max(w, 0.3)}%` }}
-                    title={`${seg.exercise} · ${fmtClock(seg.start_secs)}–${fmtClock(seg.end_secs)}`}
+                    title={`${formatExName(seg.exercise)} · ${fmtClock(seg.start_secs)}–${fmtClock(seg.end_secs)}`}
                     onClick={() => setActiveSeg(isActive ? null : seg)}
                   >
-                    {w > 5 && seg.exercise !== 'rest' ? seg.exercise.replace(/_/g,' ') : ''}
+                    {w > 5 && seg.exercise !== 'rest' ? formatExName(seg.exercise) : ''}
                   </div>
                 )
               })}
             </div>
 
             <div className="timeline-ticks">
-              {[0,0.25,0.5,0.75,1].map(t => (
-                <span key={t} className="tl-tick">{fmtClock(totalDur*t)}</span>
+              {[0, 0.25, 0.5, 0.75, 1].map(t => (
+                <span key={t} className="tl-tick">{fmtClock(totalDur * t)}</span>
               ))}
             </div>
 
             {activeSeg && (
               <div className="segment-detail-bar">
                 <div className="sd-item"><span className="sd-label">Exercise</span>
-                  <span className="sd-value" style={{textTransform:'capitalize'}}>
-                    {activeSeg.exercise.replace(/_/g,' ')}
+                  <span className="sd-value">
+                    {formatExName(activeSeg.exercise)}
                   </span>
                 </div>
                 <div className="sd-item"><span className="sd-label">Time</span>
@@ -442,7 +469,7 @@ export default function App() {
                   <span className="sd-value">{activeSeg.calories} kcal</span>
                 </div>
                 <div className="sd-item"><span className="sd-label">Confidence</span>
-                  <span className="sd-value">{Math.round((activeSeg.confidence||0)*100)}%</span>
+                  <span className="sd-value">{Math.round((activeSeg.confidence || 0) * 100)}%</span>
                 </div>
               </div>
             )}
@@ -476,10 +503,10 @@ export default function App() {
                         className={isActive ? 'seg-active' : ''}
                         onClick={() => setActiveSeg(isActive ? null : seg)}
                       >
-                        <td className="mono" style={{color:'var(--text-3)'}}>{i+1}</td>
+                        <td className="mono" style={{ color: 'var(--text-3)' }}>{i + 1}</td>
                         <td>
                           <span className={`ex-tag ex-${seg.exercise}`}>
-                            {seg.exercise.replace(/_/g,' ')}
+                            {formatExName(seg.exercise)}
                           </span>
                         </td>
                         <td className="mono">{fmtClock(seg.start_secs)}</td>
@@ -488,14 +515,14 @@ export default function App() {
                         <td>
                           <div className="conf-bar">
                             <div className="conf-track">
-                              <div className="conf-fill" style={{width:`${Math.round((seg.confidence||0)*100)}%`}} />
+                              <div className="conf-fill" style={{ width: `${Math.round((seg.confidence || 0) * 100)}%` }} />
                             </div>
-                            <span className="mono" style={{fontSize:'0.7rem',color:'var(--text-3)'}}>
-                              {Math.round((seg.confidence||0)*100)}%
+                            <span className="mono" style={{ fontSize: '0.7rem', color: 'var(--text-3)' }}>
+                              {Math.round((seg.confidence || 0) * 100)}%
                             </span>
                           </div>
                         </td>
-                        <td className="mono" style={{color:'var(--blue)'}}>{seg.calories} kcal</td>
+                        <td className="mono" style={{ color: 'var(--blue)' }}>{seg.calories} kcal</td>
                       </tr>
                     )
                   })}
@@ -514,7 +541,7 @@ export default function App() {
               result.failure_events.map((ev, i) => (
                 <div key={i} className="failure-item">
                   <strong>{ev.stage || 'Unknown'}</strong>{ev.reason ? ` — ${ev.reason}` : ''}
-                  {ev.fallback && <span style={{color:'var(--text-3)'}}> (fallback: {ev.fallback})</span>}
+                  {ev.fallback && <span style={{ color: 'var(--text-3)' }}> (fallback: {ev.fallback})</span>}
                 </div>
               ))
             ) : (
@@ -546,7 +573,7 @@ function SpinIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
-      style={{animation:'spin 0.8s linear infinite', display:'block'}}>
+      style={{ animation: 'spin 0.8s linear infinite', display: 'block' }}>
       <style>{`@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`}</style>
       <circle cx="12" cy="12" r="10" strokeOpacity="0.25" />
       <path d="M12 2a10 10 0 0 1 10 10" />
@@ -555,8 +582,8 @@ function SpinIcon() {
 }
 
 /* ── Pipeline Modal ───────────────────────────────────────────────────────── */
-function PipelineModal({ progress=0, stageName='' }) {
-  const pct = Math.min(Math.round(progress*100), 99)
+function PipelineModal({ progress = 0, stageName = '', onCancel }) {
+  const pct = Math.min(Math.round(progress * 100), 99)
   const cur = stageIndex(stageName)
 
   return (
@@ -564,7 +591,7 @@ function PipelineModal({ progress=0, stageName='' }) {
       <div className="modal-box">
         <div className="modal-header">
           <div className="modal-badge">
-            <svg width="8" height="8" viewBox="0 0 8 8" style={{animation:'spin 1.5s linear infinite'}}>
+            <svg width="8" height="8" viewBox="0 0 8 8" style={{ animation: 'spin 1.5s linear infinite' }}>
               <style>{`@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`}</style>
               <circle cx="4" cy="4" r="3" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="10 4" />
             </svg>
@@ -577,16 +604,16 @@ function PipelineModal({ progress=0, stageName='' }) {
         <div className="modal-sub">Running multi-stage computer vision pipeline</div>
 
         <div className="progress-track">
-          <div className="progress-fill" style={{width:`${pct}%`}} />
+          <div className="progress-fill" style={{ width: `${pct}%` }} />
         </div>
 
         <div className="stage-list">
           {STAGES.map((s, i) => {
             const done = i < cur, current = i === cur
             return (
-              <div key={i} className={`stage-row ${done?'done':''} ${current?'current':''}`}>
+              <div key={i} className={`stage-row ${done ? 'done' : ''} ${current ? 'current' : ''}`}>
                 <div className="stage-icon">
-                  {done ? '✓' : (current ? '→' : i+1)}
+                  {done ? '✓' : (current ? '→' : i + 1)}
                 </div>
                 <div>
                   <div>Stage {i}: {s.label}</div>
@@ -598,8 +625,25 @@ function PipelineModal({ progress=0, stageName='' }) {
         </div>
 
         <div className="modal-note">
-          ℹ PyTorch LSTM (95.3% Val Acc) · MediaPipe Pose 33-landmark 3D · EasyOCR text extraction
+          ℹ PyTorch LSTM (11 Exercise Classes) · MediaPipe Pose 33-landmark 3D · EasyOCR text extraction
         </div>
+
+        {onCancel && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+            <button
+              id="cancel-analysis-btn"
+              className="cancel-analysis-btn"
+              onClick={onCancel}
+              title="Cancel the current analysis"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ display: 'block' }}>
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              Cancel Analysis
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

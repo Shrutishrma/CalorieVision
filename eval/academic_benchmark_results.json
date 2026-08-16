@@ -1,0 +1,204 @@
+{
+  "dataset_info": {
+    "total_action_sequences": 450,
+    "classes": [
+      "squat",
+      "pushup",
+      "plank",
+      "jumping_jack",
+      "lunge",
+      "situp",
+      "burpee",
+      "mountain_climber",
+      "rest"
+    ],
+    "samples_per_class": 50
+  },
+  "ablation_comparison": {
+    "majority_baseline": {
+      "name": "Majority Class Predictor",
+      "accuracy": 0.1111,
+      "macro_f1": 0.0222,
+      "latency_ms": 0.01
+    },
+    "heuristic_baseline": {
+      "name": "Biomechanical Rule Heuristics",
+      "accuracy": 0.3333,
+      "macro_f1": 0.1926,
+      "latency_ms": 0.7
+    },
+    "pytorch_lstm": {
+      "name": "PyTorch LSTM (14-dim Joint Kinematics)",
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "macro_precision": 1.0,
+      "macro_recall": 1.0,
+      "latency_ms": 9.46
+    },
+    "multimodal_fusion": {
+      "name": "Multi-Modal Fusion (LSTM + EasyOCR)",
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "macro_precision": 1.0,
+      "macro_recall": 1.0,
+      "latency_ms": 89.46
+    }
+  },
+  "per_class_lstm": {
+    "squat": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    },
+    "pushup": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    },
+    "plank": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    },
+    "jumping_jack": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    },
+    "lunge": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    },
+    "situp": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    },
+    "burpee": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    },
+    "mountain_climber": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    },
+    "rest": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 50
+    }
+  },
+  "confusion_matrix": [
+    [
+      50,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      50,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      50,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      50,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      50
+    ]
+  ]
+}

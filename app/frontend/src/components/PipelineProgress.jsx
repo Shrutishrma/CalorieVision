@@ -5,13 +5,13 @@ const STAGES = [
   { id: 'keypoints', name: 'Stage 1: Pose Estimation', desc: 'Extracting 33 MediaPipe 3D body keypoints' },
   { id: 'motion_filter', name: 'Stage 2: Motion Filtering', desc: 'Detecting active movement vs rest intervals' },
   { id: 'scene_detect', name: 'Stage 3: Scene Cut Detection', desc: 'PySceneDetect shot boundary segmentation' },
-  { id: 'classification', name: 'Stage 4: Action Classification', desc: 'PyTorch LSTM Classifier (95.3% Val Accuracy)' },
+  { id: 'classification', name: 'Stage 4: Action Classification', desc: 'PyTorch LSTM Sequence Classifier (11 Exercise Classes)' },
   { id: 'ocr', name: 'Stage 5: EasyOCR Captioning', desc: 'Extracting on-screen exercise titles & timers' },
   { id: 'fusion', name: 'Stage 6: Multi-Signal Fusion', desc: 'Cross-checking Pose predictions with OCR' },
   { id: 'calorie', name: 'Stage 7: MET Expenditure', desc: '3-Tier MET calorie burn calculation' },
 ]
 
-export default function PipelineProgress({ progress, currentStage }) {
+export default function PipelineProgress({ progress, currentStage, onCancel, jobId }) {
   const pct = Math.round((progress || 0.05) * 100)
 
   // Find active stage index
@@ -19,6 +19,10 @@ export default function PipelineProgress({ progress, currentStage }) {
     (st) => currentStage && currentStage.toLowerCase().includes(st.id.replace('_', ''))
   )
   const currentStageInfo = activeIdx >= 0 ? STAGES[activeIdx] : STAGES[0]
+
+  const handleCancel = () => {
+    if (onCancel) onCancel()
+  }
 
   return (
     <div className="pipeline-modal-overlay">
@@ -32,9 +36,9 @@ export default function PipelineProgress({ progress, currentStage }) {
           <div className="pct-display">{pct}%</div>
         </div>
 
-        <h2 className="modal-title">Analyzing Workout Video</h2>
+        <h2 className="modal-title">Analysing Workout Video</h2>
         <p className="modal-subtitle">
-          Running real-time multi-stage computer vision & deep learning pipeline
+          Running multi-stage computer vision pipeline
         </p>
 
         {/* Circular Progress & Stage Details */}
@@ -106,7 +110,23 @@ export default function PipelineProgress({ progress, currentStage }) {
         </div>
 
         <div className="modal-footer-note">
-          <span>💡 Evaluator Note:</span> Powered by PyTorch LSTM (95.3% Val Accuracy) + MediaPipe Pose 3D Landmarks + EasyOCR.
+          <span>ℹ PyTorch LSTM (11 Exercise Classes) · MediaPipe Pose 33-landmark 3D · EasyOCR text extraction</span>
+        </div>
+
+        {/* Cancel button */}
+        <div className="modal-cancel-row">
+          <button
+            id="cancel-analysis-btn"
+            className="cancel-analysis-btn"
+            onClick={handleCancel}
+            title="Cancel the current analysis"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            Cancel Analysis
+          </button>
         </div>
       </div>
     </div>

@@ -36,7 +36,7 @@ from shared.schemas import Segment, Source
 def _write_video(
     path: Path,
     *,
-    frames_per_section: list[tuple[int, int, int]],  # list of (n_frames, BGR_color)
+    frames_per_section: list[tuple[int, int]],  # list of (n_frames, BGR_color_scalar)
     fps: int = 30,
     width: int = 320,
     height: int = 240,

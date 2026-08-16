@@ -70,6 +70,7 @@ cv-pipeline/models/*.task         # MediaPipe pre-built task bundles (large bina
 
 leMON_implementation_plan.md
 IMPLEMENTATION_PLAN_v2.md
+IMPLEMENTATION_PLAN_v3.md
 CalorieVision_final_project_summary.md
 CALORIEVISION_PROJECT_DOCUMENTATION.md
 

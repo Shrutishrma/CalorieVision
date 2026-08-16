@@ -204,6 +204,101 @@ def summarise(
             for i, f in enumerate(frames)
         ],
     }
+def _is_horizontal_pose(frame: dict) -> bool:
+    """
+    Return True if the person appears to be horizontal (lying/planking).
+    Checks if shoulder-to-ankle vertical distance is < 0.35 of frame height.
+    """
+    lms = frame.get("landmarks", [])
+    if not lms or len(lms) < 28:
+        return False
+    try:
+        l_shoulder = lms[11]
+        l_ankle    = lms[27]
+        if not (l_shoulder and l_ankle and "y" in l_shoulder and "y" in l_ankle):
+            return False
+        return abs(float(l_shoulder["y"]) - float(l_ankle["y"])) < 0.35
+    except (KeyError, TypeError, IndexError):
+        return False
+
+
+def segment_runs(
+    frames: List[dict],
+    *,
+    threshold: float = DEFAULT_THRESHOLD,
+    min_active_secs: float = 2.0,
+    min_gap_secs: float = 3.0,
+    sample_fps: float = 30.0,
+) -> List[dict]:
+    """
+    Group consecutive frames into active segments (runs).
+    Merges active runs separated by gaps shorter than min_gap_secs.
+    Filters out active runs shorter than min_active_secs.
+    Returns a list of dicts with:
+      - start_time: float
+      - end_time: float
+      - label: "active"
+      - frames: list[dict]
+    """
+    if not frames:
+        return []
+
+    # Scale threshold proportionally to time delta between samples.
+    # threshold=0.01 was tuned for 30fps (dt=33ms). At lower fps (e.g. 2fps, dt=500ms),
+    # physical displacement between samples is ~15x larger, so the threshold must scale UP.
+    effective_threshold = threshold * (30.0 / max(sample_fps, 0.1))
+
+    labels = label_motion(frames, threshold=effective_threshold)
+
+    # Force horizontal poses (plank, pushup, mountain climber) to ACTIVE
+    # regardless of motion score, since they may have near-zero frame-to-frame motion.
+    labels = [
+        ACTIVE_LABEL if (_is_horizontal_pose(f) or lb == ACTIVE_LABEL) else lb
+        for f, lb in zip(frames, labels)
+    ]
+
+    timestamps = [f.get("timestamp", 0.0) for f in frames]
+
+    # Find indices of all active frames
+    active_indices = [i for i, lb in enumerate(labels) if lb == ACTIVE_LABEL]
+    if not active_indices:
+        return []
+
+    # Group into runs, merging gaps <= min_gap_secs
+    runs_indices = []
+    current_run = [active_indices[0]]
+
+    for idx in active_indices[1:]:
+        prev_idx = current_run[-1]
+        gap_time = timestamps[idx] - timestamps[prev_idx]
+
+        if gap_time <= min_gap_secs:
+            # Continue the run, including the gap
+            # Add all indices from prev_idx+1 to idx
+            for j in range(prev_idx + 1, idx + 1):
+                if j not in current_run:
+                    current_run.append(j)
+        else:
+            runs_indices.append(current_run)
+            current_run = [idx]
+    
+    if current_run:
+        runs_indices.append(current_run)
+
+    # Filter out short runs and build result
+    results = []
+    for run in runs_indices:
+        start_t = timestamps[run[0]]
+        end_t = timestamps[run[-1]]
+        if end_t - start_t >= min_active_secs:
+            results.append({
+                "start_time": start_t,
+                "end_time": end_t,
+                "label": "active",
+                "frames": [frames[i] for i in run]
+            })
+
+    return results
 
 
 # ─── CLI entry point ──────────────────────────────────────────────────────────

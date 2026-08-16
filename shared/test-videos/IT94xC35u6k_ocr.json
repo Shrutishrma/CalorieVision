@@ -1,0 +1,782 @@
+{
+  "video_id": "IT94xC35u6k",
+  "total_ocr_segments": 97,
+  "segments": [
+    {
+      "segment_id": "ocr_0000",
+      "start_time": 33.933333,
+      "end_time": 45.077778,
+      "label": "30",
+      "confidence": 0.9999398148308071,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0001",
+      "start_time": 45.077778,
+      "end_time": 56.222222,
+      "label": "19",
+      "confidence": 0.829255220658248,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0002",
+      "start_time": 56.222222,
+      "end_time": 67.366667,
+      "label": "8",
+      "confidence": 0.596440570220505,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0003",
+      "start_time": 67.366667,
+      "end_time": 78.511111,
+      "label": "28",
+      "confidence": 0.9642608571807446,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0004",
+      "start_time": 78.511111,
+      "end_time": 89.655556,
+      "label": "17",
+      "confidence": 0.7988711237991932,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0005",
+      "start_time": 100.8,
+      "end_time": 111.944444,
+      "label": "27",
+      "confidence": 0.9594552355712256,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0006",
+      "start_time": 111.944444,
+      "end_time": 123.088889,
+      "label": "16",
+      "confidence": 0.9999865130351151,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0007",
+      "start_time": 123.088889,
+      "end_time": 134.233333,
+      "label": "5",
+      "confidence": 0.9999984502798362,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0008",
+      "start_time": 134.233333,
+      "end_time": 145.377778,
+      "label": "26",
+      "confidence": 0.9999737004678224,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0009",
+      "start_time": 145.377778,
+      "end_time": 156.522222,
+      "label": "15",
+      "confidence": 0.9999876088490234,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0010",
+      "start_time": 178.811111,
+      "end_time": 189.955556,
+      "label": "43",
+      "confidence": 0.9999991570631338,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0011",
+      "start_time": 189.955556,
+      "end_time": 201.1,
+      "label": "32",
+      "confidence": 0.9996432170563399,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0012",
+      "start_time": 201.1,
+      "end_time": 212.244444,
+      "label": "21",
+      "confidence": 0.9998989648272146,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0013",
+      "start_time": 212.244444,
+      "end_time": 223.388889,
+      "label": "10",
+      "confidence": 0.9936054829117396,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0014",
+      "start_time": 223.388889,
+      "end_time": 234.533333,
+      "label": "15",
+      "confidence": 0.9999908962928589,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0015",
+      "start_time": 234.533333,
+      "end_time": 245.677778,
+      "label": "up next 3 knee crche",
+      "confidence": 0.8846873437290949,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0016",
+      "start_time": 245.677778,
+      "end_time": 256.822222,
+      "label": "39",
+      "confidence": 0.9999981455391691,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0017",
+      "start_time": 256.822222,
+      "end_time": 267.966667,
+      "label": "27",
+      "confidence": 0.6115956693912311,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0018",
+      "start_time": 267.966667,
+      "end_time": 279.111111,
+      "label": "16",
+      "confidence": 0.9999940994463072,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0019",
+      "start_time": 279.111111,
+      "end_time": 290.255556,
+      "label": "5",
+      "confidence": 0.9999964237245109,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0020",
+      "start_time": 290.255556,
+      "end_time": 301.4,
+      "label": "10",
+      "confidence": 0.9991932360826778,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0021",
+      "start_time": 301.4,
+      "end_time": 312.544444,
+      "label": "44",
+      "confidence": 0.9998827494808462,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0022",
+      "start_time": 312.544444,
+      "end_time": 323.688889,
+      "label": "33",
+      "confidence": 0.9999995785315409,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0023",
+      "start_time": 323.688889,
+      "end_time": 334.833333,
+      "label": "22",
+      "confidence": 0.5843620632153095,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0024",
+      "start_time": 334.833333,
+      "end_time": 345.977778,
+      "label": "11",
+      "confidence": 0.9980137758008568,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0025",
+      "start_time": 357.122222,
+      "end_time": 368.266667,
+      "label": "up next 5",
+      "confidence": 0.9999980926522767,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0026",
+      "start_time": 368.266667,
+      "end_time": 379.411111,
+      "label": "40",
+      "confidence": 0.9757397989748025,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0027",
+      "start_time": 379.411111,
+      "end_time": 390.555556,
+      "label": "29",
+      "confidence": 0.7620896100997925,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0028",
+      "start_time": 390.555556,
+      "end_time": 401.7,
+      "label": "18",
+      "confidence": 0.9999701601616544,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0029",
+      "start_time": 412.844444,
+      "end_time": 423.988889,
+      "label": "11",
+      "confidence": 0.9981295298810394,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0030",
+      "start_time": 435.133333,
+      "end_time": 446.277778,
+      "label": "35",
+      "confidence": 0.9960418632791203,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0031",
+      "start_time": 446.277778,
+      "end_time": 457.422222,
+      "label": "24",
+      "confidence": 0.9999998314126102,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0032",
+      "start_time": 457.422222,
+      "end_time": 468.566667,
+      "label": "13",
+      "confidence": 0.8695456764856565,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0033",
+      "start_time": 479.711111,
+      "end_time": 490.855556,
+      "label": "up next arm circles",
+      "confidence": 0.6354724749981934,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0034",
+      "start_time": 490.855556,
+      "end_time": 502.0,
+      "label": "41",
+      "confidence": 0.9992366373518997,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0035",
+      "start_time": 502.0,
+      "end_time": 513.144444,
+      "label": "30",
+      "confidence": 0.9999322285402391,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0036",
+      "start_time": 513.144444,
+      "end_time": 524.288889,
+      "label": "19",
+      "confidence": 0.6430804628046406,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0037",
+      "start_time": 524.288889,
+      "end_time": 535.433333,
+      "label": "8",
+      "confidence": 0.9999506885433523,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0038",
+      "start_time": 535.433333,
+      "end_time": 546.577778,
+      "label": "12",
+      "confidence": 0.7047800776965868,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0039",
+      "start_time": 546.577778,
+      "end_time": 557.722222,
+      "label": "up next",
+      "confidence": 0.46295891087861957,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0040",
+      "start_time": 557.722222,
+      "end_time": 568.866667,
+      "label": "36",
+      "confidence": 0.9999962910793456,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0041",
+      "start_time": 568.866667,
+      "end_time": 580.011111,
+      "label": "25",
+      "confidence": 0.45314951005779097,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0042",
+      "start_time": 580.011111,
+      "end_time": 591.155556,
+      "label": "4",
+      "confidence": 0.9999959468882622,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0043",
+      "start_time": 591.155556,
+      "end_time": 602.3,
+      "label": "3",
+      "confidence": 0.7115956300038484,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0044",
+      "start_time": 602.3,
+      "end_time": 613.444444,
+      "label": "up next circles 8",
+      "confidence": 0.7225942021901893,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0045",
+      "start_time": 613.444444,
+      "end_time": 624.588889,
+      "label": "42",
+      "confidence": 0.9999994942378553,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0046",
+      "start_time": 624.588889,
+      "end_time": 635.733333,
+      "label": "31",
+      "confidence": 0.9999998314126102,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0047",
+      "start_time": 635.733333,
+      "end_time": 646.877778,
+      "label": "20",
+      "confidence": 0.9999639224882906,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0048",
+      "start_time": 658.022222,
+      "end_time": 669.166667,
+      "label": "14",
+      "confidence": 0.9999981455391691,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0049",
+      "start_time": 669.166667,
+      "end_time": 680.311111,
+      "label": "up next 3",
+      "confidence": 1.0,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0050",
+      "start_time": 680.311111,
+      "end_time": 691.455556,
+      "label": "38",
+      "confidence": 0.9999995785315409,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0051",
+      "start_time": 691.455556,
+      "end_time": 702.6,
+      "label": "26",
+      "confidence": 0.9999981455391691,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0052",
+      "start_time": 702.6,
+      "end_time": 713.744444,
+      "label": "15",
+      "confidence": 0.9999940994463072,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0053",
+      "start_time": 713.744444,
+      "end_time": 724.888889,
+      "label": "4",
+      "confidence": 0.9990324931180936,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0054",
+      "start_time": 736.033333,
+      "end_time": 747.177778,
+      "label": "44",
+      "confidence": 0.9999356845149628,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0055",
+      "start_time": 747.177778,
+      "end_time": 758.322222,
+      "label": "33",
+      "confidence": 0.999103945592567,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0056",
+      "start_time": 758.322222,
+      "end_time": 769.466667,
+      "label": "21",
+      "confidence": 0.9999993256504904,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0057",
+      "start_time": 769.466667,
+      "end_time": 780.611111,
+      "label": "10",
+      "confidence": 0.9986670712290437,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0058",
+      "start_time": 791.755556,
+      "end_time": 802.9,
+      "label": "up next slute bridses",
+      "confidence": 0.561562279445438,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0059",
+      "start_time": 802.9,
+      "end_time": 814.044444,
+      "label": "39",
+      "confidence": 0.9999974711900259,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0060",
+      "start_time": 814.044444,
+      "end_time": 825.188889,
+      "label": "28",
+      "confidence": 0.9916456936729531,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0061",
+      "start_time": 825.188889,
+      "end_time": 836.333333,
+      "label": "17",
+      "confidence": 0.9999765664326473,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0062",
+      "start_time": 847.477778,
+      "end_time": 858.622222,
+      "label": "10",
+      "confidence": 0.9990656479762227,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0063",
+      "start_time": 869.766667,
+      "end_time": 880.911111,
+      "label": "34",
+      "confidence": 0.9999994942378553,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0064",
+      "start_time": 880.911111,
+      "end_time": 892.055556,
+      "label": "23",
+      "confidence": 0.837822559316249,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0065",
+      "start_time": 892.055556,
+      "end_time": 903.2,
+      "label": "12",
+      "confidence": 0.9999954481433951,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0066",
+      "start_time": 914.344444,
+      "end_time": 925.488889,
+      "label": "up next up and @ners",
+      "confidence": 0.8076159706731803,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0067",
+      "start_time": 925.488889,
+      "end_time": 936.633333,
+      "label": "40",
+      "confidence": 0.9749973045800641,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0068",
+      "start_time": 936.633333,
+      "end_time": 947.777778,
+      "label": "29",
+      "confidence": 0.8795273389125579,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0069",
+      "start_time": 947.777778,
+      "end_time": 958.922222,
+      "label": "18",
+      "confidence": 0.9999878617292061,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0070",
+      "start_time": 970.066667,
+      "end_time": 981.211111,
+      "label": "12",
+      "confidence": 0.9999932565108979,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0071",
+      "start_time": 992.355556,
+      "end_time": 1003.5,
+      "label": "35",
+      "confidence": 0.9999944366205292,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0072",
+      "start_time": 1003.5,
+      "end_time": 1014.644444,
+      "label": "24",
+      "confidence": 0.9999981455391691,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0073",
+      "start_time": 1014.644444,
+      "end_time": 1025.788889,
+      "label": "13",
+      "confidence": 0.7997317203122026,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0074",
+      "start_time": 1025.788889,
+      "end_time": 1036.933333,
+      "label": "2",
+      "confidence": 1.0,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0075",
+      "start_time": 1036.933333,
+      "end_time": 1048.077778,
+      "label": "up next up and overs",
+      "confidence": 0.6718346058554426,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0076",
+      "start_time": 1048.077778,
+      "end_time": 1059.222222,
+      "label": "42",
+      "confidence": 0.907841080784764,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0077",
+      "start_time": 1059.222222,
+      "end_time": 1070.366667,
+      "label": "31",
+      "confidence": 0.49805763363838196,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0078",
+      "start_time": 1070.366667,
+      "end_time": 1081.511111,
+      "label": "19",
+      "confidence": 0.5984544016337623,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0079",
+      "start_time": 1081.511111,
+      "end_time": 1092.655556,
+      "label": "8",
+      "confidence": 0.6240104606749802,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0080",
+      "start_time": 1092.655556,
+      "end_time": 1103.8,
+      "label": "13",
+      "confidence": 0.6651561550512883,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0081",
+      "start_time": 1103.8,
+      "end_time": 1114.944444,
+      "label": "up next arms open close 2",
+      "confidence": 0.999200399360912,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0082",
+      "start_time": 1114.944444,
+      "end_time": 1126.088889,
+      "label": "37",
+      "confidence": 0.9999994099441718,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0083",
+      "start_time": 1126.088889,
+      "end_time": 1137.233333,
+      "label": "26",
+      "confidence": 0.9999957853177504,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0084",
+      "start_time": 1137.233333,
+      "end_time": 1148.377778,
+      "label": "15",
+      "confidence": 0.9999836470619405,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0085",
+      "start_time": 1170.666667,
+      "end_time": 1181.811111,
+      "label": "28",
+      "confidence": 1.0,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0086",
+      "start_time": 1192.955556,
+      "end_time": 1204.1,
+      "label": "up next",
+      "confidence": 0.8156621521349751,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0087",
+      "start_time": 1204.1,
+      "end_time": 1215.244444,
+      "label": "27",
+      "confidence": 0.9993537664413452,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0088",
+      "start_time": 1215.244444,
+      "end_time": 1226.388889,
+      "label": "16",
+      "confidence": 0.9999892947172615,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0089",
+      "start_time": 1226.388889,
+      "end_time": 1237.533333,
+      "label": "up next 5",
+      "confidence": 0.9999988079074598,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0090",
+      "start_time": 1237.533333,
+      "end_time": 1248.677778,
+      "label": "25",
+      "confidence": 0.9999996628252286,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0091",
+      "start_time": 1248.677778,
+      "end_time": 1259.822222,
+      "label": "4",
+      "confidence": 0.9999930858731574,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0092",
+      "start_time": 1259.822222,
+      "end_time": 1270.966667,
+      "label": "up next 3",
+      "confidence": 0.6893126698372657,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0093",
+      "start_time": 1270.966667,
+      "end_time": 1282.111111,
+      "label": "24",
+      "confidence": 0.9999993256504904,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0094",
+      "start_time": 1282.111111,
+      "end_time": 1293.255556,
+      "label": "13",
+      "confidence": 0.8589295484963823,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0095",
+      "start_time": 1293.255556,
+      "end_time": 1304.4,
+      "label": "2",
+      "confidence": 1.0,
+      "source": "ocr"
+    },
+    {
+      "segment_id": "ocr_0096",
+      "start_time": 1326.688889,
+      "end_time": 1337.833333,
+      "label": "try these next madfiidapp @madfitig | @themadfitapp",
+      "confidence": 0.9862130277349139,
+      "source": "ocr"
+    }
+  ]
+}

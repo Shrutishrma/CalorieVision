@@ -246,9 +246,30 @@ def train(
     model.eval()
     with torch.no_grad():
         test_logits = model(X_te)
+        test_preds  = test_logits.argmax(1).cpu().numpy()
         test_acc    = (test_logits.argmax(1) == y_te).float().mean().item()
         train_logits = model(X_tr)
         train_acc    = (train_logits.argmax(1) == y_tr).float().mean().item()
+
+    # Per-class metrics
+    y_test_np = y_te.cpu().numpy()
+    per_class = {}
+    for idx, c in enumerate(EXERCISE_CLASSES):
+        tp = int(((test_preds == idx) & (y_test_np == idx)).sum())
+        fp = int(((test_preds == idx) & (y_test_np != idx)).sum())
+        fn = int(((test_preds != idx) & (y_test_np == idx)).sum())
+        support = int((y_test_np == idx).sum())
+
+        prec = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+        rec  = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+        f1   = (2 * prec * rec) / (prec + rec) if (prec + rec) > 0 else 0.0
+
+        per_class[c] = {
+            "precision": round(prec, 4),
+            "recall": round(rec, 4),
+            "f1": round(f1, 4),
+            "support": support,
+        }
 
     if checkpoint:
         model.save_checkpoint(checkpoint, best_epoch=best_epoch, test_acc=test_acc)
@@ -257,6 +278,9 @@ def train(
         "lstm_test_acc":  test_acc,
         "lstm_train_acc": train_acc,
         "best_epoch":     best_epoch,
+        "per_class":      per_class,
+        "test_preds":     test_preds,
+        "test_truths":    y_test_np,
     }
 
 
@@ -354,19 +378,6 @@ def main(argv: list[str] | None = None) -> None:
         kp_path    = Path(args.data)
         label_path = Path(args.labels)
         X, y = _real_dataset(kp_path, label_path)
-
-        # Build frame/label lists from raw files for baseline comparison
-        with open(kp_path, "rb") as fh:
-            raw = json.load(fh)
-        all_frames = raw["frames"] if isinstance(raw, dict) else raw
-        with open(label_path, "rb") as fh:
-            all_labels: list[str] = json.load(fh)
-
-        n = len(all_frames)
-        sf = int(n * (1 - args.test_split))
-        frames_train, frames_test = all_frames[:sf], all_frames[sf:]
-        labels_train, labels_test = all_labels[:sf],  all_labels[sf:]
-
     # ── Train LSTM ────────────────────────────────────────────────────────────
     ckpt = None if args.no_checkpoint else Path(args.checkpoint)
     lstm_result = train(
@@ -379,9 +390,37 @@ def main(argv: list[str] | None = None) -> None:
         checkpoint=ckpt,
     )
 
-    # ── Baseline comparison ───────────────────────────────────────────────────
+    # ── Baseline comparison on SAME shuffled window split ─────────────────────
     print("\nEvaluating baselines on same test split …")
-    baseline = _baseline_accs(frames_train, labels_train, frames_test, labels_test, k=args.knn_k)
+    n = len(X)
+    perm = np.random.default_rng(seed=42).permutation(n)
+    split_idx = int(n * (1 - args.test_split))
+    train_indices = perm[:split_idx]
+    test_indices  = perm[split_idx:]
+
+    X_train, X_test = X[train_indices], X[test_indices]
+    y_train, y_test = y[train_indices], y[test_indices]
+
+    from collections import Counter
+    from sklearn.neighbors import KNeighborsClassifier
+
+    y_train_str = [EXERCISE_CLASSES[i] for i in y_train]
+    y_test_str  = [EXERCISE_CLASSES[i] for i in y_test]
+
+    # 1. Majority class
+    maj_class = Counter(y_train_str).most_common(1)[0][0]
+    maj_acc   = sum(1 for yt in y_test_str if yt == maj_class) / max(len(y_test_str), 1)
+
+    # 2. k-NN on 14-dim kinematic features
+    X_train_flat = X_train.mean(axis=1) if X_train.ndim == 3 else X_train
+    X_test_flat  = X_test.mean(axis=1) if X_test.ndim == 3 else X_test
+
+    knn = KNeighborsClassifier(n_neighbors=args.knn_k, metric="cosine")
+    knn.fit(X_train_flat, y_train_str)
+    knn_preds = knn.predict(X_test_flat)
+    knn_acc   = sum(1 for yp, yt in zip(knn_preds, y_test_str) if yp == yt) / max(len(y_test_str), 1)
+
+    baseline = {"majority_acc": maj_acc, "knn_acc": knn_acc, "maj_class": maj_class}
 
     # ── Print final report ────────────────────────────────────────────────────
     print(f"\n{'='*60}")
@@ -400,6 +439,17 @@ def main(argv: list[str] | None = None) -> None:
     print(f"  LSTM vs k-NN      : {lstm_vs_knn:+.4f}")
     print(f"  LSTM vs Majority  : {lstm_vs_maj:+.4f}")
     print(f"{'='*60}")
+
+    if "per_class" in lstm_result:
+        print("\n" + "=" * 60)
+        print("PER-CLASS TEST SET BREAKDOWN (PyTorch LSTM)")
+        print("=" * 60)
+        print(f"{'Class':<18} | {'Precision':<10} | {'Recall':<10} | {'F1-Score':<10} | {'Support':<8}")
+        print("-" * 60)
+        for c, m in lstm_result["per_class"].items():
+            if m["support"] > 0:
+                print(f"{c:<18} | {m['precision']*100:6.1f}%    | {m['recall']*100:6.1f}%    | {m['f1']*100:6.1f}%    | {m['support']:<8}")
+        print("=" * 60)
 
     if is_synthetic:
         print("\n" + _SYNTH_BANNER + "\n")
